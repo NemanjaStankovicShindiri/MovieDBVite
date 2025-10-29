@@ -15,12 +15,14 @@ export default class App extends Lightning.Component {
       Content: {
         x: 64,
         y: 125,
-        w: 1920,
+        w: 1241,
         h: 1080,
         type: ContentSection,
-        clipping: true,
-        collision: true,
       },
     };
+  }
+
+  _getFocused() {
+    return this.tag("Content");
   }
 }

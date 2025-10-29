@@ -27,6 +27,15 @@ export default class ContentSection extends Lightning.Component {
       },
     };
   }
+
+  get _MoviesSection() {
+    return this.tag("MoviesSection");
+  }
+
+  get _SeriesSection() {
+    return this.tag("SeriesSection");
+  }
+
   _init() {
     this.patch({
       MoviesSection: {
@@ -52,5 +61,28 @@ export default class ContentSection extends Lightning.Component {
         },
       },
     });
+    this._setState("MoviesSection");
+  }
+
+  static _states() {
+    return [
+      class MoviesSection extends this {
+        _getFocused() {
+          return this._MoviesSection;
+        }
+        _handleDown() {
+          this._setState("SeriesSection");
+          return true;
+        }
+      },
+      class SeriesSection extends this {
+        _getFocused() {
+          return this._SeriesSection;
+        }
+        _handleUp() {
+          this._setState("MoviesSection");
+        }
+      },
+    ];
   }
 }
