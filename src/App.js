@@ -1,10 +1,18 @@
 import { Lightning, Utils } from "@lightningjs/sdk";
+import MovieRow from "./movieRow";
+const movies = [
+  { label: "Dead of winter", image: "images/1.jpg" },
+  { label: "Winter of dead", image: "images/2.jpg" },
+  { label: "Dead winter off", image: "images/3.jpg" },
+  { label: "Dead of dead", image: "images/2.jpg" },
+  { label: "Winter of winter", image: "images/1.jpg" },
+  { label: "Winter of winter", image: "images/1.jpg" },
+  { label: "Winter of winter", image: "images/1.jpg" },
+];
 
 export default class App extends Lightning.Component {
   static getFonts() {
-    return [
-      { family: "Regular", url: Utils.asset("fonts/Roboto-Regular.ttf") },
-    ];
+    return [{ family: "Inter", url: Utils.asset("fonts/Inter_24pt-Bold.ttf") }];
   }
 
   static _template() {
@@ -12,47 +20,32 @@ export default class App extends Lightning.Component {
       Background: {
         w: 1920,
         h: 1080,
-        color: 0xfffbb03b,
-        src: Utils.asset("images/background.png"),
+        src: Utils.asset("images/background.jpg"),
       },
-      Logo: {
-        mountX: 0.5,
-        mountY: 1,
-        x: 960,
-        y: 600,
-        src: Utils.asset("images/logo.png"),
+      MovieRow1: {
+        type: MovieRow,
+        x: 64,
+        y: 125,
+        w: 1241,
+        h: 359,
+        color: 0xff121212,
+        props: {
+          items: movies,
+          raillabel: "MOVIES",
+        },
       },
-      Text: {
-        mount: 0.5,
-        x: 960,
-        y: 720,
-        text: {
-          text: "Let's start Building!",
-          fontFace: "Regular",
-          fontSize: 64,
-          textColor: 0xbbffffff,
+      MovieRow2: {
+        type: MovieRow,
+        x: 64,
+        y: 548,
+        w: 1241,
+        h: 359,
+        color: 0xff121212,
+        props: {
+          items: movies,
+          raillabel: "SERIES",
         },
       },
     };
-  }
-
-  _init() {
-    this.tag("Background")
-      .animation({
-        duration: 15,
-        repeat: -1,
-        actions: [
-          {
-            t: "",
-            p: "color",
-            v: {
-              0: { v: 0xfffbb03b },
-              0.5: { v: 0xfff46730 },
-              0.8: { v: 0xfffbb03b },
-            },
-          },
-        ],
-      })
-      .start();
   }
 }
