@@ -14,6 +14,7 @@
   },
   "scripts": {
     "start": "vite",
+    "startD" : "cross-env LNG_LIVE_RELOAD=true LNG_LIVE_RELOAD_PORT=8991 lng dev",
     "prepare": "husky install"
   },
   "devDependencies": {
