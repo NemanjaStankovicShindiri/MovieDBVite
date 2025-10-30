@@ -22,7 +22,7 @@ export default class Card extends Lightning.Component {
         text: {
           textColor: 0x99ffffff,
           fontSize: 24,
-          fontFace: "Inter",
+          fontFace: "InterRegular",
         },
       },
     };
@@ -35,6 +35,7 @@ export default class Card extends Lightning.Component {
     this.patch({
       smooth: { scale: 1.1 },
       Image: {
+        zIndex: 2,
         shader: {
           type: Lightning.shaders.RoundedRectangle,
           radius: 6,
@@ -42,8 +43,23 @@ export default class Card extends Lightning.Component {
           strokeColor: 0xffed1c24,
         },
       },
+      ShadowLeft: {
+        x: -100,
+        y: -55,
+        color: 0x66151515,
+        texture: lng.Tools.getShadowRect(229, 300, 0, 30, 60),
+        zIndex: 1,
+      },
+      ShadowRight: {
+        x: -30,
+        y: -55,
+        color: 0x66151515,
+        texture: lng.Tools.getShadowRect(229, 300, 0, 30, 60),
+        zIndex: 1,
+      },
       Label: {
-        text: { textColor: 0xffffffff },
+        zIndex: 2,
+        text: { textColor: 0xffffffff, fontFace: "InterSemiBold" },
       },
     });
   }
@@ -52,14 +68,25 @@ export default class Card extends Lightning.Component {
     this.patch({
       smooth: { scale: 1.0 },
       Image: {
+        zIndex: 1,
         shader: {
           type: Lightning.shaders.RoundedRectangle,
           radius: 6,
-          stroke: 6,
+          stroke: 0,
         },
       },
+      ShadowLeft: {
+        x: -30,
+        color: 0x00000000,
+        zIndex: 1,
+      },
+      ShadowRight: {
+        x: 30,
+        color: 0x00000000,
+        zIndex: 1,
+      },
       Label: {
-        text: { textColor: 0x99ffffff },
+        text: { textColor: 0x99ffffff, fontFace: "InterRegular" },
       },
     });
   }

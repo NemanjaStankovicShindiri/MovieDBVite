@@ -1,6 +1,4 @@
 import Lightning from "@lightningjs/sdk/src/Lightning";
-import HorizontalContainer from "./containers/HorizontalContainer";
-import Card from "./Card";
 import MovieRow from "./MovieRow";
 const movies = [
   { label: "Dead of winter", image: "images/1.jpg" },
@@ -8,21 +6,19 @@ const movies = [
   { label: "Dead winter off", image: "images/3.jpg" },
   { label: "Dead of dead", image: "images/2.jpg" },
   { label: "Winter of winter", image: "images/1.jpg" },
-  { label: "Winter of winter", image: "images/1.jpg" },
-  { label: "Winter of winter", image: "images/1.jpg" },
 ];
 
 export default class ContentSection extends Lightning.Component {
   static _template() {
     return {
       MoviesSection: {
-        w: 1241,
-        h: 360,
+        w: 1270,
+        h: 404,
         type: MovieRow,
       },
       SeriesSection: {
         y: 423,
-        w: 1241,
+        w: 1270,
         h: 404,
         type: MovieRow,
       },
@@ -48,7 +44,7 @@ export default class ContentSection extends Lightning.Component {
       SeriesSection: {
         props: {
           items: movies,
-          raillabel: "MOVIES",
+          raillabel: "SERIES",
         },
       },
     });

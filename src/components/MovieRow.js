@@ -1,12 +1,12 @@
 import { Lightning } from "@lightningjs/sdk";
-import HorizontalContainer from "./containers/HorizontalContainer";
+import HorizontalContainer from "../containers/HorizontalContainer";
 import Card from "./Card";
 
 export default class MovieRow extends Lightning.Component {
   static _template() {
     return {
       Row: {
-        w: 1241,
+        w: 1900,
         h: 359,
         type: HorizontalContainer,
       },
@@ -31,7 +31,6 @@ export default class MovieRow extends Lightning.Component {
         props: {
           items: cards,
           railTitle: raillabel,
-          disableScroll: false,
         },
       },
     });

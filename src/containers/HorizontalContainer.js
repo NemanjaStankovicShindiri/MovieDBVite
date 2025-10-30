@@ -84,10 +84,9 @@ export default class HorizontalContainer extends Lightning.Component {
           // h: 55,
           text: {
             text: railTitle,
-            fontFace: "Montserrat-Medium",
-            fontSize: 40,
-            textColor: Colors("#fff").get(),
-            lineHeight: 39,
+            fontFace: "InterBold",
+            fontSize: 24,
+            letterSpacing: 6,
             textTransform: "uppercase",
           },
         },
