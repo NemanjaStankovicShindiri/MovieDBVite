@@ -1,70 +1,99 @@
-import { Lightning } from '@lightningjs/sdk';
+import { Lightning, Utils } from "@lightningjs/sdk";
 
 export default class VerticalItem extends Lightning.Component {
   static _template() {
     return {
-      w: 250,
-      h: 142,
-      rect: true,
-      color: 0xff1c2526,
-      shader: { type: Lightning.shaders.RoundedRectangle, radius: 12 },
-      flexItem: { marginTop: 10 },
-      ImageWrapper: {
-        w: 160,
-        h: 60,
-        mount: 0.5,
-        x: 125,
-        y: 71,
-        Image: {
-          w: 160,
-          h: 60,
-          shader: { type: Lightning.shaders.RoundedRectangle, radius: 12 },
-          visible: false,
-        },
+      w: 280,
+      h: 136,
+      flexItem: {
+        paddingLeft: 24,
+        paddingTop: 22.5,
+        paddingRight: 24,
+        paddingButton: 22.5,
+        marginTop: 12,
       },
-      Text: {
-        mount: 0.5,
-        x: 100,
-        y: 50,
-        text: {
-          text: '',
-          fontSize: 36,
-          fontFace: 'Regular',
-          textColor: 0xffffffff,
-          textAlign: 'center',
+      Border: {
+        w: 280,
+        h: 136,
+        texture: Lightning.Tools.getRoundRect(
+          280,
+          136,
+          16,
+          4,
+          0xff2a3638,
+          true,
+          0xff2a3638
+        ),
+        flex: {
+          direction: "column",
+          alignItems: "center",
+          justifyContent: "center",
         },
-        visible: false,
+        Content: {
+          zIndex: 3,
+          Image: { w: 45, h: 45, mountX: 0.5, mountY: 0.8 },
+          Label: {
+            y: 45,
+            mountX: 0.5,
+            mountY: 0.8,
+            text: {
+              text: "",
+              fontSize: 16,
+              fontFace: "InterRegular",
+              textColor: 0xffffffff,
+            },
+          },
+        },
       },
     };
   }
-
-  set itemData(data) {
-    if (data.image) {
-      this.tag('Image').patch({ src: data.image, visible: true });
-      this.tag('Text').patch({ visible: false });
-    } else if (data.title) {
-      this.tag('Text').patch({ text: { text: data.title }, visible: true });
-      this.tag('Image').patch({ visible: false });
-    }
+  get _Label() {
+    return this.tag("Label");
+  }
+  set props({ image, label }) {
+    this.patch({
+      Border: {
+        Content: {
+          Image: { src: Utils.asset("images/" + image) },
+          Label: {
+            text: {
+              text: label,
+            },
+          },
+        },
+      },
+    });
   }
 
   _focus() {
     this.patch({
-      smooth: {
-        scale: 1.1,
-        zIndex: 1,
+      Border: {
+        texture: Lightning.Tools.getRoundRect(
+          280,
+          136,
+          16,
+          4,
+          0xffff0000,
+          true,
+          0xff2a3638
+        ),
       },
-      color: 0xff2a3638,
     });
   }
 
   _unfocus() {
     this.patch({
-      smooth: {
-        scale: 1.0,
-        zIndex: 0,
+      Border: {
+        texture: Lightning.Tools.getRoundRect(
+          280,
+          136,
+          16,
+          4,
+          0xff2a3638,
+          true,
+          0xff2a3638
+        ),
       },
-      color: 0xff1c2526,
     });
   }
 }

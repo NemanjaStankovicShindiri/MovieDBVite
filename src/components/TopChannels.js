@@ -1,44 +1,80 @@
 import VerticalContainer from "../containers/VerticalContainer/VerticalContainer";
 import VerticalItem from "../containers/VerticalContainer/VerticalItem/VerticalItem";
-
-const topChannelsData = [
-  { name: "CBS", image: "CBS.svg" },
-  { name: "NBC", image: "NBC.png" },
-  { name: "ABC", image: "ABC.png" },
-  { name: "Fox", image: "FOX.svg" },
-  { name: "Fox News Channel", image: "FNC.png" },
-];
+import Lightning from "@lightningjs/sdk/src/Lightning";
 
 export default class TopChannels extends Lightning.Component {
+  _cards = null;
   static _template() {
     return {
       Column: {
-        w: 1900,
-        h: 359,
+        flex: { alignItems: "center", justifyContent: "center" },
+        color: 0xff000000,
+        rect: true,
+        w: 312,
+        h: 837,
+        texture: Lightning.Tools.getRoundRect(
+          312,
+          837,
+          16,
+          0,
+          0xffffffff,
+          true,
+          0xffffffff
+        ),
         type: VerticalContainer,
       },
     };
   }
+
   get _Column() {
     return this.tag("Column");
   }
 
-  set props({ items, raillabel }) {
-    const cards = topChannelsData.map((data) => ({
+  _getFocused() {
+    return this._Column._getFocused();
+  }
+
+  _handleUp() {
+    return this._Column._handleUp();
+  }
+
+  _handleDown() {
+    return this._Column._handleDown();
+  }
+
+  set props(items) {
+    this._cards = items.map((data) => ({
       type: VerticalItem,
       props: {
         image: data.image,
         label: data.name,
       },
     }));
-
     this.patch({
-      Row: {
+      Column: {
         props: {
-          items: cards,
-          railTitle: raillabel,
+          items: this._cards,
+          title: "Top 5 movies",
+          w: this.w,
+          h: this.h,
+          titleFontSize: 24,
+          titleFontFace: "InterBold",
+          titleColor: 0xffffffff,
+          titleAlign: "center",
         },
       },
     });
   }
 }
+
+// items,
+//       title,
+//       w,
+//       h,
+//       titleFontSize,
+//       titleFontFace,
+//       titleColor,
+//       titleMarginBottom,
+//       titleMarginTop,
+//       titleAlign,
+//       ...rest

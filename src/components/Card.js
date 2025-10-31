@@ -6,6 +6,7 @@ export default class Card extends Lightning.Component {
       w: 229,
       h: 359,
       flexItem: { marginLeft: 12, marginRight: 12 },
+
       Image: {
         w: (w) => w,
         h: (h) => h - 59,

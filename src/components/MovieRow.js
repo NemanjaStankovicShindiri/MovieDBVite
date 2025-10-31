@@ -8,7 +8,9 @@ export default class MovieRow extends Lightning.Component {
       Row: {
         w: 1900,
         h: 359,
+        rect: true,
         type: HorizontalContainer,
+        collision: true,
       },
     };
   }

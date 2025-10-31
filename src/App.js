@@ -1,5 +1,15 @@
 import { Lightning, Utils } from "@lightningjs/sdk";
 import ContentSection from "./components/ContentSection";
+import TopChannels from "./components/TopChannels";
+import LivePlayerButton from "./components/LivePlayerButton";
+
+const topChannelsData = [
+  { name: "CBS", image: "CBS.png" },
+  { name: "NBC", image: "NBC.png" },
+  { name: "ABC", image: "ABC.png" },
+  { name: "Fox", image: "FOX.png" },
+  { name: "Fox News Channel", image: "FNC.png" },
+];
 export default class App extends Lightning.Component {
   static getFonts() {
     return [
@@ -50,15 +60,64 @@ export default class App extends Lightning.Component {
       TopChannels: {
         x: 1415,
         y: 122,
-        w: 312,
-        h: 837,
         rect: true,
-        color: 0xffff0000,
+        type: TopChannels,
+        props: topChannelsData,
+      },
+      LivePlayerButton: {
+        type: LivePlayerButton,
       },
     };
   }
 
-  _getFocused() {
+  _init() {
+    this._setState("Content");
+  }
+
+  get _Content() {
     return this.tag("Content");
+  }
+  get _TopChannels() {
+    return this.tag("TopChannels");
+  }
+
+  get _LivePlayerButton() {
+    return this.tag("LivePlayerButton");
+  }
+
+  static _states() {
+    return [
+      class Content extends this {
+        _getFocused() {
+          return this._Content;
+        }
+        _handleRight() {
+          this._setState("TopChannels");
+          return true;
+        }
+        _handleDown() {
+          this._setState("LivePlayerButton");
+          return true;
+        }
+      },
+      class TopChannels extends this {
+        _getFocused() {
+          return this._TopChannels;
+        }
+        _handleLeft() {
+          this._setState("Content");
+          return true;
+        }
+      },
+      class LivePlayerButton extends this {
+        _getFocused() {
+          return this._LivePlayerButton;
+        }
+        _handleUp() {
+          this._setState("Content");
+          return true;
+        }
+      },
+    ];
   }
 }
