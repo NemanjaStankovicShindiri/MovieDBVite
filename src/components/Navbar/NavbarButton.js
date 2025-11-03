@@ -2,6 +2,7 @@ import { Lightning, Router } from "@lightningjs/sdk";
 import Color from "@lightningjs/sdk/src/Colors";
 
 export default class NavbarButton extends Lightning.Component {
+  _index = 0;
   static _template() {
     return {
       w: 118,
@@ -40,7 +41,7 @@ export default class NavbarButton extends Lightning.Component {
       },
     };
   }
-  set props({ label }) {
+  set props({ label, index }) {
     this.patch({
       Label: {
         text: {
@@ -48,6 +49,7 @@ export default class NavbarButton extends Lightning.Component {
         },
       },
     });
+    this._index = index;
   }
   _focus() {
     const activeHash = Router.getActiveHash();
@@ -60,8 +62,7 @@ export default class NavbarButton extends Lightning.Component {
   }
 
   _handleEnter() {
-    this.fja();
-    this.fireAncestors("$changePage", this._props.index);
+    this.fireAncestors("$changePage", this._index);
     Router.focusPage();
   }
 }

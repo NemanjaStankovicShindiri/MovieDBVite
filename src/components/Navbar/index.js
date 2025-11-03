@@ -10,6 +10,7 @@ const buttons = [
 ];
 
 export default class Navbar extends Lightning.Component {
+  _buttons = [];
   static _template() {
     return {
       rect: true,
@@ -41,15 +42,16 @@ export default class Navbar extends Lightning.Component {
     };
   }
   _init() {
-    const navbarButtons = buttons.map((data) => ({
+    const buttonsMaped = buttons.map((data, index) => ({
       type: NavbarButton,
-      props: { label: data.label },
+      props: { label: data.label, index },
     }));
+    this._buttons = buttons;
 
     this.patch({
       Buttons: {
         props: {
-          items: navbarButtons,
+          items: buttonsMaped,
           railTitle: "",
         },
       },
@@ -69,5 +71,10 @@ export default class Navbar extends Lightning.Component {
   }
   _getFocused() {
     return this._Buttons;
+  }
+
+  $changePage(index) {
+    const route = this._buttons[index].route;
+    if (route) Router.navigate(route);
   }
 }
