@@ -1,4 +1,4 @@
-import { Lightning } from "@lightningjs/sdk";
+import { Lightning, Router } from "@lightningjs/sdk";
 import Color from "@lightningjs/sdk/src/Colors";
 
 export default class NavbarButton extends Lightning.Component {
@@ -50,10 +50,18 @@ export default class NavbarButton extends Lightning.Component {
     });
   }
   _focus() {
+    const activeHash = Router.getActiveHash();
+    console.log(activeHash);
     this.patch({ Line: { alpha: 1 } });
   }
 
   _unfocus() {
     this.patch({ Line: { alpha: 0 } });
+  }
+
+  _handleEnter() {
+    this.fja();
+    this.fireAncestors("$changePage", this._props.index);
+    Router.focusPage();
   }
 }

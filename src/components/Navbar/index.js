@@ -1,9 +1,13 @@
-import { Lightning, Utils } from "@lightningjs/sdk";
+import { Lightning, Utils, Router } from "@lightningjs/sdk";
 import Color from "@lightningjs/sdk/src/Colors";
 import HorizontalContainer from "../../containers/HorizontalContainer";
 import NavbarButton from "./NavbarButton";
 
-const buttons = [{ label: "HOME" }, { label: "MOVIES" }, { label: "SERIES" }];
+const buttons = [
+  { label: "HOME", route: "home" },
+  { label: "MOVIES", route: "movies" },
+  { label: "SERIES", route: "series" },
+];
 
 export default class Navbar extends Lightning.Component {
   static _template() {
@@ -41,6 +45,7 @@ export default class Navbar extends Lightning.Component {
       type: NavbarButton,
       props: { label: data.label },
     }));
+
     this.patch({
       Buttons: {
         props: {
