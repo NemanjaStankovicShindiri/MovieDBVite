@@ -2,6 +2,7 @@ import DetailsPage from "./pages/DetailsPage";
 import HomePage from "./pages/HomePage";
 
 export default {
+  root: "home",
   routes: [
     { path: "home", component: HomePage },
     {
