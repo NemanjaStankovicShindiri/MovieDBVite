@@ -1,4 +1,4 @@
-import Lightning from "@lightningjs/sdk";
+import { Lightning } from "@lightningjs/sdk";
 export default class DetailsPage extends Lightning.Component {
   static _template() {
     return {

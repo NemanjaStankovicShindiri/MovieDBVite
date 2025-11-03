@@ -1,5 +1,6 @@
-import { Lightning, Utils } from "@lightningjs/sdk";
-import HomePage from "./pages/HomePage";
+import { Router, Utils, Lightning, Colors } from "@lightningjs/sdk";
+import routes from "../src/routes";
+import Navbar from "../src/components/Navbar/index";
 
 export default class App extends Router.App {
   static getFonts() {
@@ -24,12 +25,13 @@ export default class App extends Router.App {
         w: 1920,
         h: 1080,
       },
-      Loading: {
-        w: 1920,
-        h: 1080,
-        rect: true,
-        color: 0xffff0000,
-      },
+      // Loading: {
+      //   w: 1920,
+      //   h: 1080,
+      //   rect: true,
+      //   color: Colors("#ff0000").get(),
+      //   zIndex: 102,
+      // },
       Widgets: {
         Menu: {
           zIndex: 2,

@@ -1,4 +1,4 @@
-import { Lightning, Utils } from "@lightningjs/sdk";
+import { Lightning, Utils, Router } from "@lightningjs/sdk";
 import ContentSection from "../../components/ContentSection";
 import TopChannels from "../../components/TopChannels";
 import LivePlayerButton from "../../components/LivePlayerButton";
@@ -26,7 +26,7 @@ export default class HomePage extends Lightning.Component {
         w: 1920,
         h: 1080,
         src: Utils.asset("images/background.jpg"),
-        clippg: true,
+        clipping: true,
       },
       RectangleWithGradientDiagonal: {
         x: 776,
@@ -81,6 +81,11 @@ export default class HomePage extends Lightning.Component {
       class Content extends this {
         _getFocused() {
           return this._Content;
+        }
+        _handleUp() {
+          Router.focusWidget("Menu");
+          const hash = Router.getActiveHash();
+          console.log(hash);
         }
         _handleRight() {
           this._setState("TopChannels");
