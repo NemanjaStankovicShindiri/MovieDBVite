@@ -2,11 +2,12 @@ import DetailsPage from "./pages/DetailsPage";
 import HomePage from "./pages/HomePage";
 import MoviesPage from "./pages/MoviesPage";
 import SeriesPage from "./pages/SeriesPage";
+import home from "./pages/HomePage/home";
 
 export default {
   root: "home",
   routes: [
-    { path: "home", widgets: ["Menu"], component: HomePage },
+    { path: "home", widgets: ["Menu"], component: HomePage, on: home },
     { path: "movies", widgets: ["Menu"], component: MoviesPage },
     { path: "series", widgets: ["Menu"], component: SeriesPage },
     {

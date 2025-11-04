@@ -1,12 +1,5 @@
 import Lightning from "@lightningjs/sdk/src/Lightning";
 import MovieRow from "./MovieRow";
-const movies = [
-  { label: "Dead of winter", image: "images/1.jpg" },
-  { label: "Winter of dead", image: "images/2.jpg" },
-  { label: "Dead winter off", image: "images/3.jpg" },
-  { label: "Dead of dead", image: "images/2.jpg" },
-  { label: "Winter of winter", image: "images/1.jpg" },
-];
 
 export default class ContentSection extends Lightning.Component {
   static _template() {
@@ -33,24 +26,18 @@ export default class ContentSection extends Lightning.Component {
     return this.tag("SeriesSection");
   }
 
-  _init() {
+  set props(props) {
+    const [movies, series] = props;
+    console.log(props);
     this.patch({
       MoviesSection: {
-        props: {
-          items: movies,
-          raillabel: "MOVIES",
-        },
+        props: { items: movies, raillabel: "MOVIES" },
       },
       SeriesSection: {
-        props: {
-          items: movies,
-          raillabel: "SERIES",
-        },
+        props: { items: series, raillabel: "SERIES" },
       },
     });
-    this._setState("MoviesSection");
   }
-
   static _states() {
     return [
       class MoviesSection extends this {

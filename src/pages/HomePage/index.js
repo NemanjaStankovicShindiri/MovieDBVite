@@ -68,6 +68,10 @@ export default class HomePage extends Lightning.Component {
     return this.tag("TopChannels");
   }
 
+  set props(props) {
+    this.patch({ Content: { props } });
+  }
+
   _getFocused() {
     return this._Content;
   }

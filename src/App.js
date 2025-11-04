@@ -1,6 +1,7 @@
 import { Router, Utils, Lightning, Colors } from "@lightningjs/sdk";
 import routes from "../src/routes";
 import Navbar from "../src/components/Navbar/index";
+import LoadingScreenComponent from "./components/LOadingScreenComponent";
 
 export default class App extends Router.App {
   static getFonts() {
@@ -25,13 +26,9 @@ export default class App extends Router.App {
         w: 1920,
         h: 1080,
       },
-      // Loading: {
-      //   w: 1920,
-      //   h: 1080,
-      //   rect: true,
-      //   color: Colors("#ff0000").get(),
-      //   zIndex: 102,
-      // },
+      Loading: {
+        type: LoadingScreenComponent,
+      },
       Widgets: {
         Menu: {
           zIndex: 2,

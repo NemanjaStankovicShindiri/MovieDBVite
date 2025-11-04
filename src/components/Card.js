@@ -30,7 +30,8 @@ export default class Card extends Lightning.Component {
   }
 
   set props({ image, label }) {
-    this.patch({ Image: { src: Utils.asset(image) }, Label: { text: label } });
+    console.log(image);
+    this.patch({ Image: { src: image }, Label: { text: label } });
   }
   _focus() {
     this.patch({

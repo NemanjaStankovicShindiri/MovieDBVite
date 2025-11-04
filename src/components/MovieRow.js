@@ -19,12 +19,14 @@ export default class MovieRow extends Lightning.Component {
     return this.tag("Row");
   }
 
-  set props({ items, raillabel }) {
-    const cards = items.map((data) => ({
+  set props(props) {
+    const { items, raillabel } = props;
+    console.log(props);
+    const cards = items.map((item) => ({
       type: Card,
       props: {
-        image: data.image,
-        label: data.label,
+        image: `${import.meta.env.VITE_POSTER_URL}${item.poster_path}`,
+        label: item.title,
       },
     }));
 
