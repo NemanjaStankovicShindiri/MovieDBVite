@@ -1,6 +1,6 @@
 import Lightning from "@lightningjs/sdk/src/Lightning";
-import { Utils } from "@lightningjs/sdk";
 export default class Card extends Lightning.Component {
+  _id = null;
   static _template() {
     return {
       w: 229,
@@ -29,10 +29,15 @@ export default class Card extends Lightning.Component {
     };
   }
 
-  set props({ image, label }) {
-    console.log(image);
+  set props({ image, label, id }) {
+    this._id = id;
     this.patch({ Image: { src: image }, Label: { text: label } });
   }
+
+  _handleEnter() {
+    this.fireAncestors("$navigateToDetailsPage", this._id);
+  }
+
   _focus() {
     this.patch({
       smooth: { scale: 1.1 },

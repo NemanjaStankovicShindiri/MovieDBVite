@@ -1,8 +1,9 @@
-import { Lightning } from "@lightningjs/sdk";
+import { Lightning, Router } from "@lightningjs/sdk";
 import HorizontalContainer from "../containers/HorizontalContainer";
 import Card from "./Card";
 
 export default class MovieRow extends Lightning.Component {
+  _railLabel = null;
   static _template() {
     return {
       Row: {
@@ -21,12 +22,13 @@ export default class MovieRow extends Lightning.Component {
 
   set props(props) {
     const { items, raillabel } = props;
-    console.log(props);
+    this._railLabel = raillabel;
     const cards = items.map((item) => ({
       type: Card,
       props: {
         image: `${import.meta.env.VITE_POSTER_URL}${item.poster_path}`,
         label: item.title,
+        id: item.id,
       },
     }));
 
@@ -50,5 +52,9 @@ export default class MovieRow extends Lightning.Component {
 
   _handleRight() {
     return this._Row._handleRight();
+  }
+
+  $navigateToDetailsPage(id) {
+    Router.navigate(this._railLabel.toLowerCase() + "/" + id);
   }
 }

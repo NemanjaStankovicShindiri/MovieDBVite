@@ -69,6 +69,7 @@ export default class HomePage extends Lightning.Component {
   }
 
   set props(props) {
+    this._Content._refocus();
     this.patch({ Content: { props } });
   }
 
@@ -89,7 +90,6 @@ export default class HomePage extends Lightning.Component {
         _handleUp() {
           Router.focusWidget("Menu");
           const hash = Router.getActiveHash();
-          console.log(hash);
         }
         _handleRight() {
           this._setState("TopChannels");

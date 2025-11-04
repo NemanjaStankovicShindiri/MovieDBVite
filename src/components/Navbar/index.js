@@ -2,11 +2,12 @@ import { Lightning, Utils, Router } from "@lightningjs/sdk";
 import Color from "@lightningjs/sdk/src/Colors";
 import HorizontalContainer from "../../containers/HorizontalContainer";
 import NavbarButton from "./NavbarButton";
+import MEDIA_TYPE from "../../consts/mediaType";
 
 const buttons = [
   { label: "HOME", route: "home" },
-  { label: "MOVIES", route: "movies" },
-  { label: "SERIES", route: "series" },
+  { label: MEDIA_TYPE.MOVIES, route: MEDIA_TYPE.MOVIES.toLowerCase() },
+  { label: MEDIA_TYPE.SERIES, route: MEDIA_TYPE.SERIES.toLowerCase() },
 ];
 
 export default class Navbar extends Lightning.Component {

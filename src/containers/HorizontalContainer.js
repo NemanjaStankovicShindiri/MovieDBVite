@@ -251,7 +251,6 @@ export default class HorizontalContainer extends Lightning.Component {
   }
 
   _handleEnter() {
-    console.log("handled enter");
     const focusedItem = this.Items.children[this._focusedIndex];
     if (focusedItem) {
       focusedItem.signal("select");

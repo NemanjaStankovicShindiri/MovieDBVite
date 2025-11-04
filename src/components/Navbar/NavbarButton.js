@@ -53,7 +53,6 @@ export default class NavbarButton extends Lightning.Component {
   }
   _focus() {
     const activeHash = Router.getActiveHash();
-    console.log(activeHash);
     this.patch({ Line: { alpha: 1 } });
   }
 
