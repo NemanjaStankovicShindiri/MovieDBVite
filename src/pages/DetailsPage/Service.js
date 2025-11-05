@@ -41,3 +41,26 @@ export async function getAgeRestriction(id, isMovie) {
   );
   return response.data;
 }
+
+export async function getCredits(id) {
+  const response = await tmdbApi.get("/movie/" + id + "/credits");
+  return {
+    director: response.data.crew
+      .filter((item) => item.job === "Director")
+      .map((item) => item.name)
+      .join(", "),
+    cast: response.data.cast.map((item) => item.name).join(", "),
+  };
+}
+
+export async function getTVCredits(id) {
+  const response = await tmdbApi.get("/tv/" + id + "/aggregate_credits");
+  const directors = response.data.crew.filter((item) =>
+    item.jobs.some((job) => job.job === "Director")
+  );
+  const cast = response.data.cast;
+  return {
+    director: directors.map((item) => item.name).join(", "),
+    cast: cast.map((item) => item.name).join(", "),
+  };
+}

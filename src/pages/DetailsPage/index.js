@@ -92,9 +92,7 @@ export default class DetailsPage extends Lightning.Component {
                     fontFace: "InterSemiBold",
                     fontSize: 22,
                     lineHeight: 31,
-                    wordWrap: true,
                     maxLines: 4,
-                    cutSufix: "...",
                   },
                 },
                 People: {
@@ -103,19 +101,45 @@ export default class DetailsPage extends Lightning.Component {
                   h: 101,
                   flexItem: { marginButtom: 37 },
                   Director: {
-                    text: {
-                      text: "Director:",
-                      fontFace: "InterSemiBold",
-                      fontSize: 22,
-                      lineHeight: 31,
+                    flex: { direction: "row" },
+                    Label: {
+                      text: {
+                        text: "Director: ",
+                        fontFace: "InterSemiBold",
+                        fontSize: 22,
+                        lineHeight: 31,
+                      },
+                    },
+                    Value: {
+                      w: 698,
+                      text: {
+                        text: "",
+                        fontFace: "InterRegular",
+                        fontSize: 22,
+                        lineHeight: 31,
+                        maxLines: 1,
+                      },
                     },
                   },
                   Cast: {
-                    text: {
-                      text: "Cast:",
-                      fontFace: "InterSemiBold",
-                      fontSize: 22,
-                      lineHeight: 31,
+                    flex: { direction: "row" },
+                    Label: {
+                      text: {
+                        text: "Cast: ",
+                        fontFace: "InterSemiBold",
+                        fontSize: 22,
+                        lineHeight: 31,
+                      },
+                    },
+                    Value: {
+                      w: 698,
+                      text: {
+                        text: "",
+                        fontFace: "InterRegular",
+                        fontSize: 22,
+                        lineHeight: 31,
+                        maxLines: 2,
+                      },
                     },
                     flexItem: {
                       marginBottom: 37,
@@ -133,6 +157,7 @@ export default class DetailsPage extends Lightning.Component {
     };
   }
   set props(props) {
+    console.log(props);
     this.patch({
       DetailsWindow: {
         DetailsPageContent: {
@@ -164,6 +189,12 @@ export default class DetailsPage extends Lightning.Component {
               BasicInfo: {
                 Title: { text: { text: props.title } },
                 Description: { text: { text: props.overview } },
+                People: {
+                  Director: {
+                    Value: { text: { text: props.credits.director } },
+                  },
+                  Cast: { Value: { text: { text: props.credits.cast } } },
+                },
               },
             },
           },

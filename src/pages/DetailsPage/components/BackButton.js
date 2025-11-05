@@ -42,7 +42,11 @@ export default class extends Lightning.Component {
   }
 
   _handleEnter() {
-    Router.back();
+    if (Router.getHistory().length) {
+      Router.back();
+    } else {
+      Router.navigate("home");
+    }
   }
 
   _unfocus() {

@@ -5,6 +5,7 @@ import SeriesPage from "./pages/SeriesPage";
 import home from "./pages/HomePage/home";
 import MEDIA_TYPE from "./consts/mediaType";
 import movieDetails from "./pages/DetailsPage/movieDetails";
+import seriesDetails from "./pages/DetailsPage/seriesDetails";
 
 export default {
   root: "home",
@@ -27,10 +28,8 @@ export default {
     },
     {
       path: MEDIA_TYPE.SERIES.toLowerCase() + "/:mediaId",
-      hook: (application, { mediaId }) => {
-        console.log(mediaId);
-      },
       component: DetailsPage,
+      on: seriesDetails,
     },
   ],
 };

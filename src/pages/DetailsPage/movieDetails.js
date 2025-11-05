@@ -1,7 +1,8 @@
-import { getAgeRestriction, getMovieDetails } from "./Service";
+import { getAgeRestriction, getCredits, getMovieDetails } from "./Service";
 export default async function (page, { mediaId }) {
   const movieDetails = await getMovieDetails(mediaId);
   const ratingData = await getAgeRestriction(mediaId, true);
+  const credits = await getCredits(mediaId);
   var ratingValue = "";
   if (!ratingData) {
     ratingValue = "NR";
@@ -11,5 +12,5 @@ export default async function (page, { mediaId }) {
         ?.release_dates?.[0].certification ?? "NR";
   }
 
-  page.props = { ...movieDetails, rating: ratingValue };
+  page.props = { ...movieDetails, rating: ratingValue, credits };
 }
