@@ -1,7 +1,7 @@
 import { Lightning, Utils, Router } from "@lightningjs/sdk";
-import ContentSection from "../../components/ContentSection";
-import TopChannels from "../../components/TopChannels";
-import LivePlayerButton from "../../components/LivePlayerButton";
+import ContentSection from "./components/ContentSection";
+import TopChannels from "./components/topChannels/TopChannels";
+import LivePlayerButton from "./components/LivePlayerButton";
 
 const topChannelsData = [
   { name: "CBS", image: "CBS.png" },
@@ -81,6 +81,9 @@ export default class HomePage extends Lightning.Component {
     return this.tag("LivePlayerButton");
   }
 
+  _handleBack(e) {
+    e.preventDefault();
+  }
   static _states() {
     return [
       class Content extends this {

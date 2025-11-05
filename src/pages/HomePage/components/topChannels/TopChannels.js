@@ -1,5 +1,5 @@
-import VerticalContainer from "../containers/VerticalContainer/VerticalContainer";
-import VerticalItem from "../containers/VerticalContainer/VerticalItem/VerticalItem";
+import VerticalContainer from "../../../../components/VerticalContainer";
+import ChannelCard from "./ChannelCard";
 import Lightning from "@lightningjs/sdk/src/Lightning";
 
 export default class TopChannels extends Lightning.Component {
@@ -44,7 +44,7 @@ export default class TopChannels extends Lightning.Component {
 
   set props(items) {
     this._cards = items.map((data) => ({
-      type: VerticalItem,
+      type: ChannelCard,
       props: {
         image: data.image,
         label: data.name,

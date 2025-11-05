@@ -2,10 +2,10 @@ import DetailsPage from "./pages/DetailsPage";
 import HomePage from "./pages/HomePage";
 import MoviesPage from "./pages/MoviesPage";
 import SeriesPage from "./pages/SeriesPage";
-import home from "./pages/HomePage/home";
 import MEDIA_TYPE from "./consts/mediaType";
-import movieDetails from "./pages/DetailsPage/movieDetails";
-import seriesDetails from "./pages/DetailsPage/seriesDetails";
+import movieDetails from "./pages/DetailsPage/provider/movieDetails";
+import seriesDetails from "./pages/DetailsPage/provider/seriesDetails";
+import home from "./pages/HomePage/provider/home";
 
 export default {
   root: "home",

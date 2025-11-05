@@ -1,5 +1,5 @@
 import Lightning from "@lightningjs/sdk/src/Lightning";
-import { clamp } from "../utils/index";
+import { clamp } from "../utils/clamp";
 
 export default class HorizontalContainer extends Lightning.Component {
   _props = {

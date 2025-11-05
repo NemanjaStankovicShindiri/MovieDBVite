@@ -1,5 +1,5 @@
 import { Lightning, Router } from "@lightningjs/sdk";
-import HorizontalContainer from "../containers/HorizontalContainer";
+import HorizontalContainer from "./HorizontalContainer";
 import Card from "./Card";
 
 export default class MovieRow extends Lightning.Component {

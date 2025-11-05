@@ -1,6 +1,6 @@
 import { Lightning, Utils, Router } from "@lightningjs/sdk";
 import Color from "@lightningjs/sdk/src/Colors";
-import HorizontalContainer from "../../containers/HorizontalContainer";
+import HorizontalContainer from "../HorizontalContainer";
 import NavbarButton from "./NavbarButton";
 import MEDIA_TYPE from "../../consts/mediaType";
 

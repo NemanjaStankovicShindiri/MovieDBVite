@@ -1,4 +1,8 @@
-import { getAgeRestriction, getSeriesDetails, getTVCredits } from "./Service";
+import {
+  getAgeRestriction,
+  getSeriesDetails,
+  getTVCredits,
+} from "../../../api/services/DetailsPageServices";
 export default async function (page, { mediaId }) {
   const seriesDetails = await getSeriesDetails(mediaId);
   const ratingData = await getAgeRestriction(mediaId, false);

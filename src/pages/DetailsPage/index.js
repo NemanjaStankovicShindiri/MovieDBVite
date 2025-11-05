@@ -230,7 +230,6 @@ export default class DetailsPage extends Lightning.Component {
     );
 
     if (routerHistory.length) {
-      console.log(Router.getHistory());
       Router.back();
     } else {
       Router.navigate("home");

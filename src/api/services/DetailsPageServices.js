@@ -1,4 +1,4 @@
-import tmdbApi from "../../api/tmdbInstance";
+import tmdbApi from "../tmdbInstance";
 
 export async function getMovieDetails(id) {
   const response = await tmdbApi.get(`/movie/` + id);

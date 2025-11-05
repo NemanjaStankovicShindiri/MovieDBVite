@@ -1,6 +1,6 @@
 import { Lightning, Utils } from "@lightningjs/sdk";
 
-export default class VerticalItem extends Lightning.Component {
+export default class ChannelCard extends Lightning.Component {
   static _template() {
     return {
       w: 280,
