@@ -1,6 +1,7 @@
-import { Lightning, Utils } from "@lightningjs/sdk";
+import { Lightning, Router } from "@lightningjs/sdk";
 import WatchNowButton from "./components/WatchNowButton";
 import BackButton from "./components/BackButton";
+
 export default class DetailsPage extends Lightning.Component {
   static _template() {
     return {
@@ -215,6 +216,25 @@ export default class DetailsPage extends Lightning.Component {
 
   _getFocused() {
     return this._WatchNowButton;
+  }
+
+  _handleBack(e) {
+    console.log("back");
+    if (Router.isNavigating()) {
+      return;
+    }
+    e.preventDefault();
+
+    const routerHistory = Router.getHistory().filter(
+      (history) => history.hash != "splash" && history.hash != "cmp"
+    );
+
+    if (routerHistory.length) {
+      console.log(Router.getHistory());
+      Router.back();
+    } else {
+      Router.navigate("home");
+    }
   }
 
   static _states() {

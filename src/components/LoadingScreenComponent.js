@@ -13,6 +13,7 @@ export default class LoadingScreenComponent extends Lightning.Component {
       h: 1080,
       rect: true,
       color: 0xff000000,
+      zIndex: 200,
       Spinner: {
         w: 100,
         h: 100,

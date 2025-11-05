@@ -42,7 +42,11 @@ export default class extends Lightning.Component {
   }
 
   _handleEnter() {
-    if (Router.getHistory().length) {
+    const router = Router.getHistory().filter(
+      (history) => history.hash != "splash" && history.hash != "cmp"
+    );
+    if (router.length) {
+      Router.setHistory([...router]);
       Router.back();
     } else {
       Router.navigate("home");
