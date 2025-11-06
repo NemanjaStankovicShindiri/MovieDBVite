@@ -7,8 +7,6 @@ export default async function (page, { mediaId }) {
   const seriesDetails = await getSeriesDetails(mediaId);
   const ratingData = await getAgeRestriction(mediaId, false);
   const credits = await getTVCredits(mediaId);
-  console.log(ratingData);
-  console.log(credits);
   var ratingValue = "";
   if (!ratingData) {
     ratingValue = "NR";

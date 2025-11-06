@@ -65,7 +65,6 @@ export default class HorizontalContainer extends Lightning.Component {
 
   set props(props) {
     const { items, railTitle, ...rest } = props;
-
     this._props = { ...this._props, ...rest };
 
     const { cardType, targetIndex } = rest;
@@ -80,7 +79,7 @@ export default class HorizontalContainer extends Lightning.Component {
         Title: {
           x: 0,
           y: 0,
-          // h: 55,
+          h: 45,
           text: {
             text: railTitle,
             fontFace: "InterBold",
@@ -171,7 +170,6 @@ export default class HorizontalContainer extends Lightning.Component {
   }
 
   _handleUp() {
-    console.log("handle up");
     return false;
   }
 
@@ -225,8 +223,6 @@ export default class HorizontalContainer extends Lightning.Component {
         this._focusedIndex,
         this._scrollPosition
       );
-
-      console.log("right clicked");
     } else {
       return false;
     }

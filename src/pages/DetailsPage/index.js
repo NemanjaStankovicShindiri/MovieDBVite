@@ -94,6 +94,7 @@ export default class DetailsPage extends Lightning.Component {
                     fontSize: 22,
                     lineHeight: 31,
                     maxLines: 4,
+                    maxLinesSuffix: "...",
                   },
                 },
                 People: {
@@ -119,6 +120,7 @@ export default class DetailsPage extends Lightning.Component {
                         fontSize: 22,
                         lineHeight: 31,
                         maxLines: 1,
+                        maxLinesSuffix: "...",
                       },
                     },
                   },
@@ -140,6 +142,7 @@ export default class DetailsPage extends Lightning.Component {
                         fontSize: 22,
                         lineHeight: 31,
                         maxLines: 2,
+                        maxLinesSuffix: "...",
                       },
                     },
                     flexItem: {
@@ -158,7 +161,6 @@ export default class DetailsPage extends Lightning.Component {
     };
   }
   set props(props) {
-    console.log(props);
     this.patch({
       DetailsWindow: {
         DetailsPageContent: {
@@ -167,7 +169,12 @@ export default class DetailsPage extends Lightning.Component {
               text: { text: props.genres.map((g) => g.name).join(", ") },
             },
             Runtime: {
-              text: { text: props.runtime + " Minutes" },
+              text: {
+                text:
+                  props.runtime.length !== 0
+                    ? `${props.runtime} Minutes`
+                    : "N/A",
+              },
             },
             DetailsMeta: {
               text: {
@@ -219,7 +226,6 @@ export default class DetailsPage extends Lightning.Component {
   }
 
   _handleBack(e) {
-    console.log("back");
     if (Router.isNavigating()) {
       return;
     }
