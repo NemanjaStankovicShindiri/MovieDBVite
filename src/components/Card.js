@@ -1,6 +1,10 @@
 import { Lightning, Utils } from "@lightningjs/sdk";
+import { Img } from "@lightningjs/sdk";
+import debounce from "lodash.debounce";
+
 export default class Card extends Lightning.Component {
   _id = null;
+  _backdrop_path = null;
   static _template() {
     return {
       w: 229,
@@ -48,9 +52,15 @@ export default class Card extends Lightning.Component {
   get _Placeholder() {
     return this.tag("Placeholder");
   }
-  set props({ image, label, id }) {
+  set props({ image, label, id, backdrop_path }) {
     this._id = id;
-    this.patch({ Image: { src: image }, Label: { text: label } });
+    this._backdrop_path = backdrop_path;
+    this.patch({
+      Image: {
+        texture: Img(image).portrait(200, 200),
+      },
+      Label: { text: label },
+    });
   }
 
   _handleEnter() {
@@ -79,6 +89,7 @@ export default class Card extends Lightning.Component {
   };
 
   _focus() {
+    this.signal("changeHeroBackground", this._id, this._backdrop_path);
     this.patch({
       smooth: { scale: 1.1 },
       Image: {

@@ -6,6 +6,14 @@ async function preloadImage(url) {
     img.onload = () => resolve(url);
     img.onerror = () => resolve(url); // fail gracefully
     img.src = url;
+
+    img.onload = () => {
+      resolve(true);
+    };
+
+    img.onerror = () => {
+      resolve(false);
+    };
   });
 }
 
@@ -18,8 +26,6 @@ export default async function (page) {
   const seriesUrls = series.map(
     (s) => `https://image.tmdb.org/t/p/w342${s.poster_path}`
   );
-  console.time("image-preload");
   await Promise.all([...movieUrls, ...seriesUrls].map(preloadImage));
-  console.timeEnd("image-preload");
   page.props = [movies, series];
 }

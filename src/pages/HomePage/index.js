@@ -92,7 +92,6 @@ export default class HomePage extends Lightning.Component {
         }
         _handleUp() {
           Router.focusWidget("Menu");
-          const hash = Router.getActiveHash();
         }
         _handleRight() {
           this._setState("TopChannels");

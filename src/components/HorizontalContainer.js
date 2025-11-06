@@ -12,6 +12,9 @@ export default class HorizontalContainer extends Lightning.Component {
 
   static _template() {
     return {
+      signals: {
+        changeHeroBackground: true,
+      },
       flex: { direction: "row", wrap: true },
       Title: {},
       Items: {
@@ -22,7 +25,10 @@ export default class HorizontalContainer extends Lightning.Component {
       },
     };
   }
-
+  changeHeroBackground(id, backdrop_path) {
+    console.log("signal");
+    this.signal("changeHeroBackground", id, backdrop_path);
+  }
   get Items() {
     return this.tag("Items");
   }
@@ -212,12 +218,12 @@ export default class HorizontalContainer extends Lightning.Component {
   }
 
   _handleRight() {
-    //this.Items.children[this._focusedIndex]._unfocus();
+    // this.Items.children[this._focusedIndex]._unfocus();
     const { items } = this._props;
     if (this._focusedIndex < items.length - 1) {
       this.Items.children[this._focusedIndex]._unfocus();
       this._focusedIndex += 1;
-      // this._reCalibrateScroll();
+      this._reCalibrateScroll();
       this.fireAncestors(
         "$horizontalContainerIndexChange",
         this._focusedIndex,
@@ -230,11 +236,11 @@ export default class HorizontalContainer extends Lightning.Component {
   }
 
   _handleLeft() {
-    //this.Items.children[this._focusedIndex]._unfocus();
+    // this.Items.children[this._focusedIndex]._unfocus();
     if (this._focusedIndex > 0) {
       this.Items.children[this._focusedIndex]?._unfocus();
       this._focusedIndex -= 1;
-      // this._reCalibrateScroll();
+      this._reCalibrateScroll();
       this.fireAncestors(
         "$horizontalContainerIndexChange",
         this._focusedIndex,

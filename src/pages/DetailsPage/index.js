@@ -1,4 +1,4 @@
-import { Lightning, Router } from "@lightningjs/sdk";
+import { Lightning, Utils, Router } from "@lightningjs/sdk";
 import WatchNowButton from "./components/WatchNowButton";
 import BackButton from "./components/BackButton";
 
@@ -66,10 +66,28 @@ export default class DetailsPage extends Lightning.Component {
             w: 1083,
             h: 485,
             flex: { direction: "row", alignItems: "center" },
-            Image: {
+            Poster: {
               w: 325,
               h: 485,
               flexItem: { marginRight: 60 },
+              Placeholder: {
+                w: 325,
+                h: 485,
+                rect: true,
+                src: Utils.asset("images/imgPlaceholder.jpg"),
+                alpha: 1,
+              },
+              Image: {
+                w: 325,
+                h: 485,
+                flexItem: { marginRight: 60 },
+                shader: {
+                  type: Lightning.shaders.RoundedRectangle,
+                  radius: 6,
+                  stroke: 0,
+                },
+                alpha: 0.01,
+              },
             },
             About: {
               w: 698,
@@ -160,6 +178,11 @@ export default class DetailsPage extends Lightning.Component {
       },
     };
   }
+
+  get _Image() {
+    return this.tag("Image");
+  }
+
   set props(props) {
     this.patch({
       DetailsWindow: {
@@ -190,8 +213,12 @@ export default class DetailsPage extends Lightning.Component {
             },
           },
           DetailsInfoContainer: {
-            Image: {
-              src: `${import.meta.env.VITE_POSTER_URL}${props.poster_path}`,
+            Poster: {
+              Image: {
+                src: `${
+                  "https://image.tmdb.org/t/p/w300"
+                }${props.poster_path}`,
+              },
             },
             About: {
               BasicInfo: {
@@ -219,6 +246,8 @@ export default class DetailsPage extends Lightning.Component {
   }
   _init() {
     this._setState("WatchNowButton");
+    this._Image.on("txLoaded", this.onLoaded);
+    this._Image.on("txError", this.onError);
   }
 
   _getFocused() {
@@ -241,6 +270,42 @@ export default class DetailsPage extends Lightning.Component {
       Router.navigate("home");
     }
   }
+
+  onLoaded = () => {
+    this._Image.off("txLoaded", this.onLoaded);
+    this.patch({
+      DetailsWindow: {
+        DetailsPageContent: {
+          DetailsInfoContainer: {
+            Poster: {
+              Placeholder: {
+                smooth: { alpha: [0, { duration: 0.3, delay: 0.1 }] },
+              },
+              Image: { smooth: { alpha: [1, { duration: 0.3 }] } },
+            },
+          },
+        },
+      },
+    });
+  };
+
+  onError = () => {
+    this._Image.off("txError", this.onError);
+    this.patch({
+      DetailsWindow: {
+        DetailsPageContent: {
+          DetailsInfoContainer: {
+            Poster: {
+              Placeholder: {
+                smooth: { alpha: [1, { duration: 0.3, delay: 0.1 }] },
+              },
+              Image: { smooth: { alpha: [0, { duration: 0.3 }] } },
+            },
+          },
+        },
+      },
+    });
+  };
 
   static _states() {
     return [
