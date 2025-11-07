@@ -11,7 +11,7 @@
       "pauseRafLoopOnIdle": true,
       "defaultFontFace": "Montserrat-Regular"
     },
-    "debug": true,
+    "debug": false,
     "keys": {}
   },
   "platformSettings": {

@@ -28,6 +28,8 @@ export default class MovieRow extends Lightning.Component {
         image: `${"https://image.tmdb.org/t/p/w300"}${item.poster_path}`,
         label: item.title,
         id: item.id,
+        type: raillabel.toLowerCase(),
+        overview: item.overview,
       },
     }));
 
@@ -52,9 +54,5 @@ export default class MovieRow extends Lightning.Component {
 
   _handleRight() {
     return this._Row._handleRight();
-  }
-
-  $navigateToDetailsPage(id) {
-    Router.navigate(this._railLabel.toLowerCase() + "/" + id);
   }
 }

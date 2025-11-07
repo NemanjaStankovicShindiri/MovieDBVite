@@ -7,6 +7,7 @@ import movieDetails from "./pages/DetailsPage/provider/movieDetails";
 import seriesDetails from "./pages/DetailsPage/provider/seriesDetails";
 import home from "./pages/HomePage/provider/home";
 import movies from "./pages/MoviesPage/provider/movies";
+import series from "./pages/SeriesPage/provider/series";
 
 export default {
   root: "home",
@@ -22,6 +23,7 @@ export default {
       path: MEDIA_TYPE.SERIES.toLowerCase(),
       widgets: ["Menu"],
       component: SeriesPage,
+      on: series,
     },
     {
       path: MEDIA_TYPE.MOVIES.toLowerCase() + "/:mediaId",

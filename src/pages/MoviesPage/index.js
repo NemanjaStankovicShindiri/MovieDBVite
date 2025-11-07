@@ -2,6 +2,8 @@ import { Lightning, Utils, Router, Colors } from "@lightningjs/sdk";
 import HorizontalContainer from "../../components/HorizontalContainer";
 import Card from "../../components/Card";
 import { Img } from "@lightningjs/sdk";
+import { debounce } from "lodash";
+import MEDIA_TYPE from "../../consts/mediaType";
 
 export default class MoviesPage extends Lightning.Component {
   static _template() {
@@ -18,6 +20,35 @@ export default class MoviesPage extends Lightning.Component {
           w: (w) => w,
           rect: true,
           src: Utils.asset("images/background.jpg"),
+          TextContainer: {
+            zIndex: 1,
+            x: 69,
+            y: 258,
+            w: 698,
+            h: 182,
+            flex: { direction: "column" },
+            Title: {
+              w: 698,
+              text: {
+                fontFace: "InterSemiBold",
+                fontSize: 28,
+                text: "",
+                maxLines: 1,
+              },
+            },
+            Overview: {
+              w: 698,
+              text: {
+                fontFace: "InterSemiBold",
+                fontSize: 22,
+                lineHeight: 31,
+                text: "",
+                maxLines: 4,
+                textOverflow: "ellipsis",
+                maxLinesSuffix: "...",
+              },
+            },
+          },
         },
         Slider: {
           signals: {
@@ -32,18 +63,25 @@ export default class MoviesPage extends Lightning.Component {
       },
     };
   }
-  changeHeroBackground(id, backdrop_path) {
-    console.log("grand");
+
+  _debouncedChangeHero = debounce((backdrop_path, title, overview) => {
     this.patch({
       Background: {
         Hero: {
-          texture: Img("https://image.tmdb.org/t/p/w780" + backdrop_path).cover(
-            1920,
-            697
-          ),
+          texture: Img(
+            "https://image.tmdb.org/t/p/w1280" + backdrop_path
+          ).cover(1920, 697),
+          TextContainer: {
+            Title: { text: { text: title } },
+            Overview: { text: { text: overview } },
+          },
         },
       },
     });
+  }, 500);
+
+  changeHeroBackground(id, backdrop_path, title, overview) {
+    this._debouncedChangeHero(backdrop_path, title, overview);
   }
   get _Slider() {
     return this.tag("Slider");
@@ -62,12 +100,14 @@ export default class MoviesPage extends Lightning.Component {
         w: 403,
         h: 302,
         type: Card,
-        signals: { changeHeroBackground: true }, // <--- pass signal
+        passSignals: { changeHeroBackground: true },
         props: {
           backdrop_path: item.backdrop_path,
           image: `${"https://image.tmdb.org/t/p/w300"}${item.backdrop_path}`,
           label: item.title,
           id: item.id,
+          type: MEDIA_TYPE.MOVIES.toLowerCase(),
+          overview: item.overview,
         },
       };
     });
@@ -76,8 +116,6 @@ export default class MoviesPage extends Lightning.Component {
       Background: {
         Slider: {
           props: {
-            w: 1400,
-            h: 215,
             items: cards,
             railTitle: "",
             targetIndex: 0,

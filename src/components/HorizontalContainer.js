@@ -25,9 +25,9 @@ export default class HorizontalContainer extends Lightning.Component {
       },
     };
   }
-  changeHeroBackground(id, backdrop_path) {
-    console.log("signal");
-    this.signal("changeHeroBackground", id, backdrop_path);
+  changeHeroBackground(id, backdrop_path, title, overview) {
+    console.log(title, overview);
+    this.signal("changeHeroBackground", id, backdrop_path, title, overview);
   }
   get Items() {
     return this.tag("Items");
