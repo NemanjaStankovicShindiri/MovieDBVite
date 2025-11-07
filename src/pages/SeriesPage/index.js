@@ -66,7 +66,6 @@ export default class SeriesPage extends Lightning.Component {
   }
 
   _debouncedChangeHero = debounce((backdrop_path, title, overview) => {
-    console.log(overview);
     this.patch({
       Background: {
         Hero: {

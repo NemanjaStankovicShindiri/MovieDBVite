@@ -101,7 +101,7 @@ export default class HorizontalContainer extends Lightning.Component {
     }
 
     this.patch({
-      w: this._props.w,
+      w: this._w,
     });
 
     if (items !== this._props.items) {

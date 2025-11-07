@@ -58,6 +58,7 @@ export default class MoviesPage extends Lightning.Component {
           h: 302,
           rect: true,
           color: Colors("#151515").get(),
+          w: 1780,
           type: HorizontalContainer,
         },
       },
@@ -65,6 +66,29 @@ export default class MoviesPage extends Lightning.Component {
   }
 
   _debouncedChangeHero = debounce((backdrop_path, title, overview) => {
+    const fadeIn = this._Hero.animation({
+      duration: 1,
+      repeat: 0,
+      stopMethod: "immediate",
+      actions: [
+        {
+          p: "alpha",
+          v: { 0: 0, 1: 1 },
+        },
+      ],
+    });
+    const fadeOut = this._Hero.animation({
+      duration: 1,
+      repeat: 0,
+      stopMethod: "immediate",
+      actions: [
+        {
+          p: "alpha",
+          v: { 0: 1, 1: 0 },
+        },
+      ],
+    });
+    fadeOut.start();
     this.patch({
       Background: {
         Hero: {
@@ -78,6 +102,7 @@ export default class MoviesPage extends Lightning.Component {
         },
       },
     });
+    fadeIn.start();
   }, 500);
 
   changeHeroBackground(id, backdrop_path, title, overview) {
@@ -85,6 +110,9 @@ export default class MoviesPage extends Lightning.Component {
   }
   get _Slider() {
     return this.tag("Slider");
+  }
+  get _Hero() {
+    return this.tag("Hero");
   }
   _getFocused() {
     return this._Slider._getFocused();

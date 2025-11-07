@@ -7,10 +7,10 @@ export default class MovieRow extends Lightning.Component {
   static _template() {
     return {
       Row: {
-        w: 1900,
+        w: 1241,
         h: 404,
-        rect: true,
         type: HorizontalContainer,
+        disableScroll: true,
       },
     };
   }
