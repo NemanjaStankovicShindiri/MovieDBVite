@@ -1,5 +1,6 @@
 import { Lightning, Router } from "@lightningjs/sdk";
 import Color from "@lightningjs/sdk/src/Colors";
+import { getRouteFromIndex } from "../../utils/getRouteFromIndex";
 
 export default class NavbarButton extends Lightning.Component {
   _index = 0;
@@ -61,7 +62,7 @@ export default class NavbarButton extends Lightning.Component {
   }
 
   _handleEnter() {
-    this.fireAncestors("$changePage", this._index);
+    Router.navigate(getRouteFromIndex(this._index));
     Router.focusPage();
   }
 }

@@ -73,9 +73,4 @@ export default class Navbar extends Lightning.Component {
   _getFocused() {
     return this._Buttons;
   }
-
-  $changePage(index) {
-    const route = this._buttons[index].route;
-    if (route) Router.navigate(route);
-  }
 }

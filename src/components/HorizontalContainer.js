@@ -12,7 +12,7 @@ export default class HorizontalContainer extends Lightning.Component {
 
   static _template() {
     return {
-      signals: {
+      passSignals: {
         changeHeroBackground: true,
       },
       flex: { direction: "row", wrap: true },
@@ -24,10 +24,6 @@ export default class HorizontalContainer extends Lightning.Component {
         },
       },
     };
-  }
-  changeHeroBackground(id, backdrop_path, title, overview) {
-    console.log(title, overview);
-    this.signal("changeHeroBackground", id, backdrop_path, title, overview);
   }
   get Items() {
     return this.tag("Items");

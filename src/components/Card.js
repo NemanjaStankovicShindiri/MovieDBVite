@@ -97,7 +97,6 @@ export default class Card extends Lightning.Component {
   _focus() {
     this.signal(
       "changeHeroBackground",
-      this._id,
       this._backdrop_path,
       this._title,
       this._overview

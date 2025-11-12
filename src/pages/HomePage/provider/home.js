@@ -4,7 +4,7 @@ async function preloadImage(url) {
   return new Promise((resolve, reject) => {
     const img = new Image();
     img.onload = () => resolve(url);
-    img.onerror = () => resolve(url); // fail gracefully
+    img.onerror = () => resolve(url);
     img.src = url;
 
     img.onload = () => {

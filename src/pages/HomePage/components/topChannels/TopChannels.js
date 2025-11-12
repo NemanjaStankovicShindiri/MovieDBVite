@@ -66,15 +66,3 @@ export default class TopChannels extends Lightning.Component {
     });
   }
 }
-
-// items,
-//       title,
-//       w,
-//       h,
-//       titleFontSize,
-//       titleFontFace,
-//       titleColor,
-//       titleMarginBottom,
-//       titleMarginTop,
-//       titleAlign,
-//       ...rest

@@ -77,18 +77,6 @@ export default class MoviesPage extends Lightning.Component {
         },
       ],
     });
-    const fadeOut = this._Hero.animation({
-      duration: 1,
-      repeat: 0,
-      stopMethod: "immediate",
-      actions: [
-        {
-          p: "alpha",
-          v: { 0: 1, 1: 0 },
-        },
-      ],
-    });
-    fadeOut.start();
     this.patch({
       Background: {
         Hero: {
@@ -105,7 +93,7 @@ export default class MoviesPage extends Lightning.Component {
     fadeIn.start();
   }, 500);
 
-  changeHeroBackground(id, backdrop_path, title, overview) {
+  changeHeroBackground(backdrop_path, title, overview) {
     this._debouncedChangeHero(backdrop_path, title, overview);
   }
   get _Slider() {
