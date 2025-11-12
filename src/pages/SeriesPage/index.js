@@ -4,6 +4,8 @@ import Card from "../../components/Card";
 import { Img } from "@lightningjs/sdk";
 import { debounce } from "lodash";
 import MEDIA_TYPE from "../../consts/mediaType";
+import handleBack from "../../utils/handleBack";
+import { getRouteNavbarIndex } from "../../utils/getRouteNavbarIndex";
 
 export default class SeriesPage extends Lightning.Component {
   static _template() {
@@ -64,7 +66,9 @@ export default class SeriesPage extends Lightning.Component {
       },
     };
   }
-
+  _active() {
+    this.widgets.menu.changeSelectedButton(getRouteNavbarIndex("series"));
+  }
   _debouncedChangeHero = debounce((backdrop_path, title, overview) => {
     const fadeIn = this._Hero.animation({
       duration: 1,
@@ -158,6 +162,11 @@ export default class SeriesPage extends Lightning.Component {
       },
     });
   }
+
+  _handleBack(e) {
+    handleBack(e);
+  }
+
   static _states() {
     return [
       class Slider extends this {

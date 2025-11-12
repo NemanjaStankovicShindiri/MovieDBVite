@@ -1,5 +1,5 @@
 import Lightning from "@lightningjs/sdk/src/Lightning";
-import MovieRow from "../../../components/MovieRow";
+import MovieRow from "./MovieRow";
 import MEDIA_TYPE from "../../../consts/mediaType";
 
 export default class ContentSection extends Lightning.Component {

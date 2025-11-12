@@ -2,6 +2,7 @@ import { Lightning, Utils, Router } from "@lightningjs/sdk";
 import ContentSection from "./components/ContentSection";
 import TopChannels from "./components/topChannels/TopChannels";
 import LivePlayerButton from "./components/LivePlayerButton";
+import { getRouteNavbarIndex } from "../../utils/getRouteNavbarIndex";
 
 const topChannelsData = [
   { name: "CBS", image: "CBS.png" },
@@ -59,6 +60,10 @@ export default class HomePage extends Lightning.Component {
 
   _init() {
     this._setState("Content");
+  }
+
+  _active() {
+    this.widgets.menu.changeSelectedButton(getRouteNavbarIndex("home"));
   }
 
   get _Content() {

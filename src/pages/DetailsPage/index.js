@@ -1,6 +1,7 @@
 import { Lightning, Utils, Router } from "@lightningjs/sdk";
 import WatchNowButton from "./components/WatchNowButton";
 import BackButton from "./components/BackButton";
+import handleBack from "../../utils/handleBack";
 
 export default class DetailsPage extends Lightning.Component {
   static _template() {
@@ -215,9 +216,7 @@ export default class DetailsPage extends Lightning.Component {
           DetailsInfoContainer: {
             Poster: {
               Image: {
-                src: `${
-                  "https://image.tmdb.org/t/p/w300"
-                }${props.poster_path}`,
+                src: `${"https://image.tmdb.org/t/p/w300"}${props.poster_path}`,
               },
             },
             About: {
@@ -255,20 +254,7 @@ export default class DetailsPage extends Lightning.Component {
   }
 
   _handleBack(e) {
-    if (Router.isNavigating()) {
-      return;
-    }
-    e.preventDefault();
-
-    const routerHistory = Router.getHistory().filter(
-      (history) => history.hash != "splash" && history.hash != "cmp"
-    );
-
-    if (routerHistory.length) {
-      Router.back();
-    } else {
-      Router.navigate("home");
-    }
+    handleBack(e);
   }
 
   onLoaded = () => {

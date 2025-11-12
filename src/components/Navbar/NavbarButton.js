@@ -1,9 +1,9 @@
-import { Lightning, Router } from "@lightningjs/sdk";
+import { Lightning, Router, Colors } from "@lightningjs/sdk";
 import Color from "@lightningjs/sdk/src/Colors";
 import { getRouteFromIndex } from "../../utils/getRouteFromIndex";
 
 export default class NavbarButton extends Lightning.Component {
-  _index = 0;
+  _props = { _index: 0, _selected: false };
   static _template() {
     return {
       w: 118,
@@ -24,6 +24,7 @@ export default class NavbarButton extends Lightning.Component {
       },
       Label: {
         w: 150,
+        color: Colors("#ffffff").alpha(0.4).get(),
         text: {
           text: "",
           fontFace: "InterBold",
@@ -33,6 +34,7 @@ export default class NavbarButton extends Lightning.Component {
         },
       },
       Line: {
+        color: Colors("#ed1c24").get(),
         w: 150,
         y: 10,
         h: 4,
@@ -42,15 +44,21 @@ export default class NavbarButton extends Lightning.Component {
       },
     };
   }
-  set props({ label, index }) {
+  set props(props) {
+    this._props = { ...this._props, ...props };
+    const { label, index, selected } = this._props;
     this.patch({
       Label: {
+        color: selected
+          ? Colors("#ffffff").alpha(1).get()
+          : Colors("#ffffff").alpha(0.4).get(),
         text: {
           text: label,
         },
       },
     });
     this._index = index;
+    this._selected = selected ? selected : false;
   }
   _focus() {
     const activeHash = Router.getActiveHash();
@@ -64,5 +72,6 @@ export default class NavbarButton extends Lightning.Component {
   _handleEnter() {
     Router.navigate(getRouteFromIndex(this._index));
     Router.focusPage();
+    this.signal("changeSelectedButton", this._index);
   }
 }

@@ -4,6 +4,8 @@ import Card from "../../components/Card";
 import { Img } from "@lightningjs/sdk";
 import { debounce } from "lodash";
 import MEDIA_TYPE from "../../consts/mediaType";
+import handleBack from "../../utils/handleBack";
+import { getRouteNavbarIndex } from "../../utils/getRouteNavbarIndex";
 
 export default class MoviesPage extends Lightning.Component {
   static _template() {
@@ -108,6 +110,14 @@ export default class MoviesPage extends Lightning.Component {
 
   _init() {
     this._setState("Slider");
+  }
+
+  _handleBack(e) {
+    handleBack(e);
+  }
+
+  _active() {
+    this.widgets.menu.changeSelectedButton(getRouteNavbarIndex("movies"));
   }
 
   set props(props) {

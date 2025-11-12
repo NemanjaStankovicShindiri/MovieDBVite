@@ -1,8 +1,8 @@
 import { Lightning, Utils, Router } from "@lightningjs/sdk";
-import Color from "@lightningjs/sdk/src/Colors";
 import HorizontalContainer from "../HorizontalContainer";
 import NavbarButton from "./NavbarButton";
 import MEDIA_TYPE from "../../consts/mediaType";
+import { getRouteNavbarIndex } from "../../utils/getRouteNavbarIndex";
 
 const buttons = [
   { label: "HOME", route: "home" },
@@ -28,6 +28,9 @@ export default class Navbar extends Lightning.Component {
         flexItem: { marginRight: 60 },
       },
       Buttons: {
+        signals: {
+          changeSelectedButton: true,
+        },
         rect: true,
         w: 674,
         h: 49,
@@ -45,6 +48,8 @@ export default class Navbar extends Lightning.Component {
   _init() {
     const buttonsMaped = buttons.map((data, index) => ({
       type: NavbarButton,
+      passSignals: { changeSelectedButton: true },
+
       props: { label: data.label, index },
     }));
     this._buttons = buttons;
@@ -72,5 +77,26 @@ export default class Navbar extends Lightning.Component {
   }
   _getFocused() {
     return this._Buttons;
+  }
+
+  _active() {
+    setTimeout(() => {
+      const activeHash = Router.getActiveHash();
+      this._setSelected(getRouteNavbarIndex(activeHash.toLowerCase()));
+    });
+  }
+
+  changeSelectedButton(index) {
+    this._setSelected(index);
+  }
+
+  _setSelected(index) {
+    this._Buttons.Items.children.forEach((item, i) => {
+      item.patch({
+        props: {
+          selected: i === index,
+        },
+      });
+    });
   }
 }
