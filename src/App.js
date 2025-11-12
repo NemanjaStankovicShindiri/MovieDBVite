@@ -42,6 +42,11 @@ export default class App extends Router.App {
     Router.startRouter(
       {
         ...routes,
+        afterEachRoute: (request) => {
+          this.patch({
+            Widgets: { Menu: { props: { route: request._hash } } },
+          });
+        },
       },
       this
     );

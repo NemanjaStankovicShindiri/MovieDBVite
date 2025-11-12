@@ -12,6 +12,7 @@ export default class Card extends Lightning.Component {
     return {
       w: 229,
       h: 359,
+      passSignals: { changeHeroBackground: true },
       flexItem: { marginLeft: 12, marginRight: 12 },
       Placeholder: {
         w: (w) => w,

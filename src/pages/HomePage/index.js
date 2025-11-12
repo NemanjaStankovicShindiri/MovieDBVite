@@ -62,10 +62,6 @@ export default class HomePage extends Lightning.Component {
     this._setState("Content");
   }
 
-  _active() {
-    this.widgets.menu._setSelected(getRouteNavbarIndex("home"));
-  }
-
   get _Content() {
     return this.tag("Content");
   }

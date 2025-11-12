@@ -59,6 +59,7 @@ export default class SeriesPage extends Lightning.Component {
           },
           x: 64,
           h: 302,
+          w: 1780,
           rect: true,
           color: Colors("#151515").get(),
           type: HorizontalContainer,
@@ -66,9 +67,7 @@ export default class SeriesPage extends Lightning.Component {
       },
     };
   }
-  _active() {
-    this.widgets.menu._setSelected(getRouteNavbarIndex("series"));
-  }
+
   _debouncedChangeHero = debounce((backdrop_path, title, overview) => {
     const fadeIn = this._Hero.animation({
       duration: 1,

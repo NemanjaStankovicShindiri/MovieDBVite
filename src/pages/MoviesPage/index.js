@@ -116,10 +116,6 @@ export default class MoviesPage extends Lightning.Component {
     handleBack(e);
   }
 
-  _active() {
-    this.widgets.menu._setSelected(getRouteNavbarIndex("movies"));
-  }
-
   set props(props) {
     const cards = props.map((item) => {
       return {
@@ -137,6 +133,8 @@ export default class MoviesPage extends Lightning.Component {
         },
       };
     });
+
+    // Movie -> HC (signals) -> passSignal
 
     this.patch({
       Background: {

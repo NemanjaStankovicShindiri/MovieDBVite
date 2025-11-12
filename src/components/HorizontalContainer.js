@@ -12,10 +12,6 @@ export default class HorizontalContainer extends Lightning.Component {
 
   static _template() {
     return {
-      passSignals: {
-        changeHeroBackground: true,
-        changeSelectedButton: true,
-      },
       flex: { direction: "row", wrap: true },
       Title: {},
       Items: {

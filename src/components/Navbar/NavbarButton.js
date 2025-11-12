@@ -72,6 +72,5 @@ export default class NavbarButton extends Lightning.Component {
   _handleEnter() {
     Router.navigate(getRouteFromIndex(this._index));
     Router.focusPage();
-    this.signal("changeSelectedButton", this._index);
   }
 }

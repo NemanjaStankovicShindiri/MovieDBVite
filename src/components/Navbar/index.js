@@ -12,6 +12,7 @@ const buttons = [
 
 export default class Navbar extends Lightning.Component {
   _buttons = [];
+
   static _template() {
     return {
       rect: true,
@@ -28,9 +29,6 @@ export default class Navbar extends Lightning.Component {
         flexItem: { marginRight: 60 },
       },
       Buttons: {
-        signals: {
-          changeSelectedButton: this._setSelected,
-        },
         rect: true,
         w: 674,
         h: 49,
@@ -45,10 +43,10 @@ export default class Navbar extends Lightning.Component {
       },
     };
   }
+
   _init() {
     const buttonsMaped = buttons.map((data, index) => ({
       type: NavbarButton,
-      passSignals: { changeSelectedButton: true },
 
       props: { label: data.label, index },
     }));
@@ -63,32 +61,31 @@ export default class Navbar extends Lightning.Component {
       },
     });
   }
+
+  set props(props) {
+    const { route } = props;
+    this.visible ? this._setSelected(getRouteNavbarIndex(route)) : null;
+  }
+
   _handleUp() {
     return true;
   }
+
   _handleLeft() {
     return true;
   }
+
   _handleRight() {
     return true;
   }
+
   get _Buttons() {
     return this.tag("Buttons");
   }
+
   _getFocused() {
     return this._Buttons;
   }
-
-  // _active() {
-  //   setTimeout(() => {
-  //     const activeHash = Router.getActiveHash();
-  //     this._setSelected(getRouteNavbarIndex(activeHash.toLowerCase()));
-  //   });
-  // }
-
-  // changeSelectedButton(index) {
-  //   this._setSelected(index);
-  // }
 
   _setSelected(index) {
     this._Buttons.Items.children.forEach((item, i) => {
