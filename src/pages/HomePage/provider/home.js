@@ -1,4 +1,4 @@
-import { getMovies, getTV } from "../../../api/services/MoviePageServices";
+import { getMovies, getTV } from "../../../api/services/MediaServices";
 
 async function preloadImage(url) {
   return new Promise((resolve, reject) => {
@@ -26,6 +26,6 @@ export default async function (page) {
   const seriesUrls = series.map(
     (s) => `https://image.tmdb.org/t/p/w342${s.poster_path}`
   );
-  await Promise.all([...movieUrls, ...seriesUrls].map(preloadImage));
+  // await Promise.all([...movieUrls, ...seriesUrls].map(preloadImage));
   page.props = [movies, series];
 }

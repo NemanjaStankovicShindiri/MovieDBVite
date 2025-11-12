@@ -29,7 +29,7 @@ export default class Navbar extends Lightning.Component {
       },
       Buttons: {
         signals: {
-          changeSelectedButton: true,
+          changeSelectedButton: this._setSelected,
         },
         rect: true,
         w: 674,
@@ -79,16 +79,16 @@ export default class Navbar extends Lightning.Component {
     return this._Buttons;
   }
 
-  _active() {
-    setTimeout(() => {
-      const activeHash = Router.getActiveHash();
-      this._setSelected(getRouteNavbarIndex(activeHash.toLowerCase()));
-    });
-  }
+  // _active() {
+  //   setTimeout(() => {
+  //     const activeHash = Router.getActiveHash();
+  //     this._setSelected(getRouteNavbarIndex(activeHash.toLowerCase()));
+  //   });
+  // }
 
-  changeSelectedButton(index) {
-    this._setSelected(index);
-  }
+  // changeSelectedButton(index) {
+  //   this._setSelected(index);
+  // }
 
   _setSelected(index) {
     this._Buttons.Items.children.forEach((item, i) => {

@@ -63,7 +63,7 @@ export default class HomePage extends Lightning.Component {
   }
 
   _active() {
-    this.widgets.menu.changeSelectedButton(getRouteNavbarIndex("home"));
+    this.widgets.menu._setSelected(getRouteNavbarIndex("home"));
   }
 
   get _Content() {

@@ -117,7 +117,7 @@ export default class MoviesPage extends Lightning.Component {
   }
 
   _active() {
-    this.widgets.menu.changeSelectedButton(getRouteNavbarIndex("movies"));
+    this.widgets.menu._setSelected(getRouteNavbarIndex("movies"));
   }
 
   set props(props) {

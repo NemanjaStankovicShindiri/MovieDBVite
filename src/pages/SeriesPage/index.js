@@ -67,7 +67,7 @@ export default class SeriesPage extends Lightning.Component {
     };
   }
   _active() {
-    this.widgets.menu.changeSelectedButton(getRouteNavbarIndex("series"));
+    this.widgets.menu._setSelected(getRouteNavbarIndex("series"));
   }
   _debouncedChangeHero = debounce((backdrop_path, title, overview) => {
     const fadeIn = this._Hero.animation({
