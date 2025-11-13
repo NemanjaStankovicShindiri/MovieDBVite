@@ -48,7 +48,6 @@ export default class SeriesPage extends Lightning.Component {
                 maxLines: 4,
                 textOverflow: "ellipsis",
                 maxLinesSuffix: "...",
-                wordWrap: false,
               },
             },
           },

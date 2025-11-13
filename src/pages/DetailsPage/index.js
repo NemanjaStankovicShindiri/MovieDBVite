@@ -222,7 +222,16 @@ export default class DetailsPage extends Lightning.Component {
             About: {
               BasicInfo: {
                 Title: { text: { text: props.title } },
-                Description: { text: { text: props.overview } },
+                Description: {
+                  text: {
+                    text: props.overview,
+                    fontFace: "InterSemiBold",
+                    fontSize: 22,
+                    lineHeight: 31,
+                    maxLines: 4,
+                    maxLinesSuffix: "...",
+                  },
+                },
                 People: {
                   Director: {
                     Value: { text: { text: props.credits.director } },

@@ -3,6 +3,7 @@
   "description": "MovieDB",
   "dependencies": {
     "@lightningjs/sdk": "^5.5.4",
+    "@lightningjs/ui-components": "^2.25.1",
     "@vitejs/plugin-legacy": "^7.2.1",
     "axios": "^1.13.1",
     "lodash": "^4.17.21",
