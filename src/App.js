@@ -1,21 +1,21 @@
-import { Router, Utils, Lightning, Colors } from "@lightningjs/sdk";
-import routes from "../src/routes";
-import Navbar from "../src/components/Navbar/index";
-import LoadingScreenComponent from "./components/LOadingScreenComponent";
+import { Router, Utils, Lightning, Colors } from '@lightningjs/sdk'
+import routes from '../src/routes'
+import Navbar from '../src/components/Navbar/index'
+import LoadingScreenComponent from './components/LOadingScreenComponent'
 
 export default class App extends Router.App {
   static getFonts() {
     return [
-      { family: "InterBold", url: Utils.asset("fonts/Inter_18pt-Bold.ttf") },
+      { family: 'InterBold', url: Utils.asset('fonts/Inter_18pt-Bold.ttf') },
       {
-        family: "InterSemiBold",
-        url: Utils.asset("fonts/Inter_18pt-semiBold.ttf"),
+        family: 'InterSemiBold',
+        url: Utils.asset('fonts/Inter_18pt-semiBold.ttf'),
       },
       {
-        family: "InterRegular",
-        url: Utils.asset("fonts/Inter_18pt-Regular.ttf"),
+        family: 'InterRegular',
+        url: Utils.asset('fonts/Inter_18pt-Regular.ttf'),
       },
-    ];
+    ]
   }
 
   static _template() {
@@ -35,7 +35,13 @@ export default class App extends Router.App {
           type: Navbar,
         },
       },
-    };
+      Background: {
+        w: 1920,
+        h: 1080,
+        src: Utils.asset('images/background.jpg'),
+        zIndex: -1,
+      },
+    }
   }
 
   _setup() {
@@ -45,10 +51,29 @@ export default class App extends Router.App {
         afterEachRoute: (request) => {
           this.patch({
             Widgets: { Menu: { props: { route: request._hash } } },
-          });
+          })
         },
       },
-      this
-    );
+      this,
+    )
+  }
+
+  $punchHole() {
+    this.tag('Background').shader = {
+      color: Colors('#1F2227').get(),
+      type: Lightning.shaders.Hole,
+      x: 0,
+      y: 0,
+      w: 1920,
+      h: 1080,
+    }
+  }
+  $unpunchHole() {
+    this.tag('Background').shader = {
+      x: 0,
+      y: 0,
+      w: 0,
+      h: 0,
+    }
   }
 }
