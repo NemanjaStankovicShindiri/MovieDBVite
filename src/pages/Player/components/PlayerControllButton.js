@@ -10,6 +10,7 @@ export default class PlayerControllButton extends Lightning.Component {
       w: w,
       h: h,
       rect: true,
+      mountY: 0.5,
       src: Utils.asset(src),
       color: Colors('#ffffff').alpha(0.3).get(),
     })
@@ -17,7 +18,6 @@ export default class PlayerControllButton extends Lightning.Component {
   }
 
   _focus() {
-    console.log('focus')
     this.patch({ color: Colors('#ed1c24').get() })
   }
 
@@ -50,8 +50,12 @@ export default class PlayerControllButton extends Lightning.Component {
     e.preventDefault()
     this.fireAncestors('$exitVideo', e)
   }
-  _handleForward() {}
-  _handleRewind() {}
+  _handleForward() {
+    VideoPlayer.skip(5)
+  }
+  _handleBackwards() {
+    VideoPlayer.skip(-5)
+  }
   _handlePlayPause() {
     VideoPlayer.playPause()
     const isPlaying = VideoPlayer.playing
@@ -59,5 +63,4 @@ export default class PlayerControllButton extends Lightning.Component {
       src: Utils.asset('images/player/' + (isPlaying ? 'play.png' : 'pause.png')),
     })
   }
-  _handleBackwards() {}
 }

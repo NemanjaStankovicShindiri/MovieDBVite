@@ -1,4 +1,4 @@
-import { Lightning, Utils, Router, Colors } from '@lightningjs/sdk'
+import { Lightning, Router, Colors } from '@lightningjs/sdk'
 import HorizontalContainer from '../../components/HorizontalContainer'
 import Card from '../../components/Card'
 import { Img } from '@lightningjs/sdk'
@@ -54,8 +54,6 @@ export default class MoviesPage extends Lightning.Component {
           },
           x: 64,
           h: 302,
-          rect: true,
-          color: Colors('#151515').get(),
           w: 1780,
           type: HorizontalContainer,
         },

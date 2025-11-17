@@ -1,11 +1,10 @@
-import { Lightning, Utils, Router, Colors } from '@lightningjs/sdk'
+import { Lightning, Router, Colors } from '@lightningjs/sdk'
 import HorizontalContainer from '../../components/HorizontalContainer'
 import Card from '../../components/Card'
 import { Img } from '@lightningjs/sdk'
 import { debounce } from 'lodash'
 import MEDIA_TYPE from '../../consts/mediaType'
 import handleBack from '../../utils/handleBack'
-import { getRouteNavbarIndex } from '../../utils/getRouteNavbarIndex'
 
 export default class SeriesPage extends Lightning.Component {
   static _template() {
@@ -56,8 +55,6 @@ export default class SeriesPage extends Lightning.Component {
           x: 64,
           h: 302,
           w: 1780,
-          rect: true,
-          color: Colors('#151515').get(),
           type: HorizontalContainer,
         },
       },

@@ -1,11 +1,13 @@
-import { Lightning, VideoPlayer, Colors, Router } from '@lightningjs/sdk'
+import { Lightning, VideoPlayer, Colors, Router, Utils } from '@lightningjs/sdk'
 import { loader, unloader } from '../../components/Player/HLS'
 import PlayerControllButton from './components/PlayerControllButton'
-import HorizontaContainer from '../../components/HorizontalContainer'
+import HorizontalContainer from '../../components/HorizontalContainer'
+import ProgressBar from './components/ProgressBar'
+import formatTimeHMS from './utils/formatTimeHMS'
 const buttons = [
-  { label: 'rewind', src: 'rewind.png' },
-  { label: 'playPause', src: 'pause.png' },
-  { label: 'forward', src: 'forward.png' },
+  { label: 'rewind', src: 'rewind.png', size: 66 },
+  { label: 'playPause', src: 'pause.png', size: 90 },
+  { label: 'forward', src: 'forward.png', size: 66 },
 ]
 export default class Player extends Lightning.Component {
   static _template() {
@@ -17,6 +19,15 @@ export default class Player extends Lightning.Component {
       rect: true,
       colorTop: Colors('#000000').alpha(0).get(),
       colorBottom: Colors('#000000').get(),
+      Spinner: {
+        w: 100,
+        h: 100,
+        x: 960,
+        y: 540,
+        texture: Lightning.Tools.getSvgTexture(Utils.asset('images/spinner.svg'), 100, 100),
+        mount: 0.5,
+        rotation: 0,
+      },
       Controller: {
         w: 1690,
         h: 156,
@@ -41,14 +52,18 @@ export default class Player extends Lightning.Component {
             x: 845,
             mountX: 0.5,
             w: 312,
+            h: 200,
             flex: {
               direction: 'row',
               alignItems: 'center',
-              justifyContent: 'space-between',
+              justifyContent: 'center',
             },
-            type: HorizontaContainer,
-            disableScroll: true,
+            type: HorizontalContainer,
           },
+        },
+        ProgressBar: {
+          y: 961 - 836,
+          type: ProgressBar,
         },
       },
     }
@@ -58,25 +73,117 @@ export default class Player extends Lightning.Component {
     const buttonsMaped = buttons.map((item) => ({
       type: PlayerControllButton,
       props: {
-        w: 66,
-        h: 66,
+        w: item.size,
+        h: item.size,
         src: 'images/player/' + item.src,
         label: item.label,
+        flex: { alignSelf: 'center' },
       },
     }))
     this.patch({
       Controller: {
         ButtonWrapper: {
           CenteredButtonWrapper: {
-            props: { items: buttonsMaped, targetIndex: 1 },
+            props: { items: buttonsMaped, targetIndex: 1, disableScroll: true },
           },
         },
       },
     })
     this._setState('CenteredButtonWrapper')
+    this._spin()
+  }
 
-    this._targetIndex = 1
-    this._CenteredButtonWrapper._refocus()
+  $videoPlayerLoadedData() {
+    this._ProgressBar._EndTime.patch({
+      text: {
+        text: formatTimeHMS(VideoPlayer.duration),
+        fontFace: 'InterRegular',
+        fontSize: 26,
+      },
+    })
+  }
+
+  $videoPlayerAbort() {
+    console.log('videoPlayerAbort')
+  }
+
+  $videoPlayerCanPlayThrough() {
+    console.log('videoPlayerCanPlayThrough')
+  }
+  $videoPlayerDurationChange() {
+    console.log('videoPlayerDurationChange')
+  }
+  $videoPlayerEmptied() {
+    console.log('videoPlayerEmptied')
+  }
+  $videoPlayerEncrypted() {
+    console.log('videoPlayerEncrypted')
+  }
+  $videoPlayerEnded() {
+    console.log('videoPlayerEnded')
+  }
+  $videoPlayerError() {
+    console.log('videoPlayerError')
+  }
+  $videoPlayerInterruptBegin() {
+    console.log('videoPlayerInterruptBegin')
+  }
+  $videoPlayerInterruptEnd() {
+    console.log('videoPlayerInterruptEnd')
+  }
+  $videoPlayerLoadedMetadata() {
+    console.log('videoPlayerLoadedMetadata')
+  }
+  $videoPlayerLoadStart() {
+    console.log('videoPlayerLoadStart')
+  }
+  $videoPlayerPlay() {
+    console.log('videoPlayerPlay')
+  }
+  $videoPlayerPlaying() {
+    console.log('videoPlayerPlaying')
+  }
+  $videoPlayerProgress() {
+    console.log('videoPlayerProgress')
+  }
+  $videoPlayerRatechange() {
+    console.log('videoPlayerRatechange')
+  }
+  $videoPlayerSeeked() {
+    this._Spinner.visible = false
+  }
+  $videoPlayerSeeking() {
+    this._Spinner.visible = true
+  }
+  $videoPlayerStalled() {
+    console.log('videoPlayerStalled')
+  }
+  $videoPlayerTimeUpdate() {
+    console.log('time updated')
+    this._ProgressBar._updateProgressBar()
+  }
+  $videoPlayerVolumeChange() {
+    console.log('videoPlayerVolumeChange')
+  }
+
+  $videoPlayerClear() {
+    console.log('videoPlayerClear')
+  }
+
+  _showSpinner() {
+    this._Spinner.visible = true
+  }
+
+  _hideSpinner() {
+    this._Spinner.visible = false
+  }
+
+  $videoPlayerCanPlay() {
+    this._hideSpinner()
+  }
+
+  $videoPlayerWaiting() {
+    this._showSpinner()
   }
 
   _getFocused() {
@@ -95,6 +202,10 @@ export default class Player extends Lightning.Component {
     return this._CenteredButtonWrapper._handleRight()
   }
 
+  get _ProgressBar() {
+    return this.tag('ProgressBar')
+  }
+
   get _Rewind() {
     return this.tag('Rewind')
   }
@@ -109,6 +220,10 @@ export default class Player extends Lightning.Component {
 
   get _CenteredButtonWrapper() {
     return this.tag('CenteredButtonWrapper')
+  }
+
+  get _Spinner() {
+    return this.tag('Spinner')
   }
 
   _enable() {
@@ -128,7 +243,7 @@ export default class Player extends Lightning.Component {
     VideoPlayer.clear()
   }
 
-  $exitVideo(e) {
+  $exitVideo() {
     VideoPlayer.close()
     Router.back()
   }
@@ -142,15 +257,40 @@ export default class Player extends Lightning.Component {
         _handleRight() {
           this._setState('CenteredButtonWrapper')
         }
+        _handleDown() {
+          this._setState('ProgressBar')
+        }
       },
       class CenteredButtonWrapper extends this {
         _getFocused() {
           return this._CenteredButtonWrapper
         }
+        _handleDown() {
+          this._setState('ProgressBar')
+        }
         _handleLeft() {
           this._setState('BackButton')
         }
       },
+      class ProgressBar extends this {
+        _getFocused() {
+          return this._ProgressBar
+        }
+        _handleUp() {
+          this._setState('CenteredButtonWrapper')
+        }
+      },
     ]
+  }
+  _spin() {
+    this._Spinner
+      .animation({
+        duration: 2, // animation duration in seconds
+        repeat: -1, // repeat indefinitely
+        actions: [
+          { p: 'rotation', v: { 0: 0, 1: 10 * Math.PI } }, // rotate 360 degrees
+        ],
+      })
+      .start()
   }
 }

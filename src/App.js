@@ -2,6 +2,7 @@ import { Router, Utils, Lightning, Colors } from '@lightningjs/sdk'
 import routes from '../src/routes'
 import Navbar from '../src/components/Navbar/index'
 import LoadingScreenComponent from './components/LOadingScreenComponent'
+import '@lightningjs/core/inspector'
 
 export default class App extends Router.App {
   static getFonts() {
@@ -38,7 +39,8 @@ export default class App extends Router.App {
       Background: {
         w: 1920,
         h: 1080,
-        src: Utils.asset('images/background.jpg'),
+        rect: true,
+        color: Colors('#151515').get(),
         zIndex: -1,
       },
     }

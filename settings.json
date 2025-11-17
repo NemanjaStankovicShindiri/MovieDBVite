@@ -11,13 +11,18 @@
       "pauseRafLoopOnIdle": true,
       "defaultFontFace": "Montserrat-Regular"
     },
-    "debug": true,
+    "debug": false,
     "keys": {}
   },
   "platformSettings": {
     "path": "./static",
     "log": false,
     "showVersion": false,
-    "inspector": true
+    "inspector": true,
+    "showFps": {
+      "interval": 300,
+      "log": true,
+      "threshold": 3
+    }
   }
 }

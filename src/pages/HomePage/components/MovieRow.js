@@ -1,9 +1,9 @@
-import { Lightning, Router } from "@lightningjs/sdk";
-import HorizontalContainer from "../../../components/HorizontalContainer";
-import Card from "../../../components/Card";
+import { Lightning } from '@lightningjs/sdk'
+import HorizontalContainer from '../../../components/HorizontalContainer'
+import Card from '../../../components/Card'
 
 export default class MovieRow extends Lightning.Component {
-  _railLabel = null;
+  _railLabel = null
   static _template() {
     return {
       Row: {
@@ -12,47 +12,47 @@ export default class MovieRow extends Lightning.Component {
         type: HorizontalContainer,
         disableScroll: true,
       },
-    };
+    }
   }
 
   get _Row() {
-    return this.tag("Row");
+    return this.tag('Row')
   }
 
   set props(props) {
-    const { items, raillabel } = props;
-    this._railLabel = raillabel;
+    const { items, raillabel } = props
+    this._railLabel = raillabel
     const cards = items.map((item) => ({
       type: Card,
       props: {
-        image: `${"https://image.tmdb.org/t/p/w300"}${item.poster_path}`,
+        image: `${'https://image.tmdb.org/t/p/w300'}${item.poster_path}`,
         label: item.title,
         id: item.id,
         type: raillabel.toLowerCase(),
         overview: item.overview,
       },
-    }));
+    }))
 
     this.patch({
       Row: {
         props: {
-          disableScroll: true,
           items: cards,
           railTitle: raillabel,
+          disableScroll: true,
         },
       },
-    });
+    })
   }
 
   _getFocused() {
-    return this._Row._getFocused();
+    return this._Row._getFocused()
   }
 
   _handleLeft() {
-    return this._Row._handleLeft();
+    return this._Row._handleLeft()
   }
 
   _handleRight() {
-    return this._Row._handleRight();
+    return this._Row._handleRight()
   }
 }

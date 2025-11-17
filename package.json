@@ -2,7 +2,8 @@
   "name": "moviedb",
   "description": "MovieDB",
   "dependencies": {
-    "@lightningjs/sdk": "^5.5.4",
+    "@lightningjs/sdk": "^5.5.6",
+    "@lightningjs/core": "^2.16.1",
     "@lightningjs/ui-components": "^2.25.1",
     "@vitejs/plugin-legacy": "^7.2.1",
     "axios": "^1.13.1",
@@ -18,7 +19,7 @@
     ]
   },
   "scripts": {
-    "start": "concurrently \"cross-env LNG_LIVE_RELOAD=true LNG_LIVE_RELOAD_PORT=8991 lng dev\" \"vite\"",
+    "start": "vite",
     "prepare": "husky install"
   },
   "devDependencies": {

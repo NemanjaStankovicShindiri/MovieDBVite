@@ -8,7 +8,7 @@ module.exports = {
   plugins: ['prettier'],
   extends: ['eslint:recommended', 'plugin:prettier/recommended', 'prettier'],
   rules: {
-    quotes: [2, 'single', 'avoid-escape'],
+    quotes: ['error', 'single'],
     semi: [2, 'never'],
     'no-extra-boolean-cast': 'off',
     'no-unused-vars': [
