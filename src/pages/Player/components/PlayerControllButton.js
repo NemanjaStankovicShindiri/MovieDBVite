@@ -1,11 +1,11 @@
-import { Colors, Lightning, VideoPlayer, Utils } from '@lightningjs/sdk';
+import { Colors, Lightning, Utils } from '@lightningjs/sdk';
 
 export default class PlayerControllButton extends Lightning.Component {
   _props = {
-    label: '',
+    callback: null,
   };
   set props(props) {
-    const { w, h, src, label } = props;
+    const { w, h, src, label, callback } = props;
     this.patch({
       w: w,
       h: h,
@@ -15,6 +15,7 @@ export default class PlayerControllButton extends Lightning.Component {
       color: Colors('#ffffff').alpha(0.3).get(),
     });
     this._props.label = label;
+    this._props.callback = callback;
   }
 
   _focus() {
@@ -25,42 +26,7 @@ export default class PlayerControllButton extends Lightning.Component {
     this.patch({ color: Colors('#ffffff').alpha(0.3).get() });
   }
 
-  _handleEnter(e) {
-    const { label } = this._props;
-    switch (label) {
-      case 'back': {
-        this._handleBack(e);
-        break;
-      }
-      case 'rewind': {
-        this._handleBackwards();
-        break;
-      }
-      case 'playPause': {
-        this._handlePlayPause();
-        break;
-      }
-      case 'forward': {
-        this._handleForward();
-        break;
-      }
-    }
-  }
-  _handleBack(e) {
-    e.preventDefault();
-    this.fireAncestors('$exitVideo', e);
-  }
-  _handleForward() {
-    VideoPlayer.skip(5);
-  }
-  _handleBackwards() {
-    VideoPlayer.skip(-5);
-  }
-  _handlePlayPause() {
-    VideoPlayer.playPause();
-    const isPlaying = VideoPlayer.playing;
-    this.patch({
-      src: Utils.asset('images/player/' + (isPlaying ? 'play.png' : 'pause.png')),
-    });
+  _handleEnter() {
+    this._props.callback();
   }
 }

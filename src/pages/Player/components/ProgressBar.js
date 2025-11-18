@@ -113,7 +113,6 @@ export default class ProgressBar extends Lightning.Component {
   }
 
   _handleRight() {
-    console.log('WSTV right');
     if (this._newTime == null) {
       this._newTime = VideoPlayer.currentTime;
     }

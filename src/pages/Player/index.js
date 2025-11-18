@@ -4,13 +4,13 @@ import PlayerControllButton from './components/PlayerControllButton';
 import HorizontalContainer from '../../components/HorizontalContainer';
 import ProgressBar from './components/ProgressBar';
 import formatTimeHMS from './utils/formatTimeHMS.js';
-const buttons = [
-  { label: 'rewind', src: 'rewind.png', size: 66 },
-  { label: 'playPause', src: 'pause.png', size: 90 },
-  { label: 'forward', src: 'forward.png', size: 66 },
-];
 export default class Player extends Lightning.Component {
-  _isPlaying = false;
+  _isPlaying = true;
+  _buttons = [
+    { label: 'rewind', src: 'rewind.png', size: 66, handler: '_handleBackwards' },
+    { label: 'playPause', src: 'pause.png', size: 90, handler: '_handlePlayPause' },
+    { label: 'forward', src: 'forward.png', size: 66, handler: '_handleForward' },
+  ];
   static _template() {
     return {
       x: 0,
@@ -41,12 +41,6 @@ export default class Player extends Lightning.Component {
             y: 45,
             type: PlayerControllButton,
             color: Colors('#ffffff').alpha(0.3).get(),
-            props: {
-              w: 66,
-              h: 66,
-              src: 'images/player/back.png',
-              label: 'back',
-            },
           },
           CenteredButtonWrapper: {
             x: 845,
@@ -69,9 +63,22 @@ export default class Player extends Lightning.Component {
       },
     };
   }
-
+  _handleBack() {
+    this.$exitVideo();
+  }
+  _handleForward() {
+    VideoPlayer.skip(5);
+  }
+  _handleBackwards() {
+    VideoPlayer.skip(-5);
+  }
+  _handlePlayPause() {
+    VideoPlayer.playPause();
+    this._isPlaying = !this._isPlaying;
+    this.$setIsPlaying(this._isPlaying);
+  }
   _init() {
-    const buttonsMaped = buttons.map((item) => ({
+    const buttonsMaped = this._buttons.map((item) => ({
       type: PlayerControllButton,
       props: {
         w: item.size,
@@ -79,11 +86,21 @@ export default class Player extends Lightning.Component {
         src: 'images/player/' + item.src,
         label: item.label,
         flex: { alignSelf: 'center' },
+        callback: this[item.handler].bind(this),
       },
     }));
     this.patch({
       Controller: {
         ButtonWrapper: {
+          BackButton: {
+            props: {
+              w: 66,
+              h: 66,
+              src: 'images/player/back.png',
+              label: 'back',
+              callback: this._handleBack.bind(this),
+            },
+          },
           CenteredButtonWrapper: {
             props: { items: buttonsMaped, targetIndex: 1, disableScroll: true },
           },
@@ -93,14 +110,10 @@ export default class Player extends Lightning.Component {
     this._setState('CenteredButtonWrapper');
     this._spin();
   }
-
   $setIsPlaying(status) {
     this._isPlaying = status;
-    const playButton = this._CenteredButtonWrapper.Items.children.find(
-      (element) => element._props.label === 'playPause'
-    );
-    playButton.patch({
-      src: Utils.asset(status ? 'images/player/pause.png' : 'images/player/play.png'),
+    this._PlayPauseButton.patch({
+      src: Utils.asset(this._isPlaying ? 'images/player/pause.png' : 'images/player/play.png'),
     });
   }
 
@@ -152,9 +165,9 @@ export default class Player extends Lightning.Component {
   $videoPlayerLoadStart() {
     console.log('videoPlayerLoadStart');
   }
-  $videoPlayerPlaying() {
-    this._isPlaying = true;
-  }
+  // $videoPlayerPlaying() {
+  //   this._isPlaying = true;
+  // }
   $videoPlayerProgress() {
     console.log('videoPlayerProgress');
   }
@@ -222,7 +235,9 @@ export default class Player extends Lightning.Component {
   }
 
   get _PlayPauseButton() {
-    return this.tag('PlayPauseButton');
+    return this._CenteredButtonWrapper.Items.children.find(
+      (element) => element._props.label === 'playPause'
+    );
   }
 
   get _Forward() {
