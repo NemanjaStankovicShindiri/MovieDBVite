@@ -18,11 +18,6 @@
     "path": "./static",
     "log": false,
     "showVersion": false,
-    "inspector": true,
-    "showFps": {
-      "interval": 300,
-      "log": true,
-      "threshold": 3
-    }
+    "inspector": true
   }
 }

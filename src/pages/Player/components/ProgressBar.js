@@ -3,7 +3,7 @@ import formatTimeHMS from '../utils/formatTimeHMS'
 
 export default class ProgressBar extends Lightning.Component {
   _timer = null
-  numOfTicks = 0
+  _newTime = null
   static _template() {
     return {
       w: 1690,
@@ -99,12 +99,10 @@ export default class ProgressBar extends Lightning.Component {
   progress(progress) {
     this._RedRect.setSmooth('w', progress)
     this._FocusPoint.setSmooth('x', progress)
-    // console.log(progress);
-    // console.log(this.numOfTicks);
   }
 
-  _updateProgressBar(seekTime) {
-    const newTimeToShow = seekTime ? seekTime : VideoPlayer.currentTime
+  _updateProgressBar() {
+    const newTimeToShow = this._newTime != null ? this._newTime : VideoPlayer.currentTime
     this.patch({
       CurrentTime: {
         text: formatTimeHMS(newTimeToShow),
@@ -115,10 +113,13 @@ export default class ProgressBar extends Lightning.Component {
   }
 
   _handleRight() {
+    if (this._newTime == null) {
+      this._newTime = VideoPlayer.currentTime
+    }
     if (VideoPlayer.playing) VideoPlayer.pause()
-    this.numOfTicks++
-    const seekTime = this.computeSeekTime()
-    this._updateProgressBar(seekTime)
+    this.fireAncestors('$setIsPlaying', false)
+    this._newTime = this.computeSeekTime(5)
+    this._updateProgressBar()
     this.startTimer(true)
   }
 
@@ -127,10 +128,13 @@ export default class ProgressBar extends Lightning.Component {
   }
 
   _handleLeft() {
+    if (this._newTime == null) {
+      this._newTime = VideoPlayer.currentTime
+    }
     if (VideoPlayer.playing) VideoPlayer.pause()
-    this.numOfTicks--
-    var seekTime = this.computeSeekTime()
-    this._updateProgressBar(seekTime)
+    this.fireAncestors('$setIsPlaying', false)
+    this._newTime = this.computeSeekTime(-5)
+    this._updateProgressBar()
     this.startTimer(false)
   }
 
@@ -139,30 +143,41 @@ export default class ProgressBar extends Lightning.Component {
   }
 
   _handleBack() {
-    this.numOfTicks = 0
+    if (this._newTime === VideoPlayer.currentTime || this._newTime === null) return false
+    this._newTime = null
     this._updateProgressBar()
     return true
   }
 
   _handleEnter() {
-    const seekTime = this.computeSeekTime()
-    VideoPlayer.seek(seekTime)
-    VideoPlayer.play()
-    this.numOfTicks = 0
+    if (this._newTime !== null && this._newTime !== VideoPlayer.currentTime) {
+      VideoPlayer.seek(this._newTime)
+      VideoPlayer.play()
+      this.fireAncestors('$setIsPlaying', true)
+    } else {
+      if (VideoPlayer.playing) {
+        VideoPlayer.pause()
+        this.fireAncestors('$setIsPlaying', false)
+      } else {
+        VideoPlayer.play()
+        this.fireAncestors('$setIsPlaying', true)
+      }
+    }
+    this._newTime = null
   }
 
   startTimer(forward) {
     if (this._timer) return
     this._timer = setInterval(() => {
-      forward ? this.numOfTicks++ : this.numOfTicks--
+      this._newTime = forward ? this.computeSeekTime(5) : this.computeSeekTime(-5)
       if (VideoPlayer.playing) VideoPlayer.pause()
-      const seekTime = this.computeSeekTime()
-      this._updateProgressBar(seekTime)
+      this.fireAncestors('$setIsPlaying', false)
+      this._updateProgressBar()
     }, 300)
   }
 
-  computeSeekTime() {
-    const seekTime = VideoPlayer.currentTime + this.numOfTicks * 5
+  computeSeekTime(timeToAdd) {
+    const seekTime = this._newTime + timeToAdd
     return seekTime < 0 ? 0 : seekTime > VideoPlayer.duration ? VideoPlayer.duration : seekTime
   }
 
@@ -193,8 +208,8 @@ export default class ProgressBar extends Lightning.Component {
   }
   _unfocus() {
     this._FocusPoint.visible = false
-    if (this.numOfTicks !== 0) {
-      this.numOfTicks = 0
+    if (this._newTime !== 0) {
+      this._newTime = null
       this._updateProgressBar()
     }
     this.patch({

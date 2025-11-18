@@ -10,6 +10,7 @@ const buttons = [
   { label: 'forward', src: 'forward.png', size: 66 },
 ]
 export default class Player extends Lightning.Component {
+  _isPlaying = false
   static _template() {
     return {
       x: 0,
@@ -37,8 +38,7 @@ export default class Player extends Lightning.Component {
           w: 995,
           h: 90,
           BackButton: {
-            w: 66,
-            h: 66,
+            y: 45,
             type: PlayerControllButton,
             color: Colors('#ffffff').alpha(0.3).get(),
             props: {
@@ -50,6 +50,7 @@ export default class Player extends Lightning.Component {
           },
           CenteredButtonWrapper: {
             x: 845,
+            y: 45,
             mountX: 0.5,
             w: 312,
             h: 200,
@@ -93,6 +94,20 @@ export default class Player extends Lightning.Component {
     this._spin()
   }
 
+  $setIsPlaying(status) {
+    this._isPlaying = status
+    const playButton = this._CenteredButtonWrapper.Items.children.find(
+      (element) => element._props.label === 'playPause',
+    )
+    playButton.patch({
+      src: Utils.asset(status ? 'images/player/pause.png' : 'images/player/play.png'),
+    })
+  }
+
+  $getIsPlaying() {
+    return this._isPlaying
+  }
+
   $videoPlayerLoadedData() {
     this._ProgressBar._EndTime.patch({
       text: {
@@ -120,10 +135,10 @@ export default class Player extends Lightning.Component {
     console.log('videoPlayerEncrypted')
   }
   $videoPlayerEnded() {
-    console.log('videoPlayerEnded')
+    this.$setIsPlaying(false)
   }
-  $videoPlayerError() {
-    console.log('videoPlayerError')
+  $videoPlayerError(e) {
+    if (e.event.name === 'NotAllowedError') Router.navigate('home')
   }
   $videoPlayerInterruptBegin() {
     console.log('videoPlayerInterruptBegin')
@@ -137,11 +152,8 @@ export default class Player extends Lightning.Component {
   $videoPlayerLoadStart() {
     console.log('videoPlayerLoadStart')
   }
-  $videoPlayerPlay() {
-    console.log('videoPlayerPlay')
-  }
   $videoPlayerPlaying() {
-    console.log('videoPlayerPlaying')
+    this._isPlaying = true
   }
   $videoPlayerProgress() {
     console.log('videoPlayerProgress')
@@ -159,7 +171,6 @@ export default class Player extends Lightning.Component {
     console.log('videoPlayerStalled')
   }
   $videoPlayerTimeUpdate() {
-    console.log('time updated')
     this._ProgressBar._updateProgressBar()
   }
   $videoPlayerVolumeChange() {
@@ -277,6 +288,9 @@ export default class Player extends Lightning.Component {
           return this._ProgressBar
         }
         _handleUp() {
+          this._setState('CenteredButtonWrapper')
+        }
+        _handleBack() {
           this._setState('CenteredButtonWrapper')
         }
       },
