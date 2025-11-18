@@ -1,8 +1,8 @@
-import { Router, Utils, Lightning, Colors } from '@lightningjs/sdk'
-import routes from '../src/routes'
-import Navbar from '../src/components/Navbar/index'
-import LoadingScreenComponent from './components/LOadingScreenComponent'
-import '@lightningjs/core/inspector'
+import { Router, Utils, Lightning, Colors } from '@lightningjs/sdk';
+import routes from '../src/routes';
+import Navbar from '../src/components/Navbar/index';
+import LoadingScreenComponent from './components/LoadingScreenComponent';
+import '@lightningjs/core/inspector';
 
 export default class App extends Router.App {
   static getFonts() {
@@ -16,7 +16,7 @@ export default class App extends Router.App {
         family: 'InterRegular',
         url: Utils.asset('fonts/Inter_18pt-Regular.ttf'),
       },
-    ]
+    ];
   }
 
   static _template() {
@@ -43,7 +43,7 @@ export default class App extends Router.App {
         color: Colors('#151515').get(),
         zIndex: -1,
       },
-    }
+    };
   }
 
   _setup() {
@@ -53,11 +53,11 @@ export default class App extends Router.App {
         afterEachRoute: (request) => {
           this.patch({
             Widgets: { Menu: { props: { route: request._hash } } },
-          })
+          });
         },
       },
-      this,
-    )
+      this
+    );
   }
 
   $punchHole() {
@@ -68,7 +68,7 @@ export default class App extends Router.App {
       y: 0,
       w: 1920,
       h: 1080,
-    }
+    };
   }
   $unpunchHole() {
     this.tag('Background').shader = {
@@ -76,6 +76,6 @@ export default class App extends Router.App {
       y: 0,
       w: 0,
       h: 0,
-    }
+    };
   }
 }

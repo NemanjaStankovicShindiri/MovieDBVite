@@ -1,11 +1,11 @@
-import { Lightning, Utils, Router } from "@lightningjs/sdk";
-import HorizontalContainer from "../HorizontalContainer";
-import NavbarButton from "./NavbarButton";
-import MEDIA_TYPE from "../../consts/mediaType";
-import { getRouteNavbarIndex } from "../../utils/getRouteNavbarIndex";
+import { Lightning, Utils } from '@lightningjs/sdk';
+import HorizontalContainer from '../HorizontalContainer';
+import NavbarButton from './NavbarButton';
+import MEDIA_TYPE from '../../consts/mediaType';
+import { getRouteNavbarIndex } from '../../utils/getRouteNavbarIndex';
 
 const buttons = [
-  { label: "HOME", route: "home" },
+  { label: 'HOME', route: 'home' },
   { label: MEDIA_TYPE.MOVIES, route: MEDIA_TYPE.MOVIES.toLowerCase() },
   { label: MEDIA_TYPE.SERIES, route: MEDIA_TYPE.SERIES.toLowerCase() },
 ];
@@ -20,10 +20,10 @@ export default class Navbar extends Lightning.Component {
       y: 32,
       w: 1841,
       h: 60,
-      flex: { direction: "row" },
+      flex: { direction: 'row' },
       color: 0x00000000,
       Logo: {
-        src: Utils.asset("images/icon.png"),
+        src: Utils.asset('images/icon.png'),
         w: 301.8,
         h: 60,
         flexItem: { marginRight: 60 },
@@ -36,7 +36,7 @@ export default class Navbar extends Lightning.Component {
         x: -20,
         color: 0x00000000,
         flexItem: {
-          alignSelf: "center",
+          alignSelf: 'center',
         },
         type: HorizontalContainer,
         props: { w: 674 },
@@ -56,7 +56,7 @@ export default class Navbar extends Lightning.Component {
       Buttons: {
         props: {
           items: buttonsMaped,
-          railTitle: "",
+          railTitle: '',
         },
       },
     });
@@ -80,7 +80,7 @@ export default class Navbar extends Lightning.Component {
   }
 
   get _Buttons() {
-    return this.tag("Buttons");
+    return this.tag('Buttons');
   }
 
   _getFocused() {

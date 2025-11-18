@@ -1,5 +1,5 @@
-import Lightning from "@lightningjs/sdk/src/Lightning";
-import { clamp } from "../utils/clamp";
+import Lightning from '@lightningjs/sdk/src/Lightning';
+import { clamp } from '../utils/clamp';
 
 export default class HorizontalContainer extends Lightning.Component {
   _props = {
@@ -12,22 +12,22 @@ export default class HorizontalContainer extends Lightning.Component {
 
   static _template() {
     return {
-      flex: { direction: "row", wrap: true },
+      flex: { direction: 'row', wrap: true },
       Title: {},
       Items: {
         y: 0,
         flex: {
-          direction: "row",
+          direction: 'row',
         },
       },
     };
   }
   get Items() {
-    return this.tag("Items");
+    return this.tag('Items');
   }
 
   get Title() {
-    return this.tag("Title");
+    return this.tag('Title');
   }
 
   get _focusedIndex() {
@@ -55,11 +55,7 @@ export default class HorizontalContainer extends Lightning.Component {
     this._focusedIndex = clamp(newIndex, 0, this._props.items.length - 1);
     //this._focusedIndex = newIndex;
     this._reCalibrateScroll();
-    this.fireAncestors(
-      "$horizontalContainerIndexChange",
-      this._focusedIndex,
-      this._scrollPosition
-    );
+    this.fireAncestors('$horizontalContainerIndexChange', this._focusedIndex, this._scrollPosition);
   }
 
   set props(props) {
@@ -68,7 +64,7 @@ export default class HorizontalContainer extends Lightning.Component {
 
     const { cardType, targetIndex } = rest;
 
-    if (railTitle && railTitle !== "") {
+    if (railTitle && railTitle !== '') {
       const { h } = rest;
       this.Items.patch({
         y: 0,
@@ -81,10 +77,10 @@ export default class HorizontalContainer extends Lightning.Component {
           h: 45,
           text: {
             text: railTitle,
-            fontFace: "InterBold",
+            fontFace: 'InterBold',
             fontSize: 24,
             letterSpacing: 6,
-            textTransform: "uppercase",
+            textTransform: 'uppercase',
           },
         },
       });
@@ -113,7 +109,7 @@ export default class HorizontalContainer extends Lightning.Component {
         this._focusedIndex = items?.length > 0 ? 0 : -1;
       }
       // todo: change to paddingLeft
-      if (cardType === "EPG_CARD_ITEM") {
+      if (cardType === 'EPG_CARD_ITEM') {
         this.Items.children[0].patch({
           flex: {
             paddingLeft: this._props.paddingLeft,
@@ -149,10 +145,7 @@ export default class HorizontalContainer extends Lightning.Component {
         // column from the start of the container in EPG-s
         const paddingOffset = currentFocus.flex?._paddingLeft ?? 0;
         this._scrollPosition = -elementX - paddingOffset;
-      } else if (
-        elementX + elementW >
-        containerFinalWidth - this._scrollPosition
-      ) {
+      } else if (elementX + elementW > containerFinalWidth - this._scrollPosition) {
         this._scrollPosition = -(elementX + elementW - containerFinalWidth);
       }
 
@@ -177,37 +170,26 @@ export default class HorizontalContainer extends Lightning.Component {
 
     const parentContainer = this.parent.parent.ref;
     const indexForVC = this.parent.children.indexOf(this);
-    const constructorName =
-      this.Items.children[this._focusedIndex]?.constructor.name;
+    const constructorName = this.Items.children[this._focusedIndex]?.constructor.name;
 
-    if (
-      constructorName === "PosterRailItem" &&
-      parentContainer === "VODSection"
-    ) {
+    if (constructorName === 'PosterRailItem' && parentContainer === 'VODSection') {
       //case for search page
-      verticalState = "VODSection";
+      verticalState = 'VODSection';
     }
-    if (
-      constructorName === "PosterRailItem" &&
-      parentContainer !== "VODSection"
-    ) {
-      verticalState = "VodContainer";
+    if (constructorName === 'PosterRailItem' && parentContainer !== 'VODSection') {
+      verticalState = 'VodContainer';
     }
-    if (constructorName === "SportsEventsRailItem") {
-      verticalState = "VodContentContainer";
+    if (constructorName === 'SportsEventsRailItem') {
+      verticalState = 'VodContentContainer';
     }
-    if (constructorName === "LandscapeRailItem") {
-      verticalState = "Items";
+    if (constructorName === 'LandscapeRailItem') {
+      verticalState = 'Items';
     }
-    if (constructorName === "EPGRailItems") {
-      verticalState = "EPGS";
+    if (constructorName === 'EPGRailItems') {
+      verticalState = 'EPGS';
     }
 
-    this.fireAncestors(
-      "$horizontalContainerPosterIndexChange",
-      indexForVC,
-      verticalState
-    );
+    this.fireAncestors('$horizontalContainerPosterIndexChange', indexForVC, verticalState);
   }
 
   _handleRight() {
@@ -218,7 +200,7 @@ export default class HorizontalContainer extends Lightning.Component {
       this._focusedIndex += 1;
       this._reCalibrateScroll();
       this.fireAncestors(
-        "$horizontalContainerIndexChange",
+        '$horizontalContainerIndexChange',
         this._focusedIndex,
         this._scrollPosition
       );
@@ -235,7 +217,7 @@ export default class HorizontalContainer extends Lightning.Component {
       this._focusedIndex -= 1;
       this._reCalibrateScroll();
       this.fireAncestors(
-        "$horizontalContainerIndexChange",
+        '$horizontalContainerIndexChange',
         this._focusedIndex,
         this._scrollPosition
       );
@@ -248,7 +230,7 @@ export default class HorizontalContainer extends Lightning.Component {
   _handleEnter() {
     const focusedItem = this.Items.children[this._focusedIndex];
     if (focusedItem) {
-      focusedItem.signal("select");
+      focusedItem.signal('select');
     }
     return true;
   }

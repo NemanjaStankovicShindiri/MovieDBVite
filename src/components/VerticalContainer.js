@@ -1,9 +1,9 @@
-import { Lightning } from "@lightningjs/sdk";
+import { Lightning } from '@lightningjs/sdk';
 
 export default class VerticalContainer extends Lightning.Component {
   _props = {
     items: [],
-    title: "",
+    title: '',
     enableScroll: false,
   };
   _focusedIndex = 0;
@@ -11,22 +11,22 @@ export default class VerticalContainer extends Lightning.Component {
 
   static _template() {
     return {
-      flex: { direction: "column" },
+      flex: { direction: 'column' },
       Title: {
         visible: false,
       },
       Items: {
-        flex: { direction: "column" },
+        flex: { direction: 'column' },
       },
     };
   }
 
   get Items() {
-    return this.tag("Items");
+    return this.tag('Items');
   }
 
   get Title() {
-    return this.tag("Title");
+    return this.tag('Title');
   }
 
   set props(props) {
@@ -48,10 +48,9 @@ export default class VerticalContainer extends Lightning.Component {
 
     if (w) this.patch({ w });
     if (h) this.patch({ h });
-    if (title && title !== "") {
-      const alignment = titleAlign || "left";
-      const marginBottom =
-        titleMarginBottom !== undefined ? titleMarginBottom : 20;
+    if (title && title !== '') {
+      const alignment = titleAlign || 'left';
+      const marginBottom = titleMarginBottom !== undefined ? titleMarginBottom : 20;
       const marginTop = titleMarginTop !== undefined ? titleMarginTop : 0;
 
       this.Title.patch({
@@ -63,17 +62,17 @@ export default class VerticalContainer extends Lightning.Component {
         text: {
           text: title,
           fontSize: titleFontSize || 40,
-          fontFace: titleFontFace || "Montserrat-Medium",
+          fontFace: titleFontFace || 'Montserrat-Medium',
           textColor: titleColor || 0xffffffff,
         },
       });
 
-      if (alignment === "center" && w) {
+      if (alignment === 'center' && w) {
         this.Title.patch({
           mount: 0.5,
           x: w / 2,
         });
-      } else if (alignment === "right" && w) {
+      } else if (alignment === 'right' && w) {
         this.Title.patch({
           mount: 1,
           x: w,

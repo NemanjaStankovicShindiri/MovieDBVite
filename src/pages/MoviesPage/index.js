@@ -1,10 +1,10 @@
-import { Lightning, Router, Colors } from '@lightningjs/sdk'
-import HorizontalContainer from '../../components/HorizontalContainer'
-import Card from '../../components/Card'
-import { Img } from '@lightningjs/sdk'
-import { debounce } from 'lodash'
-import MEDIA_TYPE from '../../consts/mediaType'
-import handleBack from '../../utils/handleBack'
+import { Lightning, Router, Colors } from '@lightningjs/sdk';
+import HorizontalContainer from '../../components/HorizontalContainer';
+import Card from '../../components/Card';
+import { Img } from '@lightningjs/sdk';
+import { debounce } from 'lodash';
+import MEDIA_TYPE from '../../consts/mediaType';
+import handleBack from '../../utils/handleBack';
 
 export default class MoviesPage extends Lightning.Component {
   static _template() {
@@ -58,7 +58,7 @@ export default class MoviesPage extends Lightning.Component {
           type: HorizontalContainer,
         },
       },
-    }
+    };
   }
 
   _debouncedChangeHero = debounce((backdrop_path, title, overview) => {
@@ -72,7 +72,7 @@ export default class MoviesPage extends Lightning.Component {
           v: { 0: 0, 1: 1 },
         },
       ],
-    })
+    });
     this.patch({
       Background: {
         Hero: {
@@ -83,29 +83,29 @@ export default class MoviesPage extends Lightning.Component {
           },
         },
       },
-    })
-    fadeIn.start()
-  }, 500)
+    });
+    fadeIn.start();
+  }, 500);
 
   changeHeroBackground(backdrop_path, title, overview) {
-    this._debouncedChangeHero(backdrop_path, title, overview)
+    this._debouncedChangeHero(backdrop_path, title, overview);
   }
   get _Slider() {
-    return this.tag('Slider')
+    return this.tag('Slider');
   }
   get _Hero() {
-    return this.tag('Hero')
+    return this.tag('Hero');
   }
   _getFocused() {
-    return this._Slider._getFocused()
+    return this._Slider._getFocused();
   }
 
   _init() {
-    this._setState('Slider')
+    this._setState('Slider');
   }
 
   _handleBack(e) {
-    handleBack(e)
+    handleBack(e);
   }
 
   set props(props) {
@@ -123,8 +123,8 @@ export default class MoviesPage extends Lightning.Component {
           type: MEDIA_TYPE.MOVIES.toLowerCase(),
           overview: item.overview,
         },
-      }
-    })
+      };
+    });
 
     // Movie -> HC (signals) -> passSignal
 
@@ -156,18 +156,18 @@ export default class MoviesPage extends Lightning.Component {
         colorTop: Colors('#151515').alpha(0).get(),
         colorBottom: Colors('#151515').get(),
       },
-    })
+    });
   }
   static _states() {
     return [
       class Slider extends this {
         _getFocused() {
-          return this._Slider
+          return this._Slider;
         }
         _handleUp() {
-          Router.focusWidget('Menu')
+          Router.focusWidget('Menu');
         }
       },
-    ]
+    ];
   }
 }

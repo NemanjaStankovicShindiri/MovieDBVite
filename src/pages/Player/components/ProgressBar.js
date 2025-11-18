@@ -1,5 +1,5 @@
 import { Colors, Lightning, VideoPlayer } from '@lightningjs/sdk';
-import formatTimeHMS from '../utils/formatTimeHMS';
+import formatTimeHMS from '../utils/formatTimeHMS.js';
 
 export default class ProgressBar extends Lightning.Component {
   _timer = null;
@@ -113,6 +113,7 @@ export default class ProgressBar extends Lightning.Component {
   }
 
   _handleRight() {
+    console.log('WSTV right');
     if (this._newTime == null) {
       this._newTime = VideoPlayer.currentTime;
     }
@@ -120,11 +121,7 @@ export default class ProgressBar extends Lightning.Component {
     this.fireAncestors('$setIsPlaying', false);
     this._newTime = this.computeSeekTime(5);
     this._updateProgressBar();
-    this.startTimer(true);
-  }
-
-  _handleRightRelease() {
-    this.stopTimer();
+    // this.startTimer(true);
   }
 
   _handleLeft() {
@@ -135,11 +132,7 @@ export default class ProgressBar extends Lightning.Component {
     this.fireAncestors('$setIsPlaying', false);
     this._newTime = this.computeSeekTime(-5);
     this._updateProgressBar();
-    this.startTimer(false);
-  }
-
-  _handleLeftRelease() {
-    this.stopTimer();
+    // this.startTimer(false);
   }
 
   _handleBack() {
@@ -166,27 +159,28 @@ export default class ProgressBar extends Lightning.Component {
     this._newTime = null;
   }
 
-  startTimer(forward) {
-    if (this._timer) return;
-    this._timer = setInterval(() => {
-      this._newTime = forward ? this.computeSeekTime(5) : this.computeSeekTime(-5);
-      if (VideoPlayer.playing) VideoPlayer.pause();
-      this.fireAncestors('$setIsPlaying', false);
-      this._updateProgressBar();
-    }, 300);
-  }
+  // startTimer(forward) {
+  //   if (this._timer) return;
+  //   this._timer = setInterval(() => {
+  //     console.log('WSTV');
+  //     this._newTime = forward ? this.computeSeekTime(5) : this.computeSeekTime(-5);
+  //     if (VideoPlayer.playing) VideoPlayer.pause();
+  //     this.fireAncestors('$setIsPlaying', false);
+  //     this._updateProgressBar();
+  //   }, 1000);
+  // }
 
   computeSeekTime(timeToAdd) {
     const seekTime = this._newTime + timeToAdd;
     return seekTime < 0 ? 0 : seekTime > VideoPlayer.duration ? VideoPlayer.duration : seekTime;
   }
 
-  stopTimer() {
-    if (!this._timer) return;
+  // stopTimer() {
+  //   if (!this._timer) return;
 
-    clearInterval(this._timer);
-    this._timer = null;
-  }
+  //   clearInterval(this._timer);
+  //   this._timer = null;
+  // }
 
   _focus() {
     this._FocusPoint.visible = true;

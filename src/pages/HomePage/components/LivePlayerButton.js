@@ -1,5 +1,4 @@
-import Lightning from "@lightningjs/sdk/src/Lightning";
-import { Utils } from "@lightningjs/sdk";
+import Lightning from '@lightningjs/sdk/src/Lightning';
 export default class LivePlayerButton extends Lightning.Component {
   static _template() {
     return {
@@ -15,9 +14,9 @@ export default class LivePlayerButton extends Lightning.Component {
         stroke: 0,
       },
       flex: {
-        direction: "column",
-        alignItems: "center",
-        justifyContent: "center",
+        direction: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
       },
       flexItem: {
         paddingLeft: 24,
@@ -28,10 +27,10 @@ export default class LivePlayerButton extends Lightning.Component {
       },
       Label: {
         text: {
-          text: "GO TO LIVE PLAYER",
+          text: 'GO TO LIVE PLAYER',
           textColor: 0xffffffff,
           fontSize: 24,
-          fontFace: "InterSemiBold",
+          fontFace: 'InterSemiBold',
           letterSpacing: 6,
         },
       },

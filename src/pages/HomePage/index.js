@@ -1,15 +1,14 @@
-import { Lightning, Utils, Router } from "@lightningjs/sdk";
-import ContentSection from "./components/ContentSection";
-import TopChannels from "./components/topChannels/TopChannels";
-import LivePlayerButton from "./components/LivePlayerButton";
-import { getRouteNavbarIndex } from "../../utils/getRouteNavbarIndex";
+import { Lightning, Utils, Router } from '@lightningjs/sdk';
+import ContentSection from './components/ContentSection';
+import TopChannels from './components/topChannels/TopChannels';
+import LivePlayerButton from './components/LivePlayerButton';
 
 const topChannelsData = [
-  { name: "CBS", image: "CBS.png" },
-  { name: "NBC", image: "NBC.png" },
-  { name: "ABC", image: "ABC.png" },
-  { name: "Fox", image: "FOX.png" },
-  { name: "Fox News Channel", image: "FNC.png" },
+  { name: 'CBS', image: 'CBS.png' },
+  { name: 'NBC', image: 'NBC.png' },
+  { name: 'ABC', image: 'ABC.png' },
+  { name: 'Fox', image: 'FOX.png' },
+  { name: 'Fox News Channel', image: 'FNC.png' },
 ];
 
 export default class HomePage extends Lightning.Component {
@@ -26,7 +25,7 @@ export default class HomePage extends Lightning.Component {
         y: 0,
         w: 1920,
         h: 1080,
-        src: Utils.asset("images/background.jpg"),
+        src: Utils.asset('images/background.jpg'),
         clipping: true,
       },
       RectangleWithGradientDiagonal: {
@@ -59,14 +58,14 @@ export default class HomePage extends Lightning.Component {
   }
 
   _init() {
-    this._setState("Content");
+    this._setState('Content');
   }
 
   get _Content() {
-    return this.tag("Content");
+    return this.tag('Content');
   }
   get _TopChannels() {
-    return this.tag("TopChannels");
+    return this.tag('TopChannels');
   }
 
   set props(props) {
@@ -79,7 +78,7 @@ export default class HomePage extends Lightning.Component {
   }
 
   get _LivePlayerButton() {
-    return this.tag("LivePlayerButton");
+    return this.tag('LivePlayerButton');
   }
 
   _handleBack(e) {
@@ -92,14 +91,14 @@ export default class HomePage extends Lightning.Component {
           return this._Content;
         }
         _handleUp() {
-          Router.focusWidget("Menu");
+          Router.focusWidget('Menu');
         }
         _handleRight() {
-          this._setState("TopChannels");
+          this._setState('TopChannels');
           return true;
         }
         _handleDown() {
-          this._setState("LivePlayerButton");
+          this._setState('LivePlayerButton');
           return true;
         }
       },
@@ -108,7 +107,7 @@ export default class HomePage extends Lightning.Component {
           return this._TopChannels;
         }
         _handleLeft() {
-          this._setState("Content");
+          this._setState('Content');
           return true;
         }
       },
@@ -117,7 +116,7 @@ export default class HomePage extends Lightning.Component {
           return this._LivePlayerButton;
         }
         _handleUp() {
-          this._setState("Content");
+          this._setState('Content');
           return true;
         }
       },

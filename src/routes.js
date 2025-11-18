@@ -1,14 +1,14 @@
-import DetailsPage from './pages/DetailsPage'
-import HomePage from './pages/HomePage'
-import MoviesPage from './pages/MoviesPage'
-import SeriesPage from './pages/SeriesPage'
-import MEDIA_TYPE from './consts/mediaType'
-import movieDetails from './pages/DetailsPage/provider/movieDetails'
-import seriesDetails from './pages/DetailsPage/provider/seriesDetails'
-import home from './pages/HomePage/provider/home'
-import movies from './pages/MoviesPage/provider/movies'
-import series from './pages/SeriesPage/provider/series'
-import Player from './pages/Player'
+import DetailsPage from './pages/DetailsPage';
+import HomePage from './pages/HomePage';
+import MoviesPage from './pages/MoviesPage';
+import SeriesPage from './pages/SeriesPage';
+import MEDIA_TYPE from './consts/mediaType';
+import movieDetails from './pages/DetailsPage/provider/movieDetails';
+import seriesDetails from './pages/DetailsPage/provider/seriesDetails';
+import home from './pages/HomePage/provider/home';
+import movies from './pages/MoviesPage/provider/movies';
+import series from './pages/SeriesPage/provider/series';
+import Player from './pages/Player';
 
 export default {
   root: 'home',
@@ -44,4 +44,4 @@ export default {
       },
     },
   ],
-}
+};

@@ -1,13 +1,13 @@
-import { Lightning, Utils } from "@lightningjs/sdk";
-import { Img } from "@lightningjs/sdk";
-import navigateToDetailsPage from "../utils/navigateToDetailsPage";
+import { Lightning, Utils } from '@lightningjs/sdk';
+import { Img } from '@lightningjs/sdk';
+import navigateToDetailsPage from '../utils/navigateToDetailsPage';
 
 export default class Card extends Lightning.Component {
   _id = null;
   _backdrop_path = null;
-  _type = "";
-  _overview = "";
-  _title = "";
+  _type = '';
+  _overview = '';
+  _title = '';
   static _template() {
     return {
       w: 229,
@@ -18,7 +18,7 @@ export default class Card extends Lightning.Component {
         w: (w) => w,
         h: (h) => h - 59,
         rect: true,
-        src: Utils.asset("images/imgPlaceholder.jpg"),
+        src: Utils.asset('images/imgPlaceholder.jpg'),
         alpha: 1,
       },
 
@@ -40,21 +40,21 @@ export default class Card extends Lightning.Component {
           textColor: 0x99ffffff,
           fontSize: 24,
           wordWrap: false,
-          fontFace: "InterRegular",
+          fontFace: 'InterRegular',
           maxLines: 1,
-          textOverflow: "ellipsis",
-          maxLinesSuffix: "...",
+          textOverflow: 'ellipsis',
+          maxLinesSuffix: '...',
         },
       },
     };
   }
 
   get _Image() {
-    return this.tag("Image");
+    return this.tag('Image');
   }
 
   get _Placeholder() {
-    return this.tag("Placeholder");
+    return this.tag('Placeholder');
   }
   set props({ image, label, id, backdrop_path, overview, type }) {
     this._id = id;
@@ -75,12 +75,12 @@ export default class Card extends Lightning.Component {
   }
 
   _init() {
-    this._Image.on("txLoaded", this.onLoaded);
-    this._Image.on("txError", this.onError);
+    this._Image.on('txLoaded', this.onLoaded);
+    this._Image.on('txError', this.onError);
   }
 
   onLoaded = () => {
-    this._Image.off("txLoaded", this.onLoaded);
+    this._Image.off('txLoaded', this.onLoaded);
     this.patch({
       Placeholder: { smooth: { alpha: [0, { duration: 0.3, delay: 0.1 }] } },
       Image: { smooth: { alpha: [1, { duration: 0.3 }] } },
@@ -88,7 +88,7 @@ export default class Card extends Lightning.Component {
   };
 
   onError = () => {
-    this._Image.off("txError", this.onError);
+    this._Image.off('txError', this.onError);
     this.patch({
       Placeholder: { smooth: { alpha: [1, { duration: 0.3, delay: 0.1 }] } },
       Image: { smooth: { alpha: [0, { duration: 0.3 }] } },
@@ -96,12 +96,7 @@ export default class Card extends Lightning.Component {
   };
 
   _focus() {
-    this.signal(
-      "changeHeroBackground",
-      this._backdrop_path,
-      this._title,
-      this._overview
-    );
+    this.signal('changeHeroBackground', this._backdrop_path, this._title, this._overview);
     this.patch({
       smooth: { scale: 1.1 },
       Image: {
@@ -131,7 +126,7 @@ export default class Card extends Lightning.Component {
         zIndex: 2,
         text: {
           textColor: 0xffffffff,
-          fontFace: "InterSemiBold",
+          fontFace: 'InterSemiBold',
         },
       },
     });
@@ -159,7 +154,7 @@ export default class Card extends Lightning.Component {
         zIndex: 1,
       },
       Label: {
-        text: { textColor: 0x99ffffff, fontFace: "InterRegular" },
+        text: { textColor: 0x99ffffff, fontFace: 'InterRegular' },
       },
     });
   }

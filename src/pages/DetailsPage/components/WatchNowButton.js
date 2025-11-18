@@ -1,4 +1,4 @@
-import { Lightning, Router, Utils } from '@lightningjs/sdk'
+import { Lightning, Router, Utils } from '@lightningjs/sdk';
 export default class extends Lightning.Component {
   static _template() {
     return {
@@ -30,20 +30,20 @@ export default class extends Lightning.Component {
           },
         },
       },
-    }
+    };
   }
   _focus() {
     this.patch({
       texture: Lightning.Tools.getRoundRect(286, 78, 30, 0, 0x00000000, true, 0xffed1c24),
-    })
+    });
   }
   _unfocus() {
     this.patch({
       texture: Lightning.Tools.getRoundRect(286, 78, 30, 0, 0x00000000, true, 0xff2f2f2f),
-    })
+    });
   }
 
   _handleEnter() {
-    Router.navigate('player')
+    Router.navigate('player');
   }
 }

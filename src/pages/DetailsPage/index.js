@@ -1,7 +1,7 @@
-import { Lightning, Utils, Router } from "@lightningjs/sdk";
-import WatchNowButton from "./components/WatchNowButton";
-import BackButton from "./components/BackButton";
-import handleBack from "../../utils/handleBack";
+import { Lightning, Utils } from '@lightningjs/sdk';
+import WatchNowButton from './components/WatchNowButton';
+import BackButton from './components/BackButton';
+import handleBack from '../../utils/handleBack';
 
 export default class DetailsPage extends Lightning.Component {
   static _template() {
@@ -17,7 +17,7 @@ export default class DetailsPage extends Lightning.Component {
         h: 700,
         rect: true,
         color: 0xff151515,
-        flex: { direction: "column" },
+        flex: { direction: 'column' },
         x: 69,
         y: 65,
         BackButton: {
@@ -26,11 +26,11 @@ export default class DetailsPage extends Lightning.Component {
         DetailsPageContent: {
           w: 1083,
           h: 592,
-          flex: { direction: "column" },
+          flex: { direction: 'column' },
           HeaderDetails: {
             h: 82,
             w: 1083,
-            flex: { direction: "column" },
+            flex: { direction: 'column' },
             flexItem: { marginBottom: 25 },
             Genres: {
               h: 29,
@@ -38,8 +38,8 @@ export default class DetailsPage extends Lightning.Component {
               text: {
                 fontSize: 20,
                 lineHeight: 29,
-                text: "",
-                fontFace: "InterRegular",
+                text: '',
+                fontFace: 'InterRegular',
               },
             },
             Runtime: {
@@ -48,8 +48,8 @@ export default class DetailsPage extends Lightning.Component {
               text: {
                 fontSize: 20,
                 lineHeight: 29,
-                text: "",
-                fontFace: "InterRegular",
+                text: '',
+                fontFace: 'InterRegular',
               },
             },
             DetailsMeta: {
@@ -58,15 +58,15 @@ export default class DetailsPage extends Lightning.Component {
               text: {
                 fontSize: 20,
                 lineHeight: 29,
-                text: "",
-                fontFace: "InterRegular",
+                text: '',
+                fontFace: 'InterRegular',
               },
             },
           },
           DetailsInfoContainer: {
             w: 1083,
             h: 485,
-            flex: { direction: "row", alignItems: "center" },
+            flex: { direction: 'row', alignItems: 'center' },
             Poster: {
               w: 325,
               h: 485,
@@ -75,7 +75,7 @@ export default class DetailsPage extends Lightning.Component {
                 w: 325,
                 h: 485,
                 rect: true,
-                src: Utils.asset("images/imgPlaceholder.jpg"),
+                src: Utils.asset('images/imgPlaceholder.jpg'),
                 alpha: 1,
               },
               Image: {
@@ -94,13 +94,13 @@ export default class DetailsPage extends Lightning.Component {
               w: 698,
               h: 435,
               BasicInfo: {
-                flex: { direction: "column" },
+                flex: { direction: 'column' },
                 Title: {
                   h: 34,
                   flexItem: { marginBottom: 24 },
                   text: {
-                    text: "",
-                    fontFace: "InterSemiBold",
+                    text: '',
+                    fontFace: 'InterSemiBold',
                     fontSize: 28,
                   },
                 },
@@ -109,24 +109,24 @@ export default class DetailsPage extends Lightning.Component {
                   h: 124,
                   flexItem: { marginBottom: 37 },
                   text: {
-                    fontFace: "InterSemiBold",
+                    fontFace: 'InterSemiBold',
                     fontSize: 22,
                     lineHeight: 31,
                     maxLines: 4,
-                    maxLinesSuffix: "...",
+                    maxLinesSuffix: '...',
                   },
                 },
                 People: {
-                  flex: { direction: "column" },
+                  flex: { direction: 'column' },
                   w: 698,
                   h: 101,
                   flexItem: { marginButtom: 37 },
                   Director: {
-                    flex: { direction: "row" },
+                    flex: { direction: 'row' },
                     Label: {
                       text: {
-                        text: "Director: ",
-                        fontFace: "InterSemiBold",
+                        text: 'Director: ',
+                        fontFace: 'InterSemiBold',
                         fontSize: 22,
                         lineHeight: 31,
                       },
@@ -134,21 +134,21 @@ export default class DetailsPage extends Lightning.Component {
                     Value: {
                       w: 698,
                       text: {
-                        text: "",
-                        fontFace: "InterRegular",
+                        text: '',
+                        fontFace: 'InterRegular',
                         fontSize: 22,
                         lineHeight: 31,
                         maxLines: 1,
-                        maxLinesSuffix: "...",
+                        maxLinesSuffix: '...',
                       },
                     },
                   },
                   Cast: {
-                    flex: { direction: "row" },
+                    flex: { direction: 'row' },
                     Label: {
                       text: {
-                        text: "Cast: ",
-                        fontFace: "InterSemiBold",
+                        text: 'Cast: ',
+                        fontFace: 'InterSemiBold',
                         fontSize: 22,
                         lineHeight: 31,
                       },
@@ -156,12 +156,12 @@ export default class DetailsPage extends Lightning.Component {
                     Value: {
                       w: 698,
                       text: {
-                        text: "",
-                        fontFace: "InterRegular",
+                        text: '',
+                        fontFace: 'InterRegular',
                         fontSize: 22,
                         lineHeight: 31,
                         maxLines: 2,
-                        maxLinesSuffix: "...",
+                        maxLinesSuffix: '...',
                       },
                     },
                     flexItem: {
@@ -181,7 +181,7 @@ export default class DetailsPage extends Lightning.Component {
   }
 
   get _Image() {
-    return this.tag("Image");
+    return this.tag('Image');
   }
 
   set props(props) {
@@ -190,33 +190,30 @@ export default class DetailsPage extends Lightning.Component {
         DetailsPageContent: {
           HeaderDetails: {
             Genres: {
-              text: { text: props.genres.map((g) => g.name).join(", ") },
+              text: { text: props.genres.map((g) => g.name).join(', ') },
             },
             Runtime: {
               text: {
-                text:
-                  props.runtime.length !== 0
-                    ? `${props.runtime} Minutes`
-                    : "N/A",
+                text: props.runtime.length !== 0 ? `${props.runtime} Minutes` : 'N/A',
               },
             },
             DetailsMeta: {
               text: {
                 text:
-                  props?.origin_country?.map((g) => g).join(", ") +
-                    " - " +
-                    props?.release_date.split("-")[0] +
-                    " - " +
+                  props?.origin_country?.map((g) => g).join(', ') +
+                    ' - ' +
+                    props?.release_date.split('-')[0] +
+                    ' - ' +
                     props?.rating +
-                    " - IMDb: " +
-                    props?.vote_average.toFixed(1) || "N/A",
+                    ' - IMDb: ' +
+                    props?.vote_average.toFixed(1) || 'N/A',
               },
             },
           },
           DetailsInfoContainer: {
             Poster: {
               Image: {
-                src: `${"https://image.tmdb.org/t/p/w300"}${props.poster_path}`,
+                src: `${'https://image.tmdb.org/t/p/w300'}${props.poster_path}`,
               },
             },
             About: {
@@ -225,11 +222,11 @@ export default class DetailsPage extends Lightning.Component {
                 Description: {
                   text: {
                     text: props.overview,
-                    fontFace: "InterSemiBold",
+                    fontFace: 'InterSemiBold',
                     fontSize: 22,
                     lineHeight: 31,
                     maxLines: 4,
-                    maxLinesSuffix: "...",
+                    maxLinesSuffix: '...',
                   },
                 },
                 People: {
@@ -244,18 +241,18 @@ export default class DetailsPage extends Lightning.Component {
         },
       },
     });
-    this._setState("WatchNowButton");
+    this._setState('WatchNowButton');
   }
   get _BackButton() {
-    return this.tag("BackButton");
+    return this.tag('BackButton');
   }
   get _WatchNowButton() {
-    return this.tag("WatchNowButton");
+    return this.tag('WatchNowButton');
   }
   _init() {
-    this._setState("WatchNowButton");
-    this._Image.on("txLoaded", this.onLoaded);
-    this._Image.on("txError", this.onError);
+    this._setState('WatchNowButton');
+    this._Image.on('txLoaded', this.onLoaded);
+    this._Image.on('txError', this.onError);
   }
 
   _getFocused() {
@@ -267,7 +264,7 @@ export default class DetailsPage extends Lightning.Component {
   }
 
   onLoaded = () => {
-    this._Image.off("txLoaded", this.onLoaded);
+    this._Image.off('txLoaded', this.onLoaded);
     this.patch({
       DetailsWindow: {
         DetailsPageContent: {
@@ -285,7 +282,7 @@ export default class DetailsPage extends Lightning.Component {
   };
 
   onError = () => {
-    this._Image.off("txError", this.onError);
+    this._Image.off('txError', this.onError);
     this.patch({
       DetailsWindow: {
         DetailsPageContent: {
@@ -309,7 +306,7 @@ export default class DetailsPage extends Lightning.Component {
           return this._BackButton;
         }
         _handleDown() {
-          this._setState("WatchNowButton");
+          this._setState('WatchNowButton');
         }
       },
       class WatchNowButton extends this {
@@ -317,7 +314,7 @@ export default class DetailsPage extends Lightning.Component {
           return this._WatchNowButton;
         }
         _handleUp() {
-          this._setState("BackButton");
+          this._setState('BackButton');
         }
       },
     ];

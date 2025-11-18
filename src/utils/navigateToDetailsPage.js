@@ -1,5 +1,5 @@
-import { Router } from "@lightningjs/sdk";
+import { Router } from '@lightningjs/sdk';
 
 export default function navigateToDetailsPage(id, mediaType) {
-  Router.navigate(mediaType + "/" + id);
+  Router.navigate(mediaType + '/' + id);
 }

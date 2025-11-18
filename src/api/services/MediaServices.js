@@ -1,10 +1,8 @@
-import tmdbApi from "../tmdbInstance";
+import tmdbApi from '../tmdbInstance';
 export async function getMovies(slice) {
   try {
-    const result = await tmdbApi.get(`/discover/movie`);
-    const returnValue = slice
-      ? result.data.results.slice(0, 5)
-      : result.data.results;
+    const result = await tmdbApi.get('/discover/movie');
+    const returnValue = slice ? result.data.results.slice(0, 5) : result.data.results;
     return returnValue.map((item) => ({
       title: item.title,
       poster_path: item.poster_path,
@@ -20,10 +18,8 @@ export async function getMovies(slice) {
 
 export async function getTV(slice) {
   try {
-    const result = await tmdbApi.get(`/discover/tv`);
-    const returnValue = slice
-      ? result.data.results.slice(0, 5)
-      : result.data.results;
+    const result = await tmdbApi.get('/discover/tv');
+    const returnValue = slice ? result.data.results.slice(0, 5) : result.data.results;
     return returnValue.map((item) => ({
       title: item.name,
       poster_path: item.poster_path,

@@ -1,4 +1,4 @@
-import ROUTES_INDEX from "../consts/routesIndex";
+import ROUTES_INDEX from '../consts/routesIndex';
 export function getRouteNavbarIndex(route) {
   if (route) {
     return ROUTES_INDEX[route] ?? 0;

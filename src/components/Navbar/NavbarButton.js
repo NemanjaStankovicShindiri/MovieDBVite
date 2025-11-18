@@ -1,9 +1,9 @@
-import { Lightning, Router, Colors } from '@lightningjs/sdk'
-import Color from '@lightningjs/sdk/src/Colors'
-import { getRouteFromIndex } from '../../utils/getRouteFromIndex'
+import { Lightning, Router, Colors } from '@lightningjs/sdk';
+import Color from '@lightningjs/sdk/src/Colors';
+import { getRouteFromIndex } from '../../utils/getRouteFromIndex';
 
 export default class NavbarButton extends Lightning.Component {
-  _props = { _index: 0, _selected: false }
+  _props = { _index: 0, _selected: false };
   static _template() {
     return {
       w: 118,
@@ -42,11 +42,11 @@ export default class NavbarButton extends Lightning.Component {
         shader: { type: Lightning.shaders.RoundedRectangle },
         alpha: 0,
       },
-    }
+    };
   }
   set props(props) {
-    this._props = { ...this._props, ...props }
-    const { label, index, selected } = this._props
+    this._props = { ...this._props, ...props };
+    const { label, index, selected } = this._props;
     this.patch({
       Label: {
         color: selected ? Colors('#ffffff').alpha(1).get() : Colors('#ffffff').alpha(0.4).get(),
@@ -54,20 +54,20 @@ export default class NavbarButton extends Lightning.Component {
           text: label,
         },
       },
-    })
-    this._index = index
-    this._selected = selected ? selected : false
+    });
+    this._index = index;
+    this._selected = selected ? selected : false;
   }
   _focus() {
-    this.patch({ Line: { alpha: 1 } })
+    this.patch({ Line: { alpha: 1 } });
   }
 
   _unfocus() {
-    this.patch({ Line: { alpha: 0 } })
+    this.patch({ Line: { alpha: 0 } });
   }
 
   _handleEnter() {
-    Router.navigate(getRouteFromIndex(this._index))
-    Router.focusPage()
+    Router.navigate(getRouteFromIndex(this._index));
+    Router.focusPage();
   }
 }

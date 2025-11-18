@@ -1,5 +1,5 @@
-import { Utils, Lightning } from "@lightningjs/sdk";
-import lng from "@lightningjs/core";
+import { Utils, Lightning } from '@lightningjs/sdk';
+import lng from '@lightningjs/core';
 
 export default class LoadingScreenComponent extends Lightning.Component {
   _props = {
@@ -19,11 +19,7 @@ export default class LoadingScreenComponent extends Lightning.Component {
         h: 100,
         x: 960,
         y: 540,
-        texture: lng.Tools.getSvgTexture(
-          Utils.asset("images/spinner.svg"),
-          100,
-          100
-        ),
+        texture: lng.Tools.getSvgTexture(Utils.asset('images/spinner.svg'), 100, 100),
         mount: 0.5,
         rotation: 0,
       },
@@ -31,7 +27,7 @@ export default class LoadingScreenComponent extends Lightning.Component {
   }
 
   get _Spinner() {
-    return this.tag("Spinner");
+    return this.tag('Spinner');
   }
   set props(props) {
     this._props = { ...this._props, ...props };
@@ -52,7 +48,7 @@ export default class LoadingScreenComponent extends Lightning.Component {
         duration: 2, // animation duration in seconds
         repeat: -1, // repeat indefinitely
         actions: [
-          { p: "rotation", v: { 0: 0, 1: 10 * Math.PI } }, // rotate 360 degrees
+          { p: 'rotation', v: { 0: 0, 1: 10 * Math.PI } }, // rotate 360 degrees
         ],
       })
       .start();

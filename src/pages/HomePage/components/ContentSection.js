@@ -1,6 +1,6 @@
-import Lightning from "@lightningjs/sdk/src/Lightning";
-import MovieRow from "./MovieRow";
-import MEDIA_TYPE from "../../../consts/mediaType";
+import Lightning from '@lightningjs/sdk/src/Lightning';
+import MovieRow from './MovieRow';
+import MEDIA_TYPE from '../../../consts/mediaType';
 
 export default class ContentSection extends Lightning.Component {
   static _template() {
@@ -20,11 +20,11 @@ export default class ContentSection extends Lightning.Component {
   }
 
   get _MoviesSection() {
-    return this.tag("MoviesSection");
+    return this.tag('MoviesSection');
   }
 
   get _SeriesSection() {
-    return this.tag("SeriesSection");
+    return this.tag('SeriesSection');
   }
 
   set props(props) {
@@ -37,7 +37,7 @@ export default class ContentSection extends Lightning.Component {
         props: { items: series, raillabel: MEDIA_TYPE.SERIES },
       },
     });
-    this._setState("MoviesSection");
+    this._setState('MoviesSection');
   }
   static _states() {
     return [
@@ -46,7 +46,7 @@ export default class ContentSection extends Lightning.Component {
           return this._MoviesSection;
         }
         _handleDown() {
-          this._setState("SeriesSection");
+          this._setState('SeriesSection');
           return true;
         }
       },
@@ -55,7 +55,7 @@ export default class ContentSection extends Lightning.Component {
           return this._SeriesSection;
         }
         _handleUp() {
-          this._setState("MoviesSection");
+          this._setState('MoviesSection');
         }
       },
     ];

@@ -1,4 +1,4 @@
-import { Lightning, Utils } from "@lightningjs/sdk";
+import { Lightning, Utils } from '@lightningjs/sdk';
 
 export default class ChannelCard extends Lightning.Component {
   static _template() {
@@ -15,19 +15,11 @@ export default class ChannelCard extends Lightning.Component {
       Border: {
         w: 280,
         h: 136,
-        texture: Lightning.Tools.getRoundRect(
-          280,
-          136,
-          16,
-          4,
-          0xff2a3638,
-          true,
-          0xff2a3638
-        ),
+        texture: Lightning.Tools.getRoundRect(280, 136, 16, 4, 0xff2a3638, true, 0xff2a3638),
         flex: {
-          direction: "column",
-          alignItems: "center",
-          justifyContent: "center",
+          direction: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
         },
         Content: {
           zIndex: 3,
@@ -37,9 +29,9 @@ export default class ChannelCard extends Lightning.Component {
             mountX: 0.5,
             mountY: 0.8,
             text: {
-              text: "",
+              text: '',
               fontSize: 16,
-              fontFace: "InterRegular",
+              fontFace: 'InterRegular',
               textColor: 0xffffffff,
             },
           },
@@ -48,13 +40,13 @@ export default class ChannelCard extends Lightning.Component {
     };
   }
   get _Label() {
-    return this.tag("Label");
+    return this.tag('Label');
   }
   set props({ image, label }) {
     this.patch({
       Border: {
         Content: {
-          Image: { src: Utils.asset("images/" + image) },
+          Image: { src: Utils.asset('images/' + image) },
           Label: {
             text: {
               text: label,
@@ -68,15 +60,7 @@ export default class ChannelCard extends Lightning.Component {
   _focus() {
     this.patch({
       Border: {
-        texture: Lightning.Tools.getRoundRect(
-          280,
-          136,
-          16,
-          4,
-          0xffff0000,
-          true,
-          0xff2a3638
-        ),
+        texture: Lightning.Tools.getRoundRect(280, 136, 16, 4, 0xffff0000, true, 0xff2a3638),
       },
     });
   }
@@ -84,15 +68,7 @@ export default class ChannelCard extends Lightning.Component {
   _unfocus() {
     this.patch({
       Border: {
-        texture: Lightning.Tools.getRoundRect(
-          280,
-          136,
-          16,
-          4,
-          0xff2a3638,
-          true,
-          0xff2a3638
-        ),
+        texture: Lightning.Tools.getRoundRect(280, 136, 16, 4, 0xff2a3638, true, 0xff2a3638),
       },
     });
   }
