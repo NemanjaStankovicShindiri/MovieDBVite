@@ -6,10 +6,9 @@ module.exports = {
     es6: true,
   },
   plugins: ['prettier'],
-  extends: ['eslint:recommended', 'plugin:prettier/recommended', 'prettier'],
+  extends: ['plugin:prettier/recommended'],
   rules: {
-    quotes: ['error', 'single'],
-    semi: [2, 'never'],
+    quotes: [2, 'single', 'avoid-escape'],
     'no-extra-boolean-cast': 'off',
     'no-unused-vars': [
       1,
@@ -21,10 +20,9 @@ module.exports = {
     'prettier/prettier': [
       'error',
       {
-        trailingComma: 'all',
+        trailingComma: 'es5',
         singleQuote: true,
         tabWidth: 2,
-        semi: false,
         printWidth: 100,
       },
     ],
@@ -34,4 +32,4 @@ module.exports = {
     ecmaVersion: 'latest',
     sourceType: 'module',
   },
-}
+};
