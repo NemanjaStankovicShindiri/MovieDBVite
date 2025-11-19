@@ -126,8 +126,6 @@ export default class MoviesPage extends Lightning.Component {
       };
     });
 
-    // Movie -> HC (signals) -> passSignal
-
     this.patch({
       Background: {
         Slider: {

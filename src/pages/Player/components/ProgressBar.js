@@ -116,8 +116,8 @@ export default class ProgressBar extends Lightning.Component {
     if (this._newTime == null) {
       this._newTime = VideoPlayer.currentTime;
     }
-    if (VideoPlayer.playing) VideoPlayer.pause();
-    this.fireAncestors('$setIsPlaying', false);
+    // if (VideoPlayer.playing) VideoPlayer.pause();
+    //this.fireAncestors('$setIsPlaying', false);
     this._newTime = this.computeSeekTime(5);
     this._updateProgressBar();
     // this.startTimer(true);
@@ -127,8 +127,8 @@ export default class ProgressBar extends Lightning.Component {
     if (this._newTime == null) {
       this._newTime = VideoPlayer.currentTime;
     }
-    if (VideoPlayer.playing) VideoPlayer.pause();
-    this.fireAncestors('$setIsPlaying', false);
+    // if (VideoPlayer.playing) VideoPlayer.pause();
+    //this.fireAncestors('$setIsPlaying', false);
     this._newTime = this.computeSeekTime(-5);
     this._updateProgressBar();
     // this.startTimer(false);
