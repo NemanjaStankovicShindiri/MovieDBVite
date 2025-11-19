@@ -4,6 +4,7 @@ import formatTimeHMS from '../utils/formatTimeHMS.js';
 export default class ProgressBar extends Lightning.Component {
   _timer = null;
   _newTime = null;
+  _numOfTriggers = 0;
   static _template() {
     return {
       w: 1690,
@@ -118,9 +119,17 @@ export default class ProgressBar extends Lightning.Component {
     }
     // if (VideoPlayer.playing) VideoPlayer.pause();
     //this.fireAncestors('$setIsPlaying', false);
-    this._newTime = this.computeSeekTime(5);
+    this._newTime = this.computeSeekTime(5 + this._numOfTriggers);
     this._updateProgressBar();
+    if (this._numOfTriggers < 25) this._numOfTriggers++;
     // this.startTimer(true);
+  }
+
+  _handleRightRelease() {
+    this._numOfTriggers = 0;
+  }
+  _handleLeftRelease() {
+    this._numOfTriggers = 0;
   }
 
   _handleLeft() {
@@ -129,8 +138,10 @@ export default class ProgressBar extends Lightning.Component {
     }
     // if (VideoPlayer.playing) VideoPlayer.pause();
     //this.fireAncestors('$setIsPlaying', false);
-    this._newTime = this.computeSeekTime(-5);
+    this._newTime = this.computeSeekTime(-5 - this._numOfTriggers);
     this._updateProgressBar();
+    if (this._numOfTriggers < 25) this._numOfTriggers++;
+
     // this.startTimer(false);
   }
 
