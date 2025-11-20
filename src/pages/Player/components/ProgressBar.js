@@ -10,6 +10,7 @@ export default class ProgressBar extends Lightning.Component {
     return {
       w: 1690,
       h: 31,
+      passSignals: { setIsPlaying: true },
       flex: {
         direction: 'row',
         justifyContent: 'space-between',
@@ -175,10 +176,10 @@ export default class ProgressBar extends Lightning.Component {
     } else {
       if (VideoPlayer.playing && !this.fireAncestors('$getIsSeeking')) {
         VideoPlayer.pause();
-        this.fireAncestors('$setIsPlaying', false);
+        this.signal('setIsPlaying', false);
       } else {
         VideoPlayer.play();
-        this.fireAncestors('$setIsPlaying', true);
+        this.signal('setIsPlaying', true);
       }
     }
     this._newTime = null;

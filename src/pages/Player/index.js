@@ -61,6 +61,9 @@ export default class Player extends Lightning.Component {
           },
           ProgressBar: {
             y: 125,
+            signals: {
+              setIsPlaying: true,
+            },
             type: ProgressBar,
           },
         },
@@ -91,7 +94,7 @@ export default class Player extends Lightning.Component {
     if (!this._isSeeking) {
       VideoPlayer.playPause();
       this._isPlaying = !this._isPlaying;
-      this.$setIsPlaying(this._isPlaying);
+      this.setIsPlaying(this._isPlaying);
     }
   }
   _hidePlayerControlDebounce() {
@@ -137,7 +140,7 @@ export default class Player extends Lightning.Component {
     this._setState('CenteredButtonWrapper');
     this._spin();
   }
-  $setIsPlaying(status) {
+  setIsPlaying(status) {
     this._isPlaying = status;
     this._PlayPauseButton.patch({
       src: Utils.asset(this._isPlaying ? 'images/player/pause.png' : 'images/player/play.png'),
@@ -159,7 +162,7 @@ export default class Player extends Lightning.Component {
   }
 
   $videoPlayerEnded() {
-    this.$setIsPlaying(false);
+    this.setIsPlaying(false);
   }
   $videoPlayerError(e) {
     if (e.event.name === 'NotAllowedError') Router.navigate('home');
@@ -203,13 +206,13 @@ export default class Player extends Lightning.Component {
     return this._CenteredButtonWrapper._getFocused();
   }
 
-  _handleLeft() {
-    return this._CenteredButtonWrapper._handleLeft();
-  }
+  // _handleLeft() {
+  //   return this._CenteredButtonWrapper._handleLeft();
+  // }
 
-  _handleRight() {
-    return this._CenteredButtonWrapper._handleRight();
-  }
+  // _handleRight() {
+  //   return this._CenteredButtonWrapper._handleRight();
+  // }
 
   get _ProgressBar() {
     return this.tag('ProgressBar');
@@ -307,11 +310,9 @@ export default class Player extends Lightning.Component {
   _spin() {
     this._Spinner
       .animation({
-        duration: 2, // animation duration in seconds
-        repeat: -1, // repeat indefinitely
-        actions: [
-          { p: 'rotation', v: { 0: 0, 1: 10 * Math.PI } }, // rotate 360 degrees
-        ],
+        duration: 2,
+        repeat: -1,
+        actions: [{ p: 'rotation', v: { 0: 0, 1: 10 * Math.PI } }],
       })
       .start();
   }
