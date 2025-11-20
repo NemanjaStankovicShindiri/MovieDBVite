@@ -6,6 +6,7 @@ import ProgressBar from './components/ProgressBar';
 import formatTimeHMS from './utils/formatTimeHMS.js';
 export default class Player extends Lightning.Component {
   _isPlaying = true;
+  _isSeeking = false;
   _buttons = [
     { label: 'rewind', src: 'rewind.png', size: 66, handler: '_handleBackwards' },
     { label: 'playPause', src: 'pause.png', size: 90, handler: '_handlePlayPause' },
@@ -13,56 +14,70 @@ export default class Player extends Lightning.Component {
   ];
   static _template() {
     return {
-      x: 0,
-      y: 0,
-      w: 1920,
-      h: 1080,
-      rect: true,
-      colorTop: Colors('#000000').alpha(0).get(),
-      colorBottom: Colors('#000000').get(),
-      Spinner: {
-        w: 100,
-        h: 100,
-        x: 960,
-        y: 540,
-        texture: Lightning.Tools.getSvgTexture(Utils.asset('images/spinner.svg'), 100, 100),
-        mount: 0.5,
-        rotation: 0,
-      },
-      Controller: {
-        w: 1690,
-        h: 156,
-        x: 115,
-        y: 836,
-        ButtonWrapper: {
-          w: 995,
-          h: 90,
-          BackButton: {
-            y: 45,
-            type: PlayerControllButton,
-            color: Colors('#ffffff').alpha(0.3).get(),
-          },
-          CenteredButtonWrapper: {
-            x: 845,
-            y: 45,
-            mountX: 0.5,
-            w: 312,
-            h: 200,
-            flex: {
-              direction: 'row',
-              alignItems: 'center',
-              justifyContent: 'center',
-            },
-            type: HorizontalContainer,
-          },
+      PlayerControl: {
+        x: 0,
+        y: 0,
+        w: 1920,
+        h: 1080,
+        visible: false,
+        rect: true,
+        colorTop: Colors('#000000').alpha(0).get(),
+        colorBottom: Colors('#000000').get(),
+        Spinner: {
+          w: 100,
+          h: 100,
+          x: 960,
+          y: 540,
+          texture: Lightning.Tools.getSvgTexture(Utils.asset('images/spinner.svg'), 100, 100),
+          mount: 0.5,
+          rotation: 0,
         },
-        ProgressBar: {
-          y: 961 - 836,
-          type: ProgressBar,
+        Controller: {
+          w: 1690,
+          h: 156,
+          x: 115,
+          y: 836,
+          ButtonWrapper: {
+            w: 995,
+            h: 90,
+            BackButton: {
+              y: 45,
+              type: PlayerControllButton,
+              color: Colors('#ffffff').alpha(0.3).get(),
+            },
+            CenteredButtonWrapper: {
+              x: 845,
+              y: 45,
+              mountX: 0.5,
+              w: 312,
+              h: 200,
+              flex: {
+                direction: 'row',
+                alignItems: 'center',
+                justifyContent: 'center',
+              },
+              type: HorizontalContainer,
+            },
+          },
+          ProgressBar: {
+            y: 125,
+            type: ProgressBar,
+          },
         },
       },
     };
   }
+
+  _captureKey() {
+    if (this._PlayerControl.visible === false) {
+      this._PlayerControl.visible = true;
+      this._hidePlayerControlDebounce();
+      return true;
+    }
+    this._hidePlayerControlDebounce();
+    return false;
+  }
+
   _handleBack() {
     this.$exitVideo();
   }
@@ -73,9 +88,19 @@ export default class Player extends Lightning.Component {
     VideoPlayer.skip(-5);
   }
   _handlePlayPause() {
-    VideoPlayer.playPause();
-    this._isPlaying = !this._isPlaying;
-    this.$setIsPlaying(this._isPlaying);
+    if (!this._isSeeking) {
+      VideoPlayer.playPause();
+      this._isPlaying = !this._isPlaying;
+      this.$setIsPlaying(this._isPlaying);
+    }
+  }
+  _hidePlayerControlDebounce() {
+    clearTimeout(this._hideWrapperTimeout);
+    if (!this._PlayerControl.visible || this._ProgressBar._newTime !== null) return;
+
+    this._hideWrapperTimeout = setTimeout(() => {
+      this._PlayerControl.visible = false;
+    }, 5000);
   }
   _init() {
     const buttonsMaped = this._buttons.map((item) => ({
@@ -90,19 +115,21 @@ export default class Player extends Lightning.Component {
       },
     }));
     this.patch({
-      Controller: {
-        ButtonWrapper: {
-          BackButton: {
-            props: {
-              w: 66,
-              h: 66,
-              src: 'images/player/back.png',
-              label: 'back',
-              callback: this._handleBack.bind(this),
+      PlayerControl: {
+        Controller: {
+          ButtonWrapper: {
+            BackButton: {
+              props: {
+                w: 66,
+                h: 66,
+                src: 'images/player/back.png',
+                label: 'back',
+                callback: this._handleBack.bind(this),
+              },
             },
-          },
-          CenteredButtonWrapper: {
-            props: { items: buttonsMaped, targetIndex: 1, disableScroll: true },
+            CenteredButtonWrapper: {
+              props: { items: buttonsMaped, targetIndex: 1, disableScroll: true },
+            },
           },
         },
       },
@@ -131,67 +158,29 @@ export default class Player extends Lightning.Component {
     });
   }
 
-  $videoPlayerAbort() {
-    console.log('videoPlayerAbort');
-  }
-
-  $videoPlayerCanPlayThrough() {
-    console.log('videoPlayerCanPlayThrough');
-  }
-  $videoPlayerDurationChange() {
-    console.log('videoPlayerDurationChange');
-  }
-  $videoPlayerEmptied() {
-    console.log('videoPlayerEmptied');
-  }
-  $videoPlayerEncrypted() {
-    console.log('videoPlayerEncrypted');
-  }
   $videoPlayerEnded() {
     this.$setIsPlaying(false);
   }
   $videoPlayerError(e) {
     if (e.event.name === 'NotAllowedError') Router.navigate('home');
   }
-  $videoPlayerInterruptBegin() {
-    console.log('videoPlayerInterruptBegin');
-  }
-  $videoPlayerInterruptEnd() {
-    console.log('videoPlayerInterruptEnd');
-  }
-  $videoPlayerLoadedMetadata() {
-    console.log('videoPlayerLoadedMetadata');
-  }
-  $videoPlayerLoadStart() {
-    console.log('videoPlayerLoadStart');
-  }
-  // $videoPlayerPlaying() {
-  //   this._isPlaying = true;
-  // }
-  $videoPlayerProgress() {
-    console.log('videoPlayerProgress');
-  }
-  $videoPlayerRatechange() {
-    console.log('videoPlayerRatechange');
-  }
-  $videoPlayerSeeked() {
-    this._Spinner.visible = false;
-  }
-  $videoPlayerSeeking() {
-    this._Spinner.visible = true;
-  }
-  $videoPlayerStalled() {
-    console.log('videoPlayerStalled');
-  }
-  $videoPlayerTimeUpdate() {
-    this._ProgressBar._updateProgressBar();
-  }
-  $videoPlayerVolumeChange() {
-    console.log('videoPlayerVolumeChange');
+
+  $getIsSeeking() {
+    return this._isSeeking;
   }
 
-  $videoPlayerClear() {
-    console.log('videoPlayerClear');
+  $videoPlayerSeeked() {
+    this._isSeeking = false;
+    this._Spinner.visible = false;
+    this._hidePlayerControlDebounce();
+  }
+  $videoPlayerSeeking() {
+    this._isSeeking = true;
+    this._Spinner.visible = true;
+  }
+
+  $videoPlayerTimeUpdate() {
+    this._ProgressBar._updateProgressBar();
   }
 
   _showSpinner() {
@@ -214,10 +203,6 @@ export default class Player extends Lightning.Component {
     return this._CenteredButtonWrapper._getFocused();
   }
 
-  get _BackButton() {
-    return this.tag('BackButton');
-  }
-
   _handleLeft() {
     return this._CenteredButtonWrapper._handleLeft();
   }
@@ -234,10 +219,18 @@ export default class Player extends Lightning.Component {
     return this.tag('Rewind');
   }
 
+  get _BackButton() {
+    return this.tag('BackButton');
+  }
+
   get _PlayPauseButton() {
     return this._CenteredButtonWrapper.Items.children.find(
       (element) => element._props.label === 'playPause'
     );
+  }
+
+  get _PlayerControl() {
+    return this.tag('PlayerControl');
   }
 
   get _Forward() {
