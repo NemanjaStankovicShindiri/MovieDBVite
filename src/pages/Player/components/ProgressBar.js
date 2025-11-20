@@ -1,9 +1,11 @@
 import { Colors, Lightning, VideoPlayer } from '@lightningjs/sdk';
 import formatTimeHMS from '../utils/formatTimeHMS.js';
-
+const DIRECTIONS = { LEFT: 'left', RIGHT: 'right' };
 export default class ProgressBar extends Lightning.Component {
   _newTime = null;
   _numOfTriggers = 0;
+  _speedUpTimer = null;
+  _direction = null;
   static _template() {
     return {
       w: 1690,
@@ -116,34 +118,48 @@ export default class ProgressBar extends Lightning.Component {
   }
 
   _handleRight() {
+    if (this._direction === DIRECTIONS.LEFT || this._direction === null) {
+      this._numOfTriggers = 0;
+      this._direction = DIRECTIONS.RIGHT;
+    }
+    if (this._speedUpTimer === null) {
+      this._speedUpTimer = setInterval(() => {
+        if (this._numOfTriggers < 25) this._numOfTriggers += 5;
+      }, 500);
+    }
     if (this._newTime == null) {
       this._newTime = VideoPlayer.currentTime;
     }
-    // if (VideoPlayer.playing) VideoPlayer.pause();
-    //this.fireAncestors('$setIsPlaying', false);
     this._newTime = this.computeSeekTime(5 + this._numOfTriggers);
     this._updateProgressBar();
-    if (this._numOfTriggers < 25) this._numOfTriggers++;
   }
 
   _handleRightRelease() {
+    clearInterval(this._speedUpTimer);
+    this._speedUpTimer = null;
     this._numOfTriggers = 0;
   }
   _handleLeftRelease() {
+    clearInterval(this._speedUpTimer);
+    this._speedUpTimer = null;
     this._numOfTriggers = 0;
   }
 
   _handleLeft() {
+    if (this._direction === DIRECTIONS.RIGHT || this._direction === null) {
+      this._numOfTriggers = 0;
+      this._direction = DIRECTIONS.LEFT;
+    }
+    if (this._speedUpTimer === null) {
+      this._speedUpTimer = setInterval(() => {
+        if (this._numOfTriggers < 25) this._numOfTriggers += 5;
+      }, 500);
+    }
     if (this._newTime == null) {
       this._newTime = VideoPlayer.currentTime;
     }
-    // if (VideoPlayer.playing) VideoPlayer.pause();
-    //this.fireAncestors('$setIsPlaying', false);
     this._newTime = this.computeSeekTime(-5 - this._numOfTriggers);
     this._updateProgressBar();
-    if (this._numOfTriggers < 25) this._numOfTriggers++;
-
-    // this.startTimer(false);
   }
 
   _handleBack() {
@@ -156,8 +172,6 @@ export default class ProgressBar extends Lightning.Component {
   _handleEnter() {
     if (this._newTime !== null && this._newTime !== VideoPlayer.currentTime) {
       VideoPlayer.seek(this._newTime);
-      // VideoPlayer.play();
-      // this.fireAncestors('$setIsPlaying', true);
     } else {
       if (VideoPlayer.playing && !this.fireAncestors('$getIsSeeking')) {
         VideoPlayer.pause();
