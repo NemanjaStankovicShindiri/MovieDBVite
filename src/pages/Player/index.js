@@ -7,6 +7,7 @@ import formatTimeHMS from './utils/formatTimeHMS.js';
 export default class Player extends Lightning.Component {
   _isPlaying = true;
   _isSeeking = false;
+  _isEnded = false;
   _buttons = [
     { label: 'rewind', src: 'rewind.png', size: 66, handler: '_handleBackwards' },
     { label: 'playPause', src: 'pause.png', size: 90, handler: '_handlePlayPause' },
@@ -141,7 +142,6 @@ export default class Player extends Lightning.Component {
     this._spin();
   }
   setIsPlaying(status) {
-    console.log(status);
     this._isPlaying = status;
     this._PlayPauseButton.patch({
       src: Utils.asset(this._isPlaying ? 'images/player/pause.png' : 'images/player/play.png'),
@@ -164,7 +164,12 @@ export default class Player extends Lightning.Component {
 
   $videoPlayerEnded() {
     this.setIsPlaying(false);
+    this._PlayPauseButton.patch({
+      src: Utils.asset('images/player/replay.png'),
+    });
+    this._isEnded = true;
   }
+
   $videoPlayerError(e) {
     if (e.event.name === 'NotAllowedError') Router.navigate('home');
   }
@@ -176,6 +181,10 @@ export default class Player extends Lightning.Component {
   $videoPlayerSeeked() {
     this._isSeeking = false;
     this._Spinner.visible = false;
+    if (this._isEnded) {
+      this.setIsPlaying(this._isPlaying);
+      this._isEnded = false;
+    }
     this._hidePlayerControlDebounce();
   }
   $videoPlayerSeeking() {
@@ -206,14 +215,6 @@ export default class Player extends Lightning.Component {
   _getFocused() {
     return this._CenteredButtonWrapper._getFocused();
   }
-
-  // _handleLeft() {
-  //   return this._CenteredButtonWrapper._handleLeft();
-  // }
-
-  // _handleRight() {
-  //   return this._CenteredButtonWrapper._handleRight();
-  // }
 
   get _ProgressBar() {
     return this.tag('ProgressBar');
