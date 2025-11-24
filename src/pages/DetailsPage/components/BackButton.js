@@ -1,4 +1,5 @@
-import { Lightning, Utils, Router } from '@lightningjs/sdk';
+import { Lightning, Utils } from '@lightningjs/sdk';
+import handleBack from '../../../utils/handleBack';
 
 export default class extends Lightning.Component {
   static _template() {
@@ -25,16 +26,8 @@ export default class extends Lightning.Component {
     });
   }
 
-  _handleEnter() {
-    const router = Router.getHistory().filter(
-      (history) => history.hash != 'splash' && history.hash != 'cmp'
-    );
-    if (router.length) {
-      Router.setHistory([...router]);
-      Router.back();
-    } else {
-      Router.navigate('home');
-    }
+  _handleEnter(e) {
+    handleBack(e);
   }
 
   _unfocus() {

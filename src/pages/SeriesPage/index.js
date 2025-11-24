@@ -153,10 +153,6 @@ export default class SeriesPage extends Lightning.Component {
     });
   }
 
-  _handleBack(e) {
-    handleBack(e);
-  }
-
   static _states() {
     return [
       class Slider extends this {

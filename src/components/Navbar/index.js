@@ -1,8 +1,9 @@
-import { Lightning, Utils } from '@lightningjs/sdk';
+import { Lightning, Utils, Router } from '@lightningjs/sdk';
 import HorizontalContainer from '../HorizontalContainer';
 import NavbarButton from './NavbarButton';
 import MEDIA_TYPE from '../../consts/mediaType';
 import { getRouteNavbarIndex } from '../../utils/getRouteNavbarIndex';
+import handleBack from '../../utils/handleBack';
 
 const buttons = [
   { label: 'HOME', route: 'home' },
@@ -12,7 +13,6 @@ const buttons = [
 
 export default class Navbar extends Lightning.Component {
   _buttons = [];
-
   static _template() {
     return {
       rect: true,
@@ -79,6 +79,10 @@ export default class Navbar extends Lightning.Component {
     return true;
   }
 
+  _handleBack(e) {
+    handleBack(e);
+  }
+
   get _Buttons() {
     return this.tag('Buttons');
   }
@@ -88,6 +92,7 @@ export default class Navbar extends Lightning.Component {
   }
 
   _setSelected(index) {
+    this._Buttons.props = { targetIndex: index };
     this._Buttons.Items.children.forEach((item, i) => {
       item.patch({
         props: {

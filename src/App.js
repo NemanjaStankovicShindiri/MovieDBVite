@@ -2,8 +2,6 @@ import { Router, Utils, Lightning, Colors } from '@lightningjs/sdk';
 import routes from '../src/routes';
 import Navbar from '../src/components/Navbar/index';
 import LoadingScreenComponent from './components/LoadingScreenComponent';
-import '@lightningjs/core/inspector';
-
 export default class App extends Router.App {
   static getFonts() {
     return [

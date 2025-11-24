@@ -141,6 +141,7 @@ export default class Player extends Lightning.Component {
     this._spin();
   }
   setIsPlaying(status) {
+    console.log(status);
     this._isPlaying = status;
     this._PlayPauseButton.patch({
       src: Utils.asset(this._isPlaying ? 'images/player/pause.png' : 'images/player/play.png'),
@@ -299,6 +300,9 @@ export default class Player extends Lightning.Component {
           return this._ProgressBar;
         }
         _handleUp() {
+          // this._CenteredButtonWrapper.props = {
+          //   targetIndex: 1,
+          // };
           this._setState('CenteredButtonWrapper');
         }
         _handleBack() {

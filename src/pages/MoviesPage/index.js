@@ -97,15 +97,11 @@ export default class MoviesPage extends Lightning.Component {
     return this.tag('Hero');
   }
   _getFocused() {
-    return this._Slider._getFocused();
+    return this._Slider;
   }
 
   _init() {
     this._setState('Slider');
-  }
-
-  _handleBack(e) {
-    handleBack(e);
   }
 
   set props(props) {

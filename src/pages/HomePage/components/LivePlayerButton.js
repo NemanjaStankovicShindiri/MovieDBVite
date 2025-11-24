@@ -1,3 +1,4 @@
+import { Router } from '@lightningjs/sdk';
 import Lightning from '@lightningjs/sdk/src/Lightning';
 export default class LivePlayerButton extends Lightning.Component {
   static _template() {
@@ -46,5 +47,9 @@ export default class LivePlayerButton extends Lightning.Component {
     this.patch({
       color: 0xff2f2f2f,
     });
+  }
+
+  _handleEnter() {
+    Router.navigate('InputPage');
   }
 }

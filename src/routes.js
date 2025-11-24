@@ -9,6 +9,7 @@ import home from './pages/HomePage/provider/home';
 import movies from './pages/MoviesPage/provider/movies';
 import series from './pages/SeriesPage/provider/series';
 import Player from './pages/Player';
+import InputPage from './pages/InputPage';
 
 export default {
   root: 'home',
@@ -42,6 +43,10 @@ export default {
       options: {
         reuseInstance: false,
       },
+    },
+    {
+      path: 'inputPage',
+      component: InputPage,
     },
   ],
 };

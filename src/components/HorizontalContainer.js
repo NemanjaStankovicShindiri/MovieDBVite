@@ -60,15 +60,21 @@ export default class HorizontalContainer extends Lightning.Component {
 
   set props(props) {
     const { items, railTitle, ...rest } = props;
-    this._props = { ...this._props, ...rest };
+
+    // Merge old props with new ones
+    this._props = {
+      ...this._props,
+      ...rest,
+      items: items !== undefined ? items : this._props.items,
+      railTitle: railTitle !== undefined ? railTitle : this._props.railTitle,
+    };
 
     const { cardType, targetIndex } = rest;
 
-    if (railTitle && railTitle !== '') {
+    // Handle title and container layout
+    if (this._props.railTitle && this._props.railTitle !== '') {
       const { h } = rest;
-      this.Items.patch({
-        y: 0,
-      });
+      this.Items.patch({ y: 0 });
       this.patch({
         h: h + 95,
         Title: {
@@ -76,7 +82,7 @@ export default class HorizontalContainer extends Lightning.Component {
           y: 0,
           h: 45,
           text: {
-            text: railTitle,
+            text: this._props.railTitle,
             fontFace: 'InterBold',
             fontSize: 24,
             letterSpacing: 6,
@@ -89,40 +95,30 @@ export default class HorizontalContainer extends Lightning.Component {
       this.Items.patch({ h: rest.h });
     }
 
-    this.patch({
-      w: this._w,
-    });
+    this.patch({ w: this._w });
 
-    if (items !== this._props.items) {
-      this._props.items = items;
-
+    // Only update items if they exist
+    if (this._props.items && this._props.items.length) {
       this.Items.x = 0;
-
       this.Items.childList.clear();
-      if (items?.length > 0) {
-        this.Items.childList.a(items);
-      }
+      this.Items.childList.a(this._props.items);
 
-      if (targetIndex) {
+      if (targetIndex !== undefined) {
         this._setFocusedIndex(targetIndex);
       } else {
-        this._focusedIndex = items?.length > 0 ? 0 : -1;
+        this._focusedIndex = this._props.items.length > 0 ? 0 : -1;
       }
-      // todo: change to paddingLeft
-      if (cardType === 'EPG_CARD_ITEM') {
-        this.Items.children[0].patch({
-          flex: {
-            paddingLeft: this._props.paddingLeft,
-          },
-        });
 
-        //todo: check
+      if (cardType === 'EPG_CARD_ITEM' && this.Items.children[0]) {
+        this.Items.children[0].patch({
+          flex: { paddingLeft: this._props.paddingLeft },
+        });
         this._scrollPosition = this._props.paddingLeft + this.w || 0;
       }
     }
+
     this.stage.update();
   }
-
   _setScrollPosition(x) {
     this._scrollPosition = x;
     this.Items.smooth = { x: this._scrollPosition };
