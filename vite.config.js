@@ -1,11 +1,11 @@
-import { defineConfig, loadEnv } from 'vite'
-import legacy from '@vitejs/plugin-legacy'
+import { defineConfig, loadEnv } from 'vite';
+import legacy from '@vitejs/plugin-legacy';
 
 export default ({ mode }) => {
-  const outDir = 'build'
-  const publicDir = 'public'
-  const [buildMode, platform] = mode.split('-')
-  console.log('🚀 Building the app in mode: ', buildMode, ' for platform: ', platform)
+  const outDir = 'build';
+  const publicDir = 'public';
+  const [buildMode, platform] = mode.split('-');
+  console.log('🚀 Building the app in mode: ', buildMode, ' for platform: ', platform);
 
   // usefull thing, keep it
   // const plugins = [
@@ -30,11 +30,11 @@ export default ({ mode }) => {
       renderModernChunks: false,
       targets: ['Chrome >= 53', 'not dead'],
     }),
-  ]
+  ];
 
   return defineConfig({
     base: '',
-    publicDir,
+    publicDir: publicDir,
     plugins,
     server: {
       host: true,
@@ -51,5 +51,5 @@ export default ({ mode }) => {
     esbuild: {
       drop: platform === 'web' ? ['console'] : [],
     },
-  })
-}
+  });
+};

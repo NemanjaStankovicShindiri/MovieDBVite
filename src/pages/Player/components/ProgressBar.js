@@ -162,7 +162,14 @@ export default class ProgressBar extends Lightning.Component {
     this._newTime = this.computeSeekTime(-5 - this._numOfTriggers);
     this._updateProgressBar();
   }
-
+  _handleKey({ keyCode }) {
+    console.log(keyCode);
+    if (keyCode === 461) {
+      return this._handleBack();
+    } else {
+      return false;
+    }
+  }
   _handleBack() {
     if (this._newTime === VideoPlayer.currentTime || this._newTime === null) return false;
     this._newTime = null;

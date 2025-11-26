@@ -153,6 +153,14 @@ export default class SeriesPage extends Lightning.Component {
     });
   }
 
+  _handleKey(e) {
+    if (e.keyCode === 461 || e.keyCode === 68) {
+      handleBack(e);
+      return true;
+    }
+    return false;
+  }
+
   static _states() {
     return [
       class Slider extends this {

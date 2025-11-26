@@ -15,6 +15,16 @@ export default class Player extends Lightning.Component {
   ];
   static _template() {
     return {
+      Spinner: {
+        w: 100,
+        h: 100,
+        x: 960,
+        y: 540,
+        texture: Lightning.Tools.getSvgTexture(Utils.asset('images/spinner.svg'), 100, 100),
+        mount: 0.5,
+        rotation: 0,
+        zIndex: 30,
+      },
       PlayerControl: {
         x: 0,
         y: 0,
@@ -24,15 +34,6 @@ export default class Player extends Lightning.Component {
         rect: true,
         colorTop: Colors('#000000').alpha(0).get(),
         colorBottom: Colors('#000000').get(),
-        Spinner: {
-          w: 100,
-          h: 100,
-          x: 960,
-          y: 540,
-          texture: Lightning.Tools.getSvgTexture(Utils.asset('images/spinner.svg'), 100, 100),
-          mount: 0.5,
-          rotation: 0,
-        },
         Controller: {
           w: 1690,
           h: 156,
@@ -81,7 +82,13 @@ export default class Player extends Lightning.Component {
     this._hidePlayerControlDebounce();
     return false;
   }
-
+  _handleKey(e) {
+    if (e.keyCode === 461 || e.keyCode === 68) {
+      this._handleBack();
+      return true;
+    }
+    return false;
+  }
   _handleBack() {
     this.$exitVideo();
   }
@@ -306,6 +313,13 @@ export default class Player extends Lightning.Component {
           // };
           this._setState('CenteredButtonWrapper');
         }
+        // _handleKey({ keyCode }) {
+        //   console.log(keyCode);
+        //   if (keyCode === 461) {
+        //     this._setState('CenteredButtonWrapper');
+        //   }
+        // }
+
         _handleBack() {
           this._setState('CenteredButtonWrapper');
         }

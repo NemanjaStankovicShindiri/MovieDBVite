@@ -67,6 +67,14 @@ export default class Navbar extends Lightning.Component {
     this.visible ? this._setSelected(getRouteNavbarIndex(route)) : null;
   }
 
+  _handleKey(e) {
+    if (e.keyCode === 461 || e.keyCode === 68) {
+      handleBack(e);
+      return true;
+    }
+    return false;
+  }
+
   _handleUp() {
     return true;
   }
@@ -77,10 +85,6 @@ export default class Navbar extends Lightning.Component {
 
   _handleRight() {
     return true;
-  }
-
-  _handleBack(e) {
-    handleBack(e);
   }
 
   get _Buttons() {

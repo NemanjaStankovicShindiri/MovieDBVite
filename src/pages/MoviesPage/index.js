@@ -100,6 +100,14 @@ export default class MoviesPage extends Lightning.Component {
     return this._Slider;
   }
 
+  _handleKey(e) {
+    if (e.keyCode === 461 || e.keyCode === 68) {
+      handleBack(e);
+      return true;
+    }
+    return false;
+  }
+
   _init() {
     this._setState('Slider');
   }

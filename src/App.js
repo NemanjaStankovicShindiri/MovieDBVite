@@ -8,7 +8,7 @@ export default class App extends Router.App {
       { family: 'InterBold', url: Utils.asset('fonts/Inter_18pt-Bold.ttf') },
       {
         family: 'InterSemiBold',
-        url: Utils.asset('fonts/Inter_18pt-semiBold.ttf'),
+        url: Utils.asset('fonts/Inter_18pt-SemiBold.ttf'),
       },
       {
         family: 'InterRegular',

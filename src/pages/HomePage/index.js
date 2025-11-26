@@ -80,7 +80,13 @@ export default class HomePage extends Lightning.Component {
   get _LivePlayerButton() {
     return this.tag('LivePlayerButton');
   }
-
+  _handleKey(e) {
+    if (e.keyCode === 461 || e.keyCode === 68) {
+      this._handleBack(e);
+      return true;
+    }
+    return false;
+  }
   _handleBack(e) {
     e.preventDefault();
   }

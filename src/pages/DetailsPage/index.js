@@ -258,7 +258,13 @@ export default class DetailsPage extends Lightning.Component {
   _getFocused() {
     return this._WatchNowButton;
   }
-
+  _handleKey(e) {
+    if (e.keyCode === 461 || e.keyCode === 68) {
+      this._handleBack(e);
+      return true;
+    }
+    return false;
+  }
   _handleBack(e) {
     handleBack(e);
   }
