@@ -26,7 +26,6 @@ export default class HomePage extends Lightning.Component {
         w: 1920,
         h: 1080,
         src: Utils.asset('images/background.jpg'),
-        clipping: true,
       },
       RectangleWithGradientDiagonal: {
         x: 776,
@@ -80,16 +79,24 @@ export default class HomePage extends Lightning.Component {
   get _LivePlayerButton() {
     return this.tag('LivePlayerButton');
   }
-  _handleKey(e) {
-    if (e.keyCode === 461 || e.keyCode === 68) {
-      this._handleBack(e);
+
+  _handleBack(e) {
+    if (Router.isNavigating()) {
       return true;
     }
-    return false;
-  }
-  _handleBack(e) {
     e.preventDefault();
   }
+
+  $handleStateHover(ref) {
+    console.log(ref);
+    const currentState = this._getState();
+
+    if (ref !== currentState) {
+      if (currentState) this.tag(currentState)._unfocus();
+      this._setState(ref);
+    }
+  }
+
   static _states() {
     return [
       class Content extends this {

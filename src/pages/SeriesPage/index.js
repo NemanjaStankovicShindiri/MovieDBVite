@@ -49,6 +49,7 @@ export default class SeriesPage extends Lightning.Component {
           },
         },
         Slider: {
+          collision: true,
           signals: {
             changeHeroBackground: true,
           },
@@ -153,12 +154,8 @@ export default class SeriesPage extends Lightning.Component {
     });
   }
 
-  _handleKey(e) {
-    if (e.keyCode === 461 || e.keyCode === 68) {
-      handleBack(e);
-      return true;
-    }
-    return false;
+  _handleBack(e) {
+    handleBack(e);
   }
 
   static _states() {

@@ -5,6 +5,7 @@ export default class VerticalContainer extends Lightning.Component {
     items: [],
     title: '',
     enableScroll: false,
+    parentState: '',
   };
   _focusedIndex = 0;
   _scrollPosition = 0;
@@ -126,6 +127,16 @@ export default class VerticalContainer extends Lightning.Component {
       this._scrollPosition -= itemTop - 20;
       this.Items.smooth = { y: this._scrollPosition };
     }
+  }
+
+  $handleItemHover(index) {
+    if (this._focusedIndex !== index) {
+      this.Items.children[this._focusedIndex]?._unfocus();
+      this._focusedIndex = index;
+    }
+    this.fireAncestors('$verticalContainerIndexChange', index);
+    this._reCalibrateScroll();
+    this.fireAncestors('$handleStateHover', this._props.parentState);
   }
 
   _handleDown() {

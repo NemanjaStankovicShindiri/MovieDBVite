@@ -1,8 +1,9 @@
-import { Lightning, Utils } from '@lightningjs/sdk';
+import { Lightning, Utils, Router } from '@lightningjs/sdk';
 
 export default class ChannelCard extends Lightning.Component {
   static _template() {
     return {
+      collision: true,
       w: 280,
       h: 136,
       flexItem: {
@@ -55,6 +56,11 @@ export default class ChannelCard extends Lightning.Component {
         },
       },
     });
+  }
+
+  _handleHover() {
+    this._focus();
+    this.fireAncestors('$handleItemHover', this.parent.children.indexOf(this));
   }
 
   _focus() {

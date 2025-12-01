@@ -82,14 +82,17 @@ export default class Player extends Lightning.Component {
     this._hidePlayerControlDebounce();
     return false;
   }
-  _handleKey(e) {
-    if (e.keyCode === 461 || e.keyCode === 68) {
-      this._handleBack();
+  // _handleKey(e) {
+  //   if (e.keyCode === 461) {
+  //     this._handleBack();
+  //     return true;
+  //   }
+  //   return false;
+  // }
+  _handleBack() {
+    if (Router.isNavigating()) {
       return true;
     }
-    return false;
-  }
-  _handleBack() {
     this.$exitVideo();
   }
   _handleForward() {
@@ -308,19 +311,13 @@ export default class Player extends Lightning.Component {
           return this._ProgressBar;
         }
         _handleUp() {
-          // this._CenteredButtonWrapper.props = {
-          //   targetIndex: 1,
-          // };
           this._setState('CenteredButtonWrapper');
         }
-        // _handleKey({ keyCode }) {
-        //   console.log(keyCode);
-        //   if (keyCode === 461) {
-        //     this._setState('CenteredButtonWrapper');
-        //   }
-        // }
 
         _handleBack() {
+          if (Router.isNavigating()) {
+            return;
+          }
           this._setState('CenteredButtonWrapper');
         }
       },

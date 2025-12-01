@@ -4,6 +4,7 @@ import handleBack from '../../../utils/handleBack';
 export default class extends Lightning.Component {
   static _template() {
     return {
+      collision: true,
       w: 112,
       h: 65,
       texture: lng.Tools.getRoundRect(112, 65, 35, 0, 0x00000000, true, 0xff2f2f2f),
@@ -28,6 +29,14 @@ export default class extends Lightning.Component {
 
   _handleEnter(e) {
     handleBack(e);
+  }
+
+  _handleClick(e) {
+    handleBack(e);
+  }
+
+  _handleHover() {
+    this.fireAncestors('$handleStateHover', 0, this.ref);
   }
 
   _unfocus() {

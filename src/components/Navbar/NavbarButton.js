@@ -6,6 +6,7 @@ export default class NavbarButton extends Lightning.Component {
   _props = { _index: 0, _selected: false };
   static _template() {
     return {
+      collision: true,
       w: 118,
       h: 49,
       rect: true,
@@ -64,6 +65,16 @@ export default class NavbarButton extends Lightning.Component {
 
   _unfocus() {
     this.patch({ Line: { alpha: 0 } });
+  }
+
+  _handleHover() {
+    this._focus();
+    this.fireAncestors('$handleItemHover', this.parent.children.indexOf(this));
+    // Router.focusWidget('Menu');
+  }
+
+  _handleClick() {
+    this._handleEnter();
   }
 
   _handleEnter() {

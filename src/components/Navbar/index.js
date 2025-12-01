@@ -38,6 +38,7 @@ export default class Navbar extends Lightning.Component {
         flexItem: {
           alignSelf: 'center',
         },
+        collision: true,
         type: HorizontalContainer,
         props: { w: 674 },
       },
@@ -66,13 +67,8 @@ export default class Navbar extends Lightning.Component {
     const { route } = props;
     this.visible ? this._setSelected(getRouteNavbarIndex(route)) : null;
   }
-
-  _handleKey(e) {
-    if (e.keyCode === 461 || e.keyCode === 68) {
-      handleBack(e);
-      return true;
-    }
-    return false;
+  _handleBack(e) {
+    handleBack(e);
   }
 
   _handleUp() {
@@ -93,6 +89,15 @@ export default class Navbar extends Lightning.Component {
 
   _getFocused() {
     return this._Buttons;
+  }
+
+  _handleHover() {
+    this._Buttons._focus();
+    Router.focusWidget('Menu');
+  }
+
+  _handleUnhover() {
+    Router.focusPage();
   }
 
   _setSelected(index) {

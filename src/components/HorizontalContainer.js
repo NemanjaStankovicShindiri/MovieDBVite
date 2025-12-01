@@ -6,6 +6,7 @@ export default class HorizontalContainer extends Lightning.Component {
     items: [],
     paddingLeft: 0,
     disableScroll: false,
+    parentState: null,
   };
   _focusedIndex = -1;
   _scrollPosition = 0;
@@ -221,6 +222,16 @@ export default class HorizontalContainer extends Lightning.Component {
       return false;
     }
     return true;
+  }
+
+  $handleItemHover(index) {
+    if (this._focusedIndex !== index) {
+      this.Items.children[this._focusedIndex]?._unfocus();
+      this._focusedIndex = index;
+    }
+    this._reCalibrateScroll();
+
+    this.fireAncestors('$handleStateHover', this.ref);
   }
 
   _handleEnter() {

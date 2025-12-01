@@ -2,6 +2,8 @@ import { Router, Utils, Lightning, Colors } from '@lightningjs/sdk';
 import routes from '../src/routes';
 import Navbar from '../src/components/Navbar/index';
 import LoadingScreenComponent from './components/LoadingScreenComponent';
+import Settings from '../settings.json';
+
 export default class App extends Router.App {
   static getFonts() {
     return [
@@ -68,6 +70,7 @@ export default class App extends Router.App {
       h: 1080,
     };
   }
+
   $unpunchHole() {
     this.tag('Background').shader = {
       x: 0,

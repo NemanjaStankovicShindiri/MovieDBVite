@@ -13,7 +13,6 @@ export default class MoviesPage extends Lightning.Component {
         w: 1920,
         h: 1080,
         flex: { direction: 'column' },
-
         Hero: {
           h: 697,
           w: (w) => w,
@@ -49,6 +48,7 @@ export default class MoviesPage extends Lightning.Component {
           },
         },
         Slider: {
+          collision: true,
           signals: {
             changeHeroBackground: true,
           },
@@ -100,13 +100,20 @@ export default class MoviesPage extends Lightning.Component {
     return this._Slider;
   }
 
-  _handleKey(e) {
-    if (e.keyCode === 461 || e.keyCode === 68) {
-      handleBack(e);
-      return true;
-    }
-    return false;
+  _handleBack(e) {
+    handleBack(e);
   }
+
+  // _handleKey(e) {
+  //   if (Router.isNavigating()) {
+  //     return true;
+  //   }
+  //   if (e.keyCode === 461 || e.keyCode === 68) {
+  //     handleBack(e);
+  //     return true;
+  //   }
+  //   return false;
+  // }
 
   _init() {
     this._setState('Slider');

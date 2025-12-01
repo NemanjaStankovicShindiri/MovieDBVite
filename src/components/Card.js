@@ -8,8 +8,10 @@ export default class Card extends Lightning.Component {
   _type = '';
   _overview = '';
   _title = '';
+  _index = null;
   static _template() {
     return {
+      collision: true,
       w: 229,
       h: 359,
       passSignals: { changeHeroBackground: true },
@@ -56,18 +58,28 @@ export default class Card extends Lightning.Component {
   get _Placeholder() {
     return this.tag('Placeholder');
   }
-  set props({ image, label, id, backdrop_path, overview, type }) {
+  set props({ image, label, id, backdrop_path, overview, type, index }) {
     this._id = id;
     this._backdrop_path = backdrop_path;
     this._type = type;
     this._title = label;
     this._overview = overview;
+    this._index = index;
     this.patch({
       Image: {
         texture: Img(image).portrait(200, 200),
       },
       Label: { text: label },
     });
+  }
+
+  _handleClick() {
+    this._handleEnter();
+  }
+
+  _handleHover() {
+    this._focus();
+    this.fireAncestors('$handleItemHover', this.parent.children.indexOf(this));
   }
 
   _handleEnter() {

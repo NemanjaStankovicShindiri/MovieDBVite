@@ -7,6 +7,7 @@ export default class TopChannels extends Lightning.Component {
   static _template() {
     return {
       Column: {
+        collision: true,
         flex: { alignItems: 'center', justifyContent: 'center' },
         color: 0xff000000,
         rect: true,
@@ -53,6 +54,7 @@ export default class TopChannels extends Lightning.Component {
           titleFontFace: 'InterBold',
           titleColor: 0xffffffff,
           titleAlign: 'center',
+          parentState: 'TopChannels',
         },
       },
     });

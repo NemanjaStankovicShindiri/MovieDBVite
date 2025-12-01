@@ -2,6 +2,7 @@ import { Lightning, Router, Utils } from '@lightningjs/sdk';
 export default class extends Lightning.Component {
   static _template() {
     return {
+      collision: true,
       w: 286,
       h: 78,
       texture: Lightning.Tools.getRoundRect(286, 78, 30, 0, 0x00000000, true, 0xff2f2f2f),
@@ -41,6 +42,14 @@ export default class extends Lightning.Component {
     this.patch({
       texture: Lightning.Tools.getRoundRect(286, 78, 30, 0, 0x00000000, true, 0xff2f2f2f),
     });
+  }
+
+  _handleHover() {
+    this.fireAncestors('$handleStateHover', 0, this.ref);
+  }
+
+  _handleClick() {
+    this._handleEnter();
   }
 
   _handleEnter() {

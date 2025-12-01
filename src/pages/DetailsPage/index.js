@@ -1,4 +1,4 @@
-import { Lightning, Utils } from '@lightningjs/sdk';
+import { Lightning, Utils, Router } from '@lightningjs/sdk';
 import WatchNowButton from './components/WatchNowButton';
 import BackButton from './components/BackButton';
 import handleBack from '../../utils/handleBack';
@@ -6,6 +6,7 @@ import handleBack from '../../utils/handleBack';
 export default class DetailsPage extends Lightning.Component {
   static _template() {
     return {
+      collision: true,
       Background: {
         w: 1920,
         h: 1080,
@@ -258,13 +259,7 @@ export default class DetailsPage extends Lightning.Component {
   _getFocused() {
     return this._WatchNowButton;
   }
-  _handleKey(e) {
-    if (e.keyCode === 461 || e.keyCode === 68) {
-      this._handleBack(e);
-      return true;
-    }
-    return false;
-  }
+
   _handleBack(e) {
     handleBack(e);
   }
@@ -304,6 +299,13 @@ export default class DetailsPage extends Lightning.Component {
       },
     });
   };
+
+  $handleStateHover(index, stateName = null) {
+    if (stateName) {
+      this._setState(stateName);
+      return;
+    }
+  }
 
   static _states() {
     return [

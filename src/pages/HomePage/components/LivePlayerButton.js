@@ -3,6 +3,7 @@ import Lightning from '@lightningjs/sdk/src/Lightning';
 export default class LivePlayerButton extends Lightning.Component {
   static _template() {
     return {
+      collision: true,
       w: 352,
       h: 67,
       x: 64,
@@ -51,5 +52,10 @@ export default class LivePlayerButton extends Lightning.Component {
 
   _handleEnter() {
     Router.navigate('InputPage');
+  }
+
+  _handleHover() {
+    this._focus();
+    this.fireAncestors('$handleStateHover', this.ref);
   }
 }

@@ -7,6 +7,7 @@ export default class MovieRow extends Lightning.Component {
   static _template() {
     return {
       Row: {
+        collision: true,
         w: 1241,
         h: 404,
         type: HorizontalContainer,
@@ -22,7 +23,7 @@ export default class MovieRow extends Lightning.Component {
   set props(props) {
     const { items, raillabel } = props;
     this._railLabel = raillabel;
-    const cards = items.map((item) => ({
+    const cards = items.map((item, index) => ({
       type: Card,
       props: {
         image: `${'https://image.tmdb.org/t/p/w300'}${item.poster_path}`,
@@ -30,6 +31,7 @@ export default class MovieRow extends Lightning.Component {
         id: item.id,
         type: raillabel.toLowerCase(),
         overview: item.overview,
+        index: index,
       },
     }));
 
@@ -39,6 +41,7 @@ export default class MovieRow extends Lightning.Component {
           items: cards,
           railTitle: raillabel,
           disableScroll: true,
+          parentState: props.parentState,
         },
       },
     });

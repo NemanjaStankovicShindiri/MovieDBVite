@@ -29,4 +29,16 @@ export default class PlayerControllButton extends Lightning.Component {
   _handleEnter() {
     this._props.callback();
   }
+
+  _handleClick() {
+    this._props.callback();
+  }
+
+  _handleHover() {
+    this._focus();
+  }
+
+  _handleUnhover() {
+    this._unfocus();
+  }
 }

@@ -1,7 +1,6 @@
 import Lightning from '@lightningjs/sdk/src/Lightning';
 import MovieRow from './MovieRow';
 import MEDIA_TYPE from '../../../consts/mediaType';
-
 export default class ContentSection extends Lightning.Component {
   static _template() {
     return {
@@ -31,14 +30,28 @@ export default class ContentSection extends Lightning.Component {
     const [movies, series] = props;
     this.patch({
       MoviesSection: {
-        props: { items: movies, raillabel: MEDIA_TYPE.MOVIES },
+        props: { items: movies, raillabel: MEDIA_TYPE.MOVIES, parentState: this._MoviesSection },
       },
       SeriesSection: {
-        props: { items: series, raillabel: MEDIA_TYPE.SERIES },
+        props: { items: series, raillabel: MEDIA_TYPE.SERIES, parentState: this._SeriesSection },
       },
     });
     this._setState('MoviesSection');
   }
+
+  $handleStateHover(ref) {
+    console.log(ref);
+    const currentState = this._getState();
+    if (ref != currentState) {
+      if (currentState) this.tag(currentState)._unfocus();
+      this._setState(ref);
+    }
+  }
+
+  _handleHover() {
+    this.fireAncestors('$handleStateHover', this.ref);
+  }
+
   static _states() {
     return [
       class MoviesSection extends this {
