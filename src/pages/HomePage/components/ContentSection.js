@@ -1,19 +1,23 @@
 import Lightning from '@lightningjs/sdk/src/Lightning';
-import MovieRow from './MovieRow';
 import MEDIA_TYPE from '../../../consts/mediaType';
+import HorizontalContainer from '../../../components/HorizontalContainer';
+import Card from '../../../components/Card';
 export default class ContentSection extends Lightning.Component {
   static _template() {
     return {
       MoviesSection: {
+        disableScroll: true,
         w: 1270,
         h: 404,
-        type: MovieRow,
+        type: HorizontalContainer,
       },
       SeriesSection: {
+        collision: true,
+        disableScroll: true,
         y: 423,
         w: 1270,
         h: 404,
-        type: MovieRow,
+        type: HorizontalContainer,
       },
     };
   }
@@ -28,29 +32,57 @@ export default class ContentSection extends Lightning.Component {
 
   set props(props) {
     const [movies, series] = props;
+    const moviesCards = movies.map((item, index) => ({
+      type: Card,
+      props: {
+        image: `${'https://image.tmdb.org/t/p/w300'}${item.poster_path}`,
+        label: item.title,
+        id: item.id,
+        type: MEDIA_TYPE.MOVIES.toLowerCase(),
+        overview: item.overview,
+        index: index,
+      },
+    }));
+    const seriesCards = series.map((item, index) => ({
+      type: Card,
+      props: {
+        image: `${'https://image.tmdb.org/t/p/w300'}${item.poster_path}`,
+        label: item.title,
+        id: item.id,
+        type: MEDIA_TYPE.SERIES.toLowerCase(),
+        overview: item.overview,
+        index: index,
+      },
+    }));
     this.patch({
       MoviesSection: {
-        props: { items: movies, raillabel: MEDIA_TYPE.MOVIES, parentState: this._MoviesSection },
+        props: {
+          items: moviesCards,
+          railTitle: MEDIA_TYPE.MOVIES,
+          parentState: this._MoviesSection,
+        },
       },
       SeriesSection: {
-        props: { items: series, raillabel: MEDIA_TYPE.SERIES, parentState: this._SeriesSection },
+        props: {
+          items: seriesCards,
+          railTitle: MEDIA_TYPE.SERIES,
+          parentState: this._SeriesSection,
+        },
       },
     });
     this._setState('MoviesSection');
   }
 
   $handleStateHover(ref) {
-    console.log(ref);
     const currentState = this._getState();
     if (ref != currentState) {
       if (currentState) this.tag(currentState)._unfocus();
       this._setState(ref);
     }
-  }
-
-  _handleHover() {
     this.fireAncestors('$handleStateHover', this.ref);
   }
+
+  _handleHover() {}
 
   static _states() {
     return [

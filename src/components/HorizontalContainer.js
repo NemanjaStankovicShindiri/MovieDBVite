@@ -6,16 +6,18 @@ export default class HorizontalContainer extends Lightning.Component {
     items: [],
     paddingLeft: 0,
     disableScroll: false,
-    parentState: null,
   };
   _focusedIndex = -1;
   _scrollPosition = 0;
 
   static _template() {
     return {
+      collision: true,
       flex: { direction: 'row', wrap: true },
       Title: {},
       Items: {
+        collision: true,
+
         y: 0,
         flex: {
           direction: 'row',
@@ -107,7 +109,7 @@ export default class HorizontalContainer extends Lightning.Component {
       if (targetIndex !== undefined) {
         this._setFocusedIndex(targetIndex);
       } else {
-        this._focusedIndex = this._props.items.length > 0 ? 0 : -1;
+        this._focusedIndex = this._focusedIndex >= 0 ? this._focusedIndex : 0;
       }
 
       if (cardType === 'EPG_CARD_ITEM' && this.Items.children[0]) {
@@ -162,32 +164,98 @@ export default class HorizontalContainer extends Lightning.Component {
     return false;
   }
 
-  _handleHover() {
-    let verticalState;
+  // $handleItemHover(index) {
+  //   if (this._focusedIndex !== index) {
+  //     this.Items.children[this._focusedIndex]?._unfocus();
+  //     this._focusedIndex = index;
+  //   }
+  //   this._reCalibrateScroll();
+  //   this.parent.parent.type &&
+  //   (this.parent.parent.type.name === "VerticalContainer" ||
+  //     this.parent.parent.type.name === "EPGContainer")
+  //     ? this.fireAncestors(
+  //         "$handleItemHover",
+  //         this.parent.children.indexOf(this)
+  //       )
+  //     : this.fireAncestors(
+  //         "$handleStateHover",
+  //         this.parent.children.indexOf(this),
+  //         this._props.parentState
+  //       );
+  // }
 
-    const parentContainer = this.parent.parent.ref;
-    const indexForVC = this.parent.children.indexOf(this);
-    const constructorName = this.Items.children[this._focusedIndex]?.constructor.name;
-
-    if (constructorName === 'PosterRailItem' && parentContainer === 'VODSection') {
-      //case for search page
-      verticalState = 'VODSection';
+  $handleItemHover(index) {
+    if (this._focusedIndex !== index) {
+      this.Items.children[this._focusedIndex]?._unfocus();
+      this._focusedIndex = index;
     }
-    if (constructorName === 'PosterRailItem' && parentContainer !== 'VODSection') {
-      verticalState = 'VodContainer';
-    }
-    if (constructorName === 'SportsEventsRailItem') {
-      verticalState = 'VodContentContainer';
-    }
-    if (constructorName === 'LandscapeRailItem') {
-      verticalState = 'Items';
-    }
-    if (constructorName === 'EPGRailItems') {
-      verticalState = 'EPGS';
-    }
-
-    this.fireAncestors('$horizontalContainerPosterIndexChange', indexForVC, verticalState);
+    this._reCalibrateScroll();
+    console.log('WSTV handle horizontal');
+    this.fireAncestors('$handleStateHover', this.ref);
   }
+
+  _unfocus() {
+    // console.log("WSTV da");
+    this.Items.children[this._focusedIndex]?._unfocus();
+  }
+
+  setFocus(index) {
+    this._setFocusedIndex(index);
+  }
+
+  //vidi za ovaj focus i unfocus
+
+  // _focus() {
+  //   const { items } = this._props;
+  //   if (this._focusedIndex >= 0 && this._focusedIndex < items.length) {
+  //     this.Items.children[this._focusedIndex]?._focus();
+  //   }
+  // }
+
+  // _unfocus() {
+  //   const { items } = this._props;
+  //   if (this._focusedIndex >= 0 && this._focusedIndex < items.length) {
+  //     this.Items.children[this._focusedIndex]?._unfocus();
+  //   }
+  // }
+
+  // _handleHover() {
+  //   let verticalState;
+
+  //   const parentContainer = this.parent.parent.ref;
+  //   const indexForVC = this.parent.children.indexOf(this);
+  //   const constructorName =
+  //     this.Items.children[this._focusedIndex]?.constructor.name;
+
+  //   if (
+  //     constructorName === "PosterRailItem" &&
+  //     parentContainer === "VODSection"
+  //   ) {
+  //     //case for search page
+  //     verticalState = "VODSection";
+  //   }
+  //   if (
+  //     constructorName === "PosterRailItem" &&
+  //     parentContainer !== "VODSection"
+  //   ) {
+  //     verticalState = "VodContainer";
+  //   }
+  //   if (constructorName === "SportsEventsRailItem") {
+  //     verticalState = "VodContentContainer";
+  //   }
+  //   if (constructorName === "LandscapeRailItem") {
+  //     verticalState = "Items";
+  //   }
+  //   if (constructorName === "EPGRailItems") {
+  //     verticalState = "EPGS";
+  //   }
+
+  //   this.fireAncestors(
+  //     "$horizontalContainerPosterIndexChange",
+  //     indexForVC,
+  //     verticalState
+  //   );
+  // }
 
   _handleRight() {
     // this.Items.children[this._focusedIndex]._unfocus();
@@ -201,6 +269,7 @@ export default class HorizontalContainer extends Lightning.Component {
         this._focusedIndex,
         this._scrollPosition
       );
+      this.signal('horizontalContainerIndexChange', this._focusedIndex);
     } else {
       return false;
     }
@@ -218,20 +287,11 @@ export default class HorizontalContainer extends Lightning.Component {
         this._focusedIndex,
         this._scrollPosition
       );
+      this.signal('horizontalContainerIndexChange', this._focusedIndex);
     } else {
       return false;
     }
     return true;
-  }
-
-  $handleItemHover(index) {
-    if (this._focusedIndex !== index) {
-      this.Items.children[this._focusedIndex]?._unfocus();
-      this._focusedIndex = index;
-    }
-    this._reCalibrateScroll();
-
-    this.fireAncestors('$handleStateHover', this.ref);
   }
 
   _handleEnter() {
@@ -240,5 +300,13 @@ export default class HorizontalContainer extends Lightning.Component {
       focusedItem.signal('select');
     }
     return true;
+  }
+
+  setIndex(index) {
+    this._setFocusedIndex(index);
+  }
+
+  scrollToIndex(index) {
+    this._setFocusedIndex(index);
   }
 }
