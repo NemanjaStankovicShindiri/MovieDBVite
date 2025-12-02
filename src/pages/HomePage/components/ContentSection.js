@@ -72,6 +72,10 @@ export default class ContentSection extends Lightning.Component {
     this._setState(this._getState());
   }
 
+  _init() {
+    this._setState('MoviesSection');
+  }
+
   $handleStateHover(ref) {
     const currentState = this._getState();
     if (ref != currentState) {
