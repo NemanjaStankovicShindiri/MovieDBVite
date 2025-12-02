@@ -1,4 +1,4 @@
-import { Lightning, Utils } from '@lightningjs/sdk';
+import { Lightning, Router, Utils } from '@lightningjs/sdk';
 import { Img } from '@lightningjs/sdk';
 import navigateToDetailsPage from '../utils/navigateToDetailsPage';
 
@@ -11,7 +11,6 @@ export default class Card extends Lightning.Component {
   _index = null;
   static _template() {
     return {
-      collision: true,
       w: 229,
       h: 359,
       passSignals: { changeHeroBackground: true },
@@ -23,8 +22,8 @@ export default class Card extends Lightning.Component {
         src: Utils.asset('images/imgPlaceholder.jpg'),
         alpha: 1,
       },
-
       Image: {
+        collision: true,
         w: (w) => w,
         h: (h) => h - 59,
         shader: {
@@ -78,6 +77,7 @@ export default class Card extends Lightning.Component {
   }
 
   _handleHover() {
+    if (Router.isNavigating()) return;
     this._focus();
     this.fireAncestors('$handleItemHover', this.parent.children.indexOf(this));
   }

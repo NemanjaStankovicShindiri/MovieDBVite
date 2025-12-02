@@ -4,11 +4,18 @@ export default class PlayerControllButton extends Lightning.Component {
   _props = {
     callback: null,
   };
+
+  static _template() {
+    return {
+      collision: true,
+    };
+  }
   set props(props) {
-    const { w, h, src, label, callback } = props;
+    const { w, h, x, src, label, callback } = props;
     this.patch({
       w: w,
       h: h,
+      x: x,
       rect: true,
       mountY: 0.5,
       src: Utils.asset(src),
@@ -36,9 +43,6 @@ export default class PlayerControllButton extends Lightning.Component {
 
   _handleHover() {
     this._focus();
-  }
-
-  _handleUnhover() {
-    this._unfocus();
+    this.fireAncestors('$handleItemHover', this.parent.children.indexOf(this));
   }
 }

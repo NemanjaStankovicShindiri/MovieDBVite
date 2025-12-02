@@ -190,12 +190,10 @@ export default class HorizontalContainer extends Lightning.Component {
       this._focusedIndex = index;
     }
     this._reCalibrateScroll();
-    console.log('WSTV handle horizontal');
     this.fireAncestors('$handleStateHover', this.ref);
   }
 
   _unfocus() {
-    // console.log("WSTV da");
     this.Items.children[this._focusedIndex]?._unfocus();
   }
 

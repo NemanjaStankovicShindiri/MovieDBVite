@@ -9,9 +9,10 @@ export default class Player extends Lightning.Component {
   _isSeeking = false;
   _isEnded = false;
   _buttons = [
-    { label: 'rewind', src: 'rewind.png', size: 66, handler: '_handleBackwards' },
-    { label: 'playPause', src: 'pause.png', size: 90, handler: '_handlePlayPause' },
-    { label: 'forward', src: 'forward.png', size: 66, handler: '_handleForward' },
+    { label: 'back', src: 'back.png', size: 66, handler: '_handleBack', x: -610 },
+    { label: 'rewind', src: 'rewind.png', size: 66, handler: '_handleBackwards', x: 0 },
+    { label: 'playPause', src: 'pause.png', size: 90, handler: '_handlePlayPause', x: 0 },
+    { label: 'forward', src: 'forward.png', size: 66, handler: '_handleForward', x: 0 },
   ];
   static _template() {
     return {
@@ -42,22 +43,12 @@ export default class Player extends Lightning.Component {
           ButtonWrapper: {
             w: 995,
             h: 90,
-            BackButton: {
-              y: 45,
-              type: PlayerControllButton,
-              color: Colors('#ffffff').alpha(0.3).get(),
-            },
             CenteredButtonWrapper: {
-              x: 845,
+              x: 790,
               y: 45,
               mountX: 0.5,
               w: 312,
               h: 200,
-              flex: {
-                direction: 'row',
-                alignItems: 'center',
-                justifyContent: 'center',
-              },
               type: HorizontalContainer,
             },
           },
@@ -82,13 +73,7 @@ export default class Player extends Lightning.Component {
     this._hidePlayerControlDebounce();
     return false;
   }
-  // _handleKey(e) {
-  //   if (e.keyCode === 461) {
-  //     this._handleBack();
-  //     return true;
-  //   }
-  //   return false;
-  // }
+
   _handleBack() {
     if (Router.isNavigating()) {
       return true;
@@ -108,6 +93,13 @@ export default class Player extends Lightning.Component {
       this.setIsPlaying(this._isPlaying);
     }
   }
+  $handleStateHover(ref) {
+    const currentState = this._getState();
+    if (ref !== currentState) {
+      if (currentState) this.tag(currentState)._unfocus();
+      this._setState(ref);
+    }
+  }
   _hidePlayerControlDebounce() {
     clearTimeout(this._hideWrapperTimeout);
     if (!this._PlayerControl.visible || this._ProgressBar._newTime !== null) return;
@@ -117,6 +109,12 @@ export default class Player extends Lightning.Component {
     }, 5000);
   }
   _init() {
+    window.addEventListener('mousemove', () => {
+      if (this._PlayerControl.visible === false) {
+        this._PlayerControl.visible = true;
+        this._hidePlayerControlDebounce();
+      }
+    });
     const buttonsMaped = this._buttons.map((item) => ({
       type: PlayerControllButton,
       props: {
@@ -124,6 +122,7 @@ export default class Player extends Lightning.Component {
         h: item.size,
         src: 'images/player/' + item.src,
         label: item.label,
+        x: item.x,
         flex: { alignSelf: 'center' },
         callback: this[item.handler].bind(this),
       },
@@ -132,17 +131,8 @@ export default class Player extends Lightning.Component {
       PlayerControl: {
         Controller: {
           ButtonWrapper: {
-            BackButton: {
-              props: {
-                w: 66,
-                h: 66,
-                src: 'images/player/back.png',
-                label: 'back',
-                callback: this._handleBack.bind(this),
-              },
-            },
             CenteredButtonWrapper: {
-              props: { items: buttonsMaped, targetIndex: 1, disableScroll: true },
+              props: { items: buttonsMaped, targetIndex: 2, disableScroll: true },
             },
           },
         },
@@ -284,26 +274,12 @@ export default class Player extends Lightning.Component {
 
   static _states() {
     return [
-      class BackButton extends this {
-        _getFocused() {
-          return this._BackButton;
-        }
-        _handleRight() {
-          this._setState('CenteredButtonWrapper');
-        }
-        _handleDown() {
-          this._setState('ProgressBar');
-        }
-      },
       class CenteredButtonWrapper extends this {
         _getFocused() {
           return this._CenteredButtonWrapper;
         }
         _handleDown() {
           this._setState('ProgressBar');
-        }
-        _handleLeft() {
-          this._setState('BackButton');
         }
       },
       class ProgressBar extends this {

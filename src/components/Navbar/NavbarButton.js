@@ -67,11 +67,11 @@ export default class NavbarButton extends Lightning.Component {
     this.patch({ Line: { alpha: 0 } });
   }
 
-  _handleHover() {
-    this._focus();
-    this.fireAncestors('$handleItemHover', this.parent.children.indexOf(this));
-    // Router.focusWidget('Menu');
-  }
+  // _handleHover() {
+  //   this._focus();
+  //   this.fireAncestors('$handleItemHover', this.parent.children.indexOf(this));
+  //   // Router.focusWidget('Menu');
+  // }
 
   _handleClick() {
     this._handleEnter();
@@ -79,6 +79,16 @@ export default class NavbarButton extends Lightning.Component {
 
   _handleEnter() {
     Router.navigate(getRouteFromIndex(this._index));
+    Router.focusPage();
+  }
+
+  _handleHover() {
+    this._focus();
+    this.fireAncestors('$handleItemHover', this.parent.children.indexOf(this));
+    Router.focusWidget('Menu');
+  }
+
+  _handleUnhover() {
     Router.focusPage();
   }
 }

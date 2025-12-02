@@ -104,17 +104,6 @@ export default class MoviesPage extends Lightning.Component {
     handleBack(e);
   }
 
-  // _handleKey(e) {
-  //   if (Router.isNavigating()) {
-  //     return true;
-  //   }
-  //   if (e.keyCode === 461 || e.keyCode === 68) {
-  //     handleBack(e);
-  //     return true;
-  //   }
-  //   return false;
-  // }
-
   _init() {
     this._setState('Slider');
   }

@@ -12,7 +12,6 @@ export default class ContentSection extends Lightning.Component {
         type: HorizontalContainer,
       },
       SeriesSection: {
-        collision: true,
         disableScroll: true,
         y: 423,
         w: 1270,
@@ -70,7 +69,7 @@ export default class ContentSection extends Lightning.Component {
         },
       },
     });
-    this._setState('MoviesSection');
+    this._setState(this._getState());
   }
 
   $handleStateHover(ref) {
@@ -81,8 +80,6 @@ export default class ContentSection extends Lightning.Component {
     }
     this.fireAncestors('$handleStateHover', this.ref);
   }
-
-  _handleHover() {}
 
   static _states() {
     return [

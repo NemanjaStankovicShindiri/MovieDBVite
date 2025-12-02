@@ -59,6 +59,7 @@ export default class ChannelCard extends Lightning.Component {
   }
 
   _handleHover() {
+    if (Router.isNavigating()) return;
     this._focus();
     this.fireAncestors('$handleItemHover', this.parent.children.indexOf(this));
   }

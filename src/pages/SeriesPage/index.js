@@ -105,6 +105,18 @@ export default class SeriesPage extends Lightning.Component {
     this._setState('Slider');
   }
 
+  $handleStateHover(ref) {
+    console.log('object');
+    if (Router.getActiveWidget()) {
+      Router.focusPage();
+    }
+    const currentState = this._getState();
+    if (ref !== currentState) {
+      if (currentState) this.tag(currentState)._unfocus();
+      this._setState(ref);
+    }
+  }
+
   set props(props) {
     const cards = props.map((item) => {
       return {
