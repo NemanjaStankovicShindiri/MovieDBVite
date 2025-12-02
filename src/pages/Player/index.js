@@ -10,9 +10,9 @@ export default class Player extends Lightning.Component {
   _isEnded = false;
   _buttons = [
     { label: 'back', src: 'back.png', size: 66, handler: '_handleBack', x: -610 },
-    { label: 'rewind', src: 'rewind.png', size: 66, handler: '_handleBackwards', x: 0 },
-    { label: 'playPause', src: 'pause.png', size: 90, handler: '_handlePlayPause', x: 0 },
-    { label: 'forward', src: 'forward.png', size: 66, handler: '_handleForward', x: 0 },
+    { label: 'rewind', src: 'rewind.png', size: 66, handler: '_handleBackwards', x: 20 },
+    { label: 'playPause', src: 'pause.png', size: 90, handler: '_handlePlayPause', x: 20 },
+    { label: 'forward', src: 'forward.png', size: 66, handler: '_handleForward', x: 20 },
   ];
   static _template() {
     return {
